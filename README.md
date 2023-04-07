@@ -1,9 +1,11 @@
-# Marvel - Vue 3 (Nuxt 3)
+## Marvel - Vue 3 (Nuxt 3)
+
+# Tecnologias utilizadas
 
 * Pinia for global state.
 * TailwindCSS
 * DaisyUI Utils only
-
+* NodeJS 18
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 

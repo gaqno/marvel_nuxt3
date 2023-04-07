@@ -1,10 +1,11 @@
 export interface App {
   translate: {},
   theme: 'light' | 'dark',
+  darkMode: boolean,
   language: | 'ptBR' | 'enUS',
   loading: boolean,
   currentCharacter: {},
-  favorites: [],
+  favorites: Array<{}>,
   drawer: {
     show: boolean,
     template: string,

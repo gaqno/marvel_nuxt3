@@ -35,6 +35,7 @@ export default defineNuxtConfig({
           lookForCharacters: 'Procure por personagens',
           empty: 'Nenhum personagem encontrado',
           ctrSubtitle: 'Aqui você encontra os personagens da Marvel',
+          
         },
         en: {
           welcome: 'Welcome!',

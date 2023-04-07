@@ -38,3 +38,20 @@ export const getCharacters = (params?: any) => {
 export const getCharacter = (id: number, params?: any) => {
   return callApi("get", `characters/${id}`, { params });
 }
+
+export const getCharacterComics = (id: number, params?: any) => {
+  return callApi("get", `characters/${id}/comics`, { params });
+}
+
+export const getCharacterEvents = (id: number, params?: any) => {
+  return callApi("get", `characters/${id}/events`, { params });
+}
+
+export const getCharacterSeries = (id: number, params?: any) => {
+  return callApi("get", `characters/${id}/series`, { params });
+}
+
+export const getCharacterStories = (id: number, params?: any) => {
+  return callApi("get", `characters/${id}/stories`, { params });
+}
+

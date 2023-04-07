@@ -1,19 +1,55 @@
 <template>
-  <div class="drawer">
-    <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content">
-      <slot name="drawer-content"></slot>
+  <div className="drawer">
+    <input id="my-drawer" type="checkbox" v-model="app.drawer.show" className="drawer-toggle" />
+    <div className="drawer-content">
+      <!-- Page content here -->
+      <NuxtPage />
     </div> 
-    <div class="drawer-side">
-      <label for="my-drawer" class="drawer-overlay"></label>
-      <ul class="menu p-4 w-80 bg-base-100 text-base-content">
+    <div className="drawer-side">
+      <label htmlFor="my-drawer" className="drawer-overlay"></label>
+      <ul className="menu p-4 w-80 bg-base-100 text-base-content">
         <!-- Sidebar content here -->
-        <li><a>Sidebar Item 1</a></li>
-        <li><a>Sidebar Item 2</a></li>
+        <section v-if="app.drawer.template === 'navigation'" class="prose">
+          <h3>Obrigado pela visita!</h3>
+          <p>Esse site foi feito utilizando as tecnologias</p>
+          <ul class="menu bg-base-100 w-56 p-2 rounded-box prose">
+            <li class="menu-title">
+              <span class="text-gray-700">Frameworks</span>
+            </li>
+            <span class="ml-4">
+              <Icon name="carbon:logo-vue" />
+              Vue 3
+            </span>
+            <span class="ml-4">
+              <Icon name="simple-icons:nuxtdotjs" />
+              Nuxt 3
+            </span>
+            <span class="ml-4">
+              <Icon name="simple-icons:tailwindcss" />
+              TailwindCSS
+            </span>
+            <span class="ml-4">
+              <Icon name="fluent-emoji-flat:pineapple" />
+              Pinia
+            </span>
+          </ul>
+          <h3 class="text-center">Você encontra o repositório desse projeto aqui!</h3>
+          <a href="https://github.com/gaqno" target="_blank" class="btn w-full">
+            <Icon name="carbon:logo-github" size="2em"/>
+            <span class="ml-2">gaqno</span>
+          </a>
+          <a href="https://linkedin.com/in/gaqno" target="_blank" class="btn w-full mt-4">
+            <Icon name="mdi:linkedin" size="2em"/>
+            <span class="ml-2">Gabriel Aquino</span>
+          </a>
+        </section>
       </ul>
     </div>
   </div>
 </template>
 
 <script setup>
+import { useAppStore } from '~~/store/app';
+const app = useAppStore()
+
 </script>

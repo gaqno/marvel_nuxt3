@@ -25,6 +25,7 @@ export const useAppStore = defineStore({
     return {
       language: 'ptBR',
       loading: false,
+      darkMode: false,
       theme: 'light',
       translate: {},
       currentCharacter: {},
@@ -57,12 +58,8 @@ export const useAppStore = defineStore({
     isLoading: state => state.loading,
   },
   actions: {
-    setFavoriteCharacter(content: any) {
-      if (this.favorites.find((item: any) => item.id === content.id)) {
-        this.removeFavoriteCharacter(content);
-        return;
-      }
-      this.favorites.push(content as never);
+    setFavorites(content: any) {
+      this.favorites.push(content);
       this.toast = {
         show: true,
         message: "Character adicionado aos favoritos",
@@ -117,6 +114,9 @@ export const useAppStore = defineStore({
     },
     setLoading(content: boolean) {
       this.loading = content;
+    },
+    setDarkMode(content: boolean) {
+      this.darkMode = content;
     },
     setTranslate(content: any) {
       this.translate = content;
