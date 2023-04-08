@@ -4,7 +4,11 @@ export interface App {
   darkMode: boolean,
   language: | 'ptBR' | 'enUS',
   loading: boolean,
-  currentCharacter: {},
+  current: {
+    series: [],
+    comics: [],
+    characters: [],
+  },
   favorites: Array<{}>,
   drawer: {
     show: boolean,

@@ -1,4 +1,4 @@
-export function useFormatTags() {
+export function useFormatTags () {
   const formatTags = (tag: any) => {
     switch (tag.name) {
       case 'Grass':

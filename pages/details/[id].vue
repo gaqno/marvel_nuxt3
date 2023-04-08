@@ -2,7 +2,7 @@
   <section class="text-gray-600 body-font">
     <div class="flex flex-col">
       <div class="m-12 p-12 mx-auto prose rounded h-1/2">
-        <img :src="currentCharacter.thumbnail.path + '.' + currentCharacter.thumbnail.extension" class="rounded-full w-32 h-32 my-8 mx-auto" />
+        <img :src="currentCharacter.thumbnail.path + '.' + currentCharacter.thumbnail.extension" class="rounded-full w-32 h-32 my-8 mx-auto">
         <span class="text-center">
           <h1>{{ currentCharacter.name }}</h1>
           <p>{{ currentCharacter.description || 'Sem descrição' }}</p>
@@ -10,41 +10,44 @@
       </div>
       <div class="m-12  mx-auto prose rounded">
         <div class="btn-group flex justify-center">
-          <button @click="currentTab = 'comics'" data-tip="Quadrinhos" :class="[currentTab === 'comics' && 'btn-active', 'btn tooltip']">
+          <button data-tip="Quadrinhos" :class="[currentTab === 'comics' && 'btn-active', 'btn tooltip']" @click="currentTab = 'comics'">
             <p class="text-white">
               <Icon name="material-symbols:auto-stories-outline" size="1.5em" />
               {{ currentCharacter.stories.available }}
             </p>
           </button>
-          <button @click="currentTab = 'series'" data-tip="Séries" :class="[currentTab === 'series' && 'btn-active', 'btn tooltip']">
+          <button data-tip="Séries" :class="[currentTab === 'series' && 'btn-active', 'btn tooltip']" @click="currentTab = 'series'">
             <p class="text-white">
               <Icon name="material-symbols:live-tv-outline" size="1.5em" />
               {{ currentCharacter.series.available }}
             </p>
           </button>
-          </div>
+        </div>
         <div v-if="currentTab === 'comics'" class="mt-8">
-          <h3 class="text-center">Edições em que participa</h3>
+          <h3 class="text-center">
+            Edições em que participa
+          </h3>
           <div class="carousel carousel-center w-full space-x-4 bg-neutral rounded-box">
             <div v-for="comic, index in characterComics" :key="comic.title" class="carousel-item">
-              <img 
-                @touchmove="handleScroll(index)" 
-                @click="handleScroll(index)"
-                :class="handleScroll(index)" 
-                :src="comic.thumbnail.path + '.' + comic.thumbnail.extension" 
-                tabindex="0"
+              <img
                 id="comic-{{ index }}"
-                class="w-40 h-70 px-2 focus:ring-2 ring-lime-200" />
-            </div>           
+                :class="handleScroll(index)"
+                :src="comic.thumbnail.path + '.' + comic.thumbnail.extension"
+                tabindex="0"
+                class="w-40 h-70 px-2 focus:ring-2 ring-lime-200"
+                @touchmove="handleScroll(index)"
+                @click="handleScroll(index)"
+              >
+            </div>
           </div>
         </div>
         <div v-if="currentTab === 'series'" class="mt-8">
           <h3>Séries em que participa</h3>
-            <div class="carousel carousel-center w-full space-x-4 bg-neutral rounded-box">
-              <div v-for="serie in characterSeries" :key="serie.title" class="carousel-item">
-                <img :src="serie.thumbnail.path + '.' + serie.thumbnail.extension" class="w-40 h-40" />
-              </div>           
-            </div>   
+          <div class="carousel carousel-center w-full space-x-4 bg-neutral rounded-box">
+            <div v-for="serie in characterSeries" :key="serie.title" class="carousel-item">
+              <img :src="serie.thumbnail.path + '.' + serie.thumbnail.extension" class="w-40 h-40">
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -53,17 +56,13 @@
 
 <script setup lang="ts">
 
-import { useAppStore } from '~~/store/app';
-import { getCharacterComics, getCharacterSeries } from '~/helpers/marvel-api';
 definePageMeta({
   title: 'Detalhes do personagem',
   description: 'Detalhes do personagem'
 })
 
-const app = useAppStore()
 const currentTab = ref('comics')
-const currentImage = ref("comic-0")
-const router = useRouter()
+const currentImage = ref('comic-0')
 const characterComics = ref([{
   title: '',
   thumbnail: {
@@ -102,20 +101,15 @@ const handleScroll = (index: number) => {
   currentImage.value = `comic-${index}`
 }
 
-onMounted(() => {
-  if (app.currentCharacter !== null) {
-    currentCharacter.value = { ...currentCharacter.value, ...app.currentCharacter }
-  } else {
-    router.push('/')
-  }
-  getCharacterComics(currentCharacter.value.id)
-    .then((response) => {
-      characterComics.value = response.data.results
-    })
-  getCharacterSeries(currentCharacter.value.id)
-    .then((response) => {
-      characterSeries.value = response.data.results
-    })
-})
+// onMounted(() => {
+//   getCharacterComics(current.value.id)
+//     .then((response) => {
+//       characterComics.value = response.data.results
+//     })
+//   getCharacterSeries(current.value.id)
+//     .then((response) => {
+//       characterSeries.value = response.data.results
+//     })
+// })
 
 </script>

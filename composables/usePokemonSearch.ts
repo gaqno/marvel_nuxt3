@@ -1,5 +1,5 @@
-import axios from "axios";
-import { ref } from "vue";
+import axios from 'axios'
+import { ref } from 'vue'
 
 interface Pokemon {
   name: string;
@@ -16,16 +16,16 @@ interface Pokemon {
   types: { type: { name: string } }[];
 }
 
-export function usePokemonSearch() {
-  const loading = ref(false);
-  const error = ref("");
-  const pokemon = ref<Pokemon | null>(null);
+export function usePokemonSearch () {
+  const loading = ref(false)
+  const error = ref('')
+  const pokemon = ref<Pokemon | null>(null)
 
   const searchPokemon = async (query: string) => {
     try {
-      loading.value = true;
-      const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${query.toLowerCase()}`);
-      const { data } = response;
+      loading.value = true
+      const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${query.toLowerCase()}`)
+      const { data } = response
 
       pokemon.value = {
         name: data.name,
@@ -37,21 +37,21 @@ export function usePokemonSearch() {
           front_default: data.sprites.front_default,
           front_female: data.sprites.front_female,
           front_shiny: data.sprites.front_shiny,
-          front_shiny_female: data.sprites.front_shiny_female,
+          front_shiny_female: data.sprites.front_shiny_female
         },
-        types: data.types,
-      };
+        types: data.types
+      }
     } catch (e) {
-      error.value = e as string;
+      error.value = e as string
     } finally {
-      loading.value = false;
+      loading.value = false
     }
-  };
+  }
 
   return {
     loading,
     error,
     pokemon,
-    searchPokemon,
-  };
+    searchPokemon
+  }
 }

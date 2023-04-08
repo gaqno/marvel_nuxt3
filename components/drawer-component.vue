@@ -1,10 +1,15 @@
 <template>
   <div className="drawer">
-    <input id="my-drawer" type="checkbox" v-model="app.drawer.show" className="drawer-toggle" />
+    <input
+      id="my-drawer"
+      v-model="app.drawer.show"
+      type="checkbox"
+      className="drawer-toggle"
+    >
     <div className="drawer-content">
       <!-- Page content here -->
       <NuxtPage />
-    </div> 
+    </div>
     <div className="drawer-side">
       <label htmlFor="my-drawer" className="drawer-overlay"></label>
       <ul className="menu p-4 w-80 bg-base-100 text-base-content">
@@ -14,7 +19,9 @@
           <p>Esse site foi feito utilizando as tecnologias</p>
           <ul class="menu bg-base-100 w-56 p-2 rounded-box prose">
             <li class="menu-title">
-              <span class="text-gray-700">Frameworks</span>
+              <span class="text-gray-700">
+                Frameworks
+              </span>
             </li>
             <span class="ml-4">
               <Icon name="carbon:logo-vue" />
@@ -33,14 +40,20 @@
               Pinia
             </span>
           </ul>
-          <h3 class="text-center">Você encontra o repositório desse projeto aqui!</h3>
+          <h3 class="text-center">
+            Você encontra o repositório desse projeto aqui!
+          </h3>
           <a href="https://github.com/gaqno" target="_blank" class="btn w-full">
-            <Icon name="carbon:logo-github" size="2em"/>
-            <span class="ml-2">gaqno</span>
+            <Icon name="carbon:logo-github" size="2em" />
+            <span class="ml-2">
+              gaqno
+            </span>
           </a>
           <a href="https://linkedin.com/in/gaqno" target="_blank" class="btn w-full mt-4">
-            <Icon name="mdi:linkedin" size="2em"/>
-            <span class="ml-2">Gabriel Aquino</span>
+            <Icon name="mdi:linkedin" size="2em" />
+            <span class="ml-2">
+              Gabriel Aquino
+            </span>
           </a>
         </section>
       </ul>
@@ -49,7 +62,7 @@
 </template>
 
 <script setup>
-import { useAppStore } from '~~/store/app';
+import { useAppStore } from '~~/store/app'
 const app = useAppStore()
 
 </script>

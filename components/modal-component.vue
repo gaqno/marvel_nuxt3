@@ -1,7 +1,9 @@
 <template>
   <div class="modal modal-open">
     <div class="modal-box relative prose">
-      <label @click="app.closeModal" for="my-modal-3" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+      <label for="my-modal-3" class="btn btn-sm btn-circle absolute right-2 top-2" @click="app.closeModal">
+        ✕
+      </label>
       <section v-if="app.modal.template === 'landing'">
         <h2>Bem vindo ao Marvel Heroes!</h2>
         <p>Esta aplicação foi feita utilizando as tecnologias:</p>
@@ -17,7 +19,7 @@
 </template>
 
 <script setup>
-import { useAppStore } from '~~/store/app';
+import { useAppStore } from '~~/store/app'
 
 const app = useAppStore()
 </script>
