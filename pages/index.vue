@@ -9,7 +9,7 @@
             </h2>
 
             <span class="hidden max-w-lg mx-auto text-white/90 md:mt-6 md:block md:text-lg ">
-              Bem vindo ao MarvelDetails, coletania de personagens, quadrinhos e séries.
+              {{ $t('welcome') }}
             </span>
 
             <div class="flex flex-row float-right my-8 gap-4">
@@ -21,7 +21,7 @@
               >
                 <Icon name="mdi:bug" size="2em" :class="currentView === 'characters' ? 'text-yellow-400' : ''" />
                 <span class="inline-flex px-2">
-                  Personagens
+                  {{ $t('characters') }}
                 </span>
               </button>
               <button
@@ -32,7 +32,7 @@
               >
                 <Icon name="fluent:movies-and-tv-16-regular" size="2em" />
                 <span class="inline-flex px-2">
-                  Séries
+                  {{ $t('series') }}
                 </span>
               </button>
               <button
@@ -43,7 +43,7 @@
               >
                 <Icon name="material-symbols:menu-book-outline-sharp" size="2em" />
                 <span class="inline-flex px-2">
-                  Quadrinhos
+                  {{ $t('comics') }}
                 </span>
               </button>
               <button
@@ -54,7 +54,7 @@
               >
                 <Icon name="mdi:heart-box" size="2em" />
                 <span class="inline-flex px-2">
-                  Favoritos
+                  {{ $t('favorite') }}
                 </span>
               </button>
               <!-- <button v-else @click="handleViews('unsee')" data-tip="Voltar"
@@ -190,7 +190,7 @@
         <button type="button" class="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
           <Icon name="line-md:emoji-frown" size="5em" />
           <span class="mt-2 block text-sm font-semibold">
-            Meio vázio por aqui...
+            {{ $t('kindEmpty') }}
           </span>
         </button>
       </div>
@@ -207,6 +207,7 @@
 <script setup lang="ts">
 
 import { useAppStore } from '~/store/app'
+import { MarvelCharacter } from '~/types/character'
 import { getCharacters, getSeries } from '~~/helpers/marvel-api'
 
 const app = useAppStore()

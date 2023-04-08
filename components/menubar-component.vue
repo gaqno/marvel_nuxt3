@@ -13,9 +13,12 @@
       </button>
     </div>
     <div class="ml-auto">
-      <button class="btn btn-ghost normal-case text-xl" @click="navigateTo('/')">
-        <Icon name="mdi:ab-testing" size="1em" />
-      </button>
+      <NuxtLink :to="switchLocalePath('en')" class="btn btn-ghost normal-case text-xl">
+        <Icon name="icon-park-outline:english" size="1em" />
+      </NuxtLink>
+      <NuxtLink :to="switchLocalePath('pt')" class="btn btn-ghost normal-case text-xl">
+        <Icon name="game-icons:brazil" size="1em" />
+      </NuxtLink>
       <button class="btn btn-ghost normal-case text-xl" @click="toggleDarkMode">
         <Icon v-if="!darkModeEnabled" name="line-md:moon-alt-to-sunny-outline-loop-transition" size="1em" />
         <Icon v-else name="line-md:sunny-filled-loop-to-moon-filled-loop-transition" size="1em" />
@@ -26,7 +29,6 @@
 
 <script setup>
 import { useAppStore } from '~~/store/app'
-
 const app = useAppStore()
 const darkModeEnabled = ref(false)
 const handleDrawer = () =>

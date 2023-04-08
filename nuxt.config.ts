@@ -32,17 +32,30 @@ export default defineNuxtConfig({
       locale: 'pt',
       messages: {
         pt: {
-          welcome: 'Bem vindo!',
+          welcome: 'Bem vindo ao MarvelDetails, coletania de personagens, quadrinhos e séries',
           lookForCharacters: 'Procure por personagens',
-          empty: 'Nenhum personagem encontrado',
-          ctrSubtitle: 'Aqui você encontra os personagens da Marvel'
-
+          lookForComics: 'Procure por quadrinhos',
+          characters: 'Personagens',
+          comics: 'Quadrinhos',
+          series: 'Séries',
+          favorite: 'Favoritos',
+          emptyCharacter: 'Nenhum personagem encontrado',
+          emptyComic: 'Nenhum quadrinho encontrado',
+          ctrSubtitle: 'Aqui você encontra os personagens da Marvel',
+          kindEmpty: 'Meio vázio por aqui...'
         },
         en: {
-          welcome: 'Welcome!',
+          welcome: 'Welcome to MarvelDetails, collection of characters, comics and series',
           lookForCharacters: 'Look for characters',
-          empty: 'No characters found',
-          ctrSubtitle: 'Here you find the Marvel characters'
+          lookForComics: 'Look for comics',
+          characters: 'Characters',
+          comics: 'Comics',
+          series: 'Series',
+          favorite: 'Favorites',
+          emptyCharacter: 'No character found',
+          emptyComic: 'No comic found',
+          ctrSubtitle: 'Here you find the Marvel characters',
+          kindEmpty: 'It\'s a little empty here...'
         }
       }
     }
