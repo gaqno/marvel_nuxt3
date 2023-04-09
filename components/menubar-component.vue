@@ -13,16 +13,37 @@
       </button>
     </div>
     <div class="ml-auto">
-      <NuxtLink :to="switchLocalePath('en')" class="btn btn-ghost normal-case text-xl">
-        <Icon name="icon-park-outline:english" size="1em" />
-      </NuxtLink>
-      <NuxtLink :to="switchLocalePath('pt')" class="btn btn-ghost normal-case text-xl">
-        <Icon name="game-icons:brazil" size="1em" />
-      </NuxtLink>
       <button class="btn btn-ghost normal-case text-xl" @click="toggleDarkMode">
         <Icon v-if="!darkModeEnabled" name="line-md:moon-alt-to-sunny-outline-loop-transition" size="1em" />
         <Icon v-else name="line-md:sunny-filled-loop-to-moon-filled-loop-transition" size="1em" />
       </button>
+    </div>
+    <div class="relative">
+      <button
+        :disabled="app.drawer.show"
+        class="bg-indigo-700 text-white font-bold py-2 px-4 rounded"
+        @click="popoverLanguage = !popoverLanguage"
+      >
+        {{ $t('language') }}
+      </button>
+      <div v-show="popoverLanguage" class="absolute top-0 right-0 mt-12 w-64 h-14 rounded-md shadow-lg bg-white ring-1 ring-indigo-800 ring-opacity-5">
+        <div class="p-2">
+          <p class="text-gray-700">
+            <NuxtLink :to="switchLocalePath('pt')" class="btn btn-ghost normal-case text-base" @click="popoverLanguage = false">
+              <Icon name="game-icons:brazil" size="1em" />
+            </NuxtLink>
+            <NuxtLink :to="switchLocalePath('cn')" class="btn btn-ghost normal-case text-base" @click="popoverLanguage = false">
+              <Icon name="material-symbols:language-chinese-cangjie" size="1em" />
+            </NuxtLink>
+            <NuxtLink :to="switchLocalePath('kr')" class="btn btn-ghost normal-case text-base" @click="popoverLanguage = false">
+              <Icon name="material-symbols:language-korean-latin" size="1em" />
+            </NuxtLink>
+            <NuxtLink :to="switchLocalePath('en')" class="btn btn-ghost normal-case text-base" @click="popoverLanguage = false">
+              <Icon name="icon-park-outline:english" size="1em" />
+            </NuxtLink>
+          </p>
+        </div>
+      </div>
     </div>
   </header>
 </template>
@@ -30,6 +51,7 @@
 <script setup>
 import { useAppStore } from '~~/store/app'
 const app = useAppStore()
+const popoverLanguage = ref(false)
 const darkModeEnabled = ref(false)
 const handleDrawer = () =>
   app.setDrawer({

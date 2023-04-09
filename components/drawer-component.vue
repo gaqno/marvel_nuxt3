@@ -15,12 +15,12 @@
       <ul className="menu p-4 w-80 bg-base-100 text-base-content">
         <!-- Sidebar content here -->
         <section v-if="app.drawer.template === 'navigation'" class="prose">
-          <h3>Obrigado pela visita!</h3>
-          <p>Esse site foi feito utilizando as tecnologias</p>
+          <h3>{{ $t('thanksForVisiting') }}</h3>
+          <p>{{ $t('siteBuild') }}</p>
           <ul class="menu bg-base-100 w-56 p-2 rounded-box prose">
             <li class="menu-title">
               <span class="text-gray-700">
-                Frameworks
+                {{ $t('franeworks') }}
               </span>
             </li>
             <span class="ml-4">
@@ -41,7 +41,7 @@
             </span>
           </ul>
           <h3 class="text-center">
-            Você encontra o repositório desse projeto aqui!
+            {{ $t('repository') }}
           </h3>
           <a href="https://github.com/gaqno" target="_blank" class="btn w-full">
             <Icon name="carbon:logo-github" size="2em" />
