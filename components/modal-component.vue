@@ -16,8 +16,8 @@
       </section>
       <section v-if="app.modal.template === 'jaba'">
         <h2>Jaba</h2>
-        <p>Esta aplicação foi feita utilizando as tecnologias:</p>
-        <adsbygoogle />
+        <img src="/assets/jaba.png">
+        <AdsByGoogle />
       </section>
     </div>
   </div>

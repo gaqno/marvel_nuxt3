@@ -37,13 +37,12 @@ export default defineNuxtConfig({
     // injectPosition: 0,
     // viewer: true,
   },
-  plugins: [
-    { src: '~/plugins/google-adsense.js', ssr: false }
-  ],
   runtimeConfig: {
     public: {
-      id: process.env.GOOGLE_ADSENSE_ID,
-      test: process.env.GOOGLE_ADSENSE_TEST_MODE,
+      'google-adsense': {
+        id: process.env.GOOGLE_ADSENSE_ID,
+        test: process.env.GOOGLE_ADSENSE_TEST_MODE === 'true'
+      },
       MARVEL_API_BASE: process.env.MARVEL_API_BASE,
       MARVEL_PUBLIC_KEY: process.env.MARVEL_PUBLIC_KEY,
       MARVEL_PRIVATE_KEY: process.env.MARVEL_PRIVATE_KEY
