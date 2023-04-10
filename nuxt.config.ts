@@ -55,6 +55,7 @@ export default defineNuxtConfig({
       messages: {
         pt: {
           welcome: 'Bem vindo ao MarvelDetails, coletania de personagens, quadrinhos e séries',
+          jaba: 'Jaba-time, pois contas precisam ser pagas...',
           language: 'Idioma',
           spring: 'A primavera há de chegar',
           brazilianPortuguese: 'Português do Brasil',
@@ -89,6 +90,7 @@ export default defineNuxtConfig({
         },
         en: {
           welcome: 'Welcome to MarvelDetails, collection of characters, comics and series',
+          jaba: 'Jaba-time, because accounts need to be paid...',
           language: 'Language',
           spring: 'Spring will come',
           brazilianPortuguese: 'Brazilian Portuguese',
@@ -123,6 +125,7 @@ export default defineNuxtConfig({
         },
         cn: {
           welcome: '欢迎来到MarvelDetails，收集人物，漫画和系列',
+          jaba: 'Jaba时间，因为帐户需要付款...',
           language: '语言',
           spring: '春天将会来临',
           brazilianPortuguese: '巴西葡萄牙语',
@@ -157,6 +160,7 @@ export default defineNuxtConfig({
         },
         kr: {
           welcome: 'MarvelDetails에 오신 것을 환영합니다. 캐릭터, 만화 및 시리즈 모음',
+          jaba: 'Jaba 시간, 왜냐하면 계정을 지불해야하기 때문입니다 ...',
           language: '언어',
           spring: '봄이 오리라',
           brazilianPortuguese: '브라질 포르투갈어',
