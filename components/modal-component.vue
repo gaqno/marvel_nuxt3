@@ -16,9 +16,9 @@
       </section>
       <section v-if="app.modal.template === 'jaba'">
         <p>{{ $t('jaba') }}</p>
-        <adsbygoogle />
+        <Adsbygoogle class="mr-8" />
         <progress v-if="!Jaba" class="progress w-full h-80"></progress>
-        <img v-else :src="Jaba" class="absolute -bottom-6 right-0 w-auto h-32">
+        <img v-else :src="Jaba" class="absolute -bottom-6 right-0 w-auto h-32 mt-8">
       </section>
     </div>
   </div>
@@ -28,4 +28,5 @@
 import { useAppStore } from '~~/store/app'
 import Jaba from '~/assets/jaba.png'
 const app = useAppStore()
+
 </script>

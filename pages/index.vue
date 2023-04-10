@@ -175,7 +175,7 @@
                       <div class="flex flex-row justify-center items-center gap-2 py-4">
                         <button
                           v-if="character.isFavorite"
-                          :data-tip="$t('desfavorite')"
+                          :data-tip="$t('desfavorited')"
                           class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
                           type="button"
                           @click="handleViews('remove', character)"
@@ -230,7 +230,7 @@
                       <div class="flex flex-row justify-center items-center gap-2 py-4">
                         <button
                           v-if="serie.isFavorite"
-                          :data-tip="$t('desfavorite')"
+                          :data-tip="$t('desfavorited')"
                           class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
                           type="button"
                           @click="handleViews('remove', serie)"
@@ -285,7 +285,7 @@
                       <div class="flex flex-row justify-center items-center gap-2 py-4">
                         <button
                           v-if="comic.isFavorite"
-                          :data-tip="$t('desfavorite')"
+                          :data-tip="$t('desfavorited')"
                           class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
                           type="button"
                           @click="handleViews('remove', comic)"
@@ -344,7 +344,7 @@
                       <div class="flex flex-row justify-center items-center gap-2 py-4">
                         <button
                           v-if="comic.isFavorite"
-                          :data-tip="$t('desfavorite')"
+                          :data-tip="$t('desfavorited')"
                           class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
                           type="button"
                           @click="handleViews('remove', comic)"
@@ -680,14 +680,4 @@ const handleUpdate = (action: string, value?: any) => {
     }
   }
 }
-
-onMounted(() => {
-  handleUpdate('characters')
-  app.setModal({
-    show: true,
-    template: 'jaba',
-    data: {}
-  })
-})
-
 </script>

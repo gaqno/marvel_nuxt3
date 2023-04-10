@@ -6,7 +6,7 @@
       </button>
     </div>
     <div class="flex-1">
-      <button class="btn btn-ghost normal-case text-xl" @click="navigateTo('/')">
+      <button class="btn btn-ghost normal-case text-xl" @click.prevent="navigateTo('/')">
         <span class="ml-3 text-xl">
           Marvel
         </span>

@@ -26,8 +26,8 @@ export default defineNuxtConfig({
     }
   },
   'google-adsense': {
-    onPageLoad: true,
-    pageLevelAds: true,
+    onPageLoad: false,
+    pageLevelAds: false,
     id: process.env.GOOGLE_ADSENSE_ID,
     test: process.env.GOOGLE_ADSENSE_TEST_MODE === 'true'
   },
@@ -41,6 +41,10 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
+      adsTxt: {
+        fileName: 'ads.txt',
+        content: process.env.ADSTXT_CONTENT || ''
+      },
       MARVEL_API_BASE: process.env.MARVEL_API_BASE,
       MARVEL_PUBLIC_KEY: process.env.MARVEL_PUBLIC_KEY,
       MARVEL_PRIVATE_KEY: process.env.MARVEL_PRIVATE_KEY

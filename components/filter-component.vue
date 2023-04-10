@@ -67,6 +67,11 @@
               </button>
             </div>
           </div>
+          <adsbygoogle class="mt-8" />
+          <adsbygoogle class="mt-8" />
+          <adsbygoogle class="mt-8" />
+          <adsbygoogle class="mt-8" />
+          <adsbygoogle class="mt-8" />
         </div>
 
         <div class="lg:col-span-3">
