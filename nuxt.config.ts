@@ -25,6 +25,10 @@ export default defineNuxtConfig({
       Poppins: [400, 500, 600, 700]
     }
   },
+  'google-adsense': {
+    onPageLoad: false,
+    pageLevelAds: false
+  },
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css',
     configPath: 'tailwind.config'
@@ -38,6 +42,8 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {
+      id: process.env.GOOGLE_ADSENSE_ID,
+      test: process.env.GOOGLE_ADSENSE_TEST_MODE,
       MARVEL_API_BASE: process.env.MARVEL_API_BASE,
       MARVEL_PUBLIC_KEY: process.env.MARVEL_PUBLIC_KEY,
       MARVEL_PRIVATE_KEY: process.env.MARVEL_PRIVATE_KEY

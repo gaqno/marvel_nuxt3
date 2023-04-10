@@ -11,6 +11,12 @@
 <script setup>
 import { useAppStore } from './store/app'
 
+definePageMeta({
+  title: 'MarvelDetails',
+  description: 'MarvelDetails, a Gabriel Aquino project',
+  keywords: 'marvel, marvel details, spiderman'
+})
+
 const app = useAppStore()
 
 watchEffect(() => {
