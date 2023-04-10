@@ -680,4 +680,8 @@ const handleUpdate = (action: string, value?: any) => {
     }
   }
 }
+
+onMounted(() => {
+  handleUpdate('characters')
+})
 </script>
