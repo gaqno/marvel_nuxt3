@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxtjs/device',
     '@nuxtjs/google-fonts',
+    '@nuxtjs/google-adsense',
     '@nuxtjs/eslint-module',
     '@pinia/nuxt',
     '@vueuse/nuxt'
@@ -22,6 +23,24 @@ export default defineNuxtConfig({
     download: true,
     families: {
       Poppins: [400, 500, 600, 700]
+    }
+  },
+  tailwindcss: {
+    cssPath: '~/assets/css/tailwind.css',
+    configPath: 'tailwind.config'
+    // exposeConfig: false,
+    // config: {},
+    // injectPosition: 0,
+    // viewer: true,
+  },
+  plugins: [
+    { src: '~/plugins/google-adsense.js', ssr: false }
+  ],
+  runtimeConfig: {
+    public: {
+      MARVEL_API_BASE: process.env.MARVEL_API_BASE,
+      MARVEL_PUBLIC_KEY: process.env.MARVEL_PUBLIC_KEY,
+      MARVEL_PRIVATE_KEY: process.env.MARVEL_PRIVATE_KEY
     }
   },
   i18n: {
@@ -168,21 +187,6 @@ export default defineNuxtConfig({
           repository: '이 프로젝트의 저장소를 여기에서 찾을 수 있습니다!'
         }
       }
-    }
-  },
-  tailwindcss: {
-    cssPath: '~/assets/css/tailwind.css',
-    configPath: 'tailwind.config'
-    // exposeConfig: false,
-    // config: {},
-    // injectPosition: 0,
-    // viewer: true,
-  },
-  runtimeConfig: {
-    public: {
-      MARVEL_API_BASE: process.env.MARVEL_API_BASE,
-      MARVEL_PUBLIC_KEY: process.env.MARVEL_PUBLIC_KEY,
-      MARVEL_PRIVATE_KEY: process.env.MARVEL_PRIVATE_KEY
     }
   }
 })
