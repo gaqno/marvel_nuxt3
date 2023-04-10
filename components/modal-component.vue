@@ -15,9 +15,8 @@
         </ul>
       </section>
       <section v-if="app.modal.template === 'jaba'">
-        <h2>Jaba</h2>
-        <img src="/assets/jaba.png">
-        <AdsByGoogle />
+        <adsbygoogle />
+        <img v-if="Jaba" :src="Jaba" class="h-auto w-60">
       </section>
     </div>
   </div>
@@ -25,6 +24,6 @@
 
 <script setup>
 import { useAppStore } from '~~/store/app'
-
+import Jaba from '~/assets/jaba.png'
 const app = useAppStore()
 </script>

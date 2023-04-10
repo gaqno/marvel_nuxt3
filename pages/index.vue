@@ -683,6 +683,11 @@ const handleUpdate = (action: string, value?: any) => {
 
 onMounted(() => {
   handleUpdate('characters')
+  app.setModal({
+    show: true,
+    template: 'jaba',
+    data: {}
+  })
 })
 
 </script>
