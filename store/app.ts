@@ -22,7 +22,8 @@ export const useAppStore = defineStore({
       darkMode: false,
       theme: 'light',
       translate: {},
-      current: {
+      current: {},
+      favorite: {
         characters: [],
         series: [],
         comics: []
@@ -77,16 +78,8 @@ export const useAppStore = defineStore({
         position: 'top-right'
       }
     },
-    setCurrent (action: string, content: any) {
-      if (action === 'characters') {
-        this.current.characters = content
-      }
-      if (action === 'series') {
-        this.current.series = content
-      }
-      if (action === 'comics') {
-        this.current.comics = content
-      }
+    setCurrent (content: any) {
+      this.current = content
     },
     setToast (content: IToast) {
       this.toast.show = !this.toast.show

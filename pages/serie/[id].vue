@@ -2,10 +2,10 @@
   <section class="text-gray-600 body-font">
     <div class="flex flex-col">
       <div class="m-12 p-12 mx-auto prose rounded h-1/2">
-        <img :src="currentCharacter.thumbnail.path + '.' + currentCharacter.thumbnail.extension" class="rounded-full w-32 h-32 my-8 mx-auto">
+        <img :src="currentSerie.thumbnail.path + '.' + currentSerie.thumbnail.extension" class="rounded-full w-32 h-32 my-8 mx-auto">
         <span class="text-center">
-          <h1>{{ currentCharacter.name }}</h1>
-          <p>{{ currentCharacter.description || 'Sem descrição' }}</p>
+          <h1>{{ currentSerie.name }}</h1>
+          <p>{{ currentSerie.description || 'Sem descrição' }}</p>
         </span>
       </div>
       <div class="m-12  mx-auto prose rounded">
@@ -13,13 +13,13 @@
           <button data-tip="Quadrinhos" :class="[currentTab === 'comics' && 'btn-active', 'btn tooltip']" @click="currentTab = 'comics'">
             <p class="text-white">
               <Icon name="material-symbols:auto-stories-outline" size="1.5em" />
-              {{ currentCharacter.stories.available }}
+              {{ currentSerie.stories.available }}
             </p>
           </button>
           <button data-tip="Séries" :class="[currentTab === 'series' && 'btn-active', 'btn tooltip']" @click="currentTab = 'series'">
             <p class="text-white">
               <Icon name="material-symbols:live-tv-outline" size="1.5em" />
-              {{ currentCharacter.series.available }}
+              {{ currentSerie.series.available }}
             </p>
           </button>
         </div>
@@ -55,6 +55,7 @@
 </template>
 
 <script setup lang="ts">
+import { useAppStore } from '~/store/app'
 import { MarvelCharacter } from '~/types/character'
 
 definePageMeta({
@@ -62,6 +63,7 @@ definePageMeta({
   description: 'Detalhes do personagem'
 })
 
+const app = useAppStore()
 const currentTab = ref('comics')
 const currentImage = ref('comic-0')
 const characterComics = ref([{
@@ -80,7 +82,7 @@ const characterSeries = ref([
     }
   }
 ])
-const currentCharacter = ref({
+const currentSerie = ref({
   name: '',
   description: '',
   series: {
@@ -102,15 +104,12 @@ const handleScroll = (index: number) => {
   currentImage.value = `comic-${index}`
 }
 
-// onMounted(() => {
-//   getCharacterComics(current.value.id)
-//     .then((response) => {
-//       characterComics.value = response.data.results
-//     })
-//   getCharacterSeries(current.value.id)
-//     .then((response) => {
-//       characterSeries.value = response.data.results
-//     })
-// })
-
+onMounted(() => {
+  if (app.current !== null) {
+    currentSerie.value = {
+      ...currentSerie.value,
+      ...app.current
+    }
+  } else { navigateTo('/') }
+})
 </script>

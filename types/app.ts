@@ -4,7 +4,8 @@ export interface App {
   darkMode: boolean,
   language: | 'ptBR' | 'enUS',
   loading: boolean,
-  current: {
+  current: {},
+  favorite: {
     series: [],
     comics: [],
     characters: [],
