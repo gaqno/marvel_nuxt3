@@ -16,7 +16,7 @@
       </section>
       <section v-if="app.modal.template === 'jaba'">
         <p>{{ $t('jaba') }}</p>
-        <Adsbygoogle class="mr-8" />
+        <!-- <Adsbygoogle class="mr-8" /> -->
         <progress v-if="!Jaba" class="progress w-full h-80"></progress>
         <img v-else :src="Jaba" class="absolute -bottom-6 right-0 w-auto h-32 mt-8">
       </section>

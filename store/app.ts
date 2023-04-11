@@ -22,7 +22,11 @@ export const useAppStore = defineStore({
       darkMode: false,
       theme: 'light',
       translate: {},
-      current: {},
+      current: {
+        character: {},
+        serie: {},
+        comic: {}
+      },
       favorite: {
         characters: [],
         series: [],

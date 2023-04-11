@@ -468,18 +468,12 @@ const offset = ref(0)
 
 const redirect = (action: string, value: any) => {
   if (action === 'character') {
-    characters.value.filter((i: any) => i.id === value.id ? app.setCurrent({ ...i }) : null)
-    app.setCurrent(value)
     navigateTo(`/character/${value.id}`)
   }
   if (action === 'serie') {
-    series.value.filter((i: any) => i.id === value.id ? app.setCurrent({ ...i }) : null)
-    app.setCurrent(value)
     navigateTo(`/serie/${value.id}`)
   }
   if (action === 'comic') {
-    comics.value.filter((i: any) => i.id === value.id && app.setCurrent(i))
-    app.setCurrent(value)
     navigateTo(`/comic/${value.id}`)
   }
 }
