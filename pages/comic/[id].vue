@@ -1,306 +1,291 @@
 <template>
-  <!--
-  This component uses @tailwindcss/typography
-
-  yarn add @tailwindcss/typography
-  npm install @tailwindcss/typography
-
-  plugins: [require('@tailwindcss/typography')]
--->
-
-  <section>
-    <div class="relative mx-auto max-w-screen-xl px-4 py-8">
-      <div>
-        <h1 class="text-2xl font-bold lg:text-3xl">
-          Simple Clothes Basic Tee
-        </h1>
-
-        <p class="mt-1 text-sm text-gray-500">
-          SKU: #012345
-        </p>
-      </div>
-
-      <div class="grid gap-8 lg:grid-cols-4 lg:items-start">
-        <div class="lg:col-span-3">
-          <div class="relative mt-4">
+  <section class="body-font">
+    <div id="character" class="relative mx-auto max-w-screen-xl px-4 py-8">
+      <div class="grid gap-8 lg:grid-cols-4 lg:items-start p-8">
+        <div class="flex flex-col md:flex-row">
+          <progress v-if="app.isLoading" class="progress w-full h-96"></progress>
+          <figure v-else class="max-w-md max-h-md ">
             <img
-              alt="Tee"
-              src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-              class="h-72 w-full rounded-xl object-cover lg:h-[540px]"
+              class="w-full h-full object-cover rounded-tr-xl rounded-tl-xl"
+              :src="character.thumbnail.path + '.' + character.thumbnail.extension"
+              alt="Album"
             >
-
-            <div
-              class="absolute bottom-4 left-1/2 inline-flex -translate-x-1/2 items-center rounded-full bg-black/75 px-3 py-1.5 text-white"
-            >
-              <svg
-                class="h-4 w-4"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
-                />
-              </svg>
-
-              <span class="ml-1.5 text-xs">
-                Hover to zoom
-              </span>
-            </div>
-          </div>
-
-          <ul class="mt-1 flex gap-1">
-            <li>
-              <img
-                alt="Tee"
-                src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-                class="h-16 w-16 rounded-md object-cover"
-              >
-            </li>
-
-            <li>
-              <img
-                alt="Tee"
-                src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-                class="h-16 w-16 rounded-md object-cover"
-              >
-            </li>
-
-            <li>
-              <img
-                alt="Tee"
-                src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-                class="h-16 w-16 rounded-md object-cover"
-              >
-            </li>
-
-            <li>
-              <img
-                alt="Tee"
-                src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-                class="h-16 w-16 rounded-md object-cover"
-              >
-            </li>
-          </ul>
-        </div>
-
-        <div class="lg:sticky lg:top-0">
-          <form class="space-y-4 lg:pt-8">
-            <fieldset>
-              <legend class="text-lg font-bold">
-                Color
-              </legend>
-
-              <div class="mt-2 flex flex-wrap gap-1">
-                <label for="color_green" class="cursor-pointer">
-                  <input
-                    id="color_green"
-                    type="radio"
-                    name="color"
-                    class="peer sr-only"
-                    checked
-                  >
-
-                  <span
-                    class="block h-6 w-6 rounded-full border border-gray-200 bg-green-700 ring-1 ring-transparent ring-offset-1 peer-checked:ring-gray-300"
-                  ></span>
-                </label>
-
-                <label for="color_blue" class="cursor-pointer">
-                  <input
-                    id="color_blue"
-                    type="radio"
-                    name="color"
-                    class="peer sr-only"
-                  >
-
-                  <span
-                    class="block h-6 w-6 rounded-full border border-gray-200 bg-blue-700 ring-1 ring-transparent ring-offset-1 peer-checked:ring-gray-300"
-                  ></span>
-                </label>
-
-                <label for="color_pink" class="cursor-pointer">
-                  <input
-                    id="color_pink"
-                    type="radio"
-                    name="color"
-                    class="peer sr-only"
-                  >
-
-                  <span
-                    class="block h-6 w-6 rounded-full border border-gray-200 bg-pink-700 ring-1 ring-transparent ring-offset-1 peer-checked:ring-gray-300"
-                  ></span>
-                </label>
-
-                <label for="color_red" class="cursor-pointer">
-                  <input
-                    id="color_red"
-                    type="radio"
-                    name="color"
-                    class="peer sr-only"
-                  >
-
-                  <span
-                    class="block h-6 w-6 rounded-full border border-gray-200 bg-red-700 ring-1 ring-transparent ring-offset-1 peer-checked:ring-gray-300"
-                  ></span>
-                </label>
-
-                <label for="color_indigo" class="cursor-pointer">
-                  <input
-                    id="color_indigo"
-                    type="radio"
-                    name="color"
-                    class="peer sr-only"
-                  >
-
-                  <span
-                    class="block h-6 w-6 rounded-full border border-gray-200 bg-indigo-700 ring-1 ring-transparent ring-offset-1 peer-checked:ring-gray-300"
-                  ></span>
-                </label>
-              </div>
-            </fieldset>
-
-            <fieldset>
-              <legend class="text-lg font-bold">
-                Material
-              </legend>
-
-              <div class="mt-2 flex flex-wrap gap-1">
-                <label for="material_cotton" class="cursor-pointer">
-                  <input
-                    id="material_cotton"
-                    type="radio"
-                    name="material"
-                    class="peer sr-only"
-                    checked
-                  >
-
-                  <span
-                    class="block rounded-full border border-gray-200 px-3 py-1 text-xs peer-checked:bg-gray-100"
-                  >
-                    Cotton
-                  </span>
-                </label>
-
-                <label for="material_wool" class="cursor-pointer">
-                  <input
-                    id="material_wool"
-                    type="radio"
-                    name="material"
-                    class="peer sr-only"
-                    checked
-                  >
-
-                  <span
-                    class="block rounded-full border border-gray-200 px-3 py-1 text-xs peer-checked:bg-gray-100"
-                  >
-                    Wool
-                  </span>
-                </label>
-              </div>
-            </fieldset>
-
-            <div class="rounded border bg-gray-100 p-4">
-              <p class="text-sm">
-                <span class="block">
-                  Pay as low as $3/mo with 0% APR.
-                </span>
-
-                <a href="" class="mt-1 inline-block underline">
-                  Find out more
-                </a>
-              </p>
-            </div>
-
-            <div>
-              <p class="text-xl font-bold">
-                $19.99
-              </p>
-            </div>
-
-            <button
-              type="submit"
-              class="w-full rounded bg-red-700 px-6 py-3 text-sm font-bold uppercase tracking-wide text-white"
-            >
-              Add to cart
-            </button>
-
-            <button
-              type="button"
-              class="w-full rounded border border-gray-300 bg-gray-100 px-6 py-3 text-sm font-bold uppercase tracking-wide"
-            >
-              Notify when on sale
-            </button>
-          </form>
-        </div>
-
-        <div class="lg:col-span-3">
-          <div class="prose max-w-none">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam totam
-              eos iusto repellat blanditiis voluptate aspernatur, quae nemo
-              exercitationem cum debitis! Sint consectetur laborum tempora
-              repellat odit. Impedit quasi reprehenderit harum illum sequi
-              provident soluta cum quisquam odit possimus? Officia illum saepe
-              magnam nostrum, officiis placeat iure itaque cumque voluptate?
+          </figure>
+          <div class="bg-white w-full py-4 rounded-br-xl rounded-bl-xl">
+            <h1 class="text-center text-2xl font-bold">
+              {{ character.name }}
+            </h1>
+            <p class="p-8">
+              {{ character.description || $t('noDescription') }}
             </p>
+            <div class="card-actions justify-center py-6">
+              <button class="btn bg-red-600 border-0 text-white">
+                <Icon name="mdi:television" size="1.5em" class="mr-4" />
+                {{ $t('favorited') }}
+              </button>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+
+    <div id="series" class="relative mx-auto max-w-screen-xl px-4 py-8">
+      <div class="pb-4">
+        <h1 class="text-2xl font-bold md:text-3xl md:p-8">
+          {{ $t('series') }}
+        </h1>
+        <p>{{ $t('allSeriesThatParticipated') }}</p>
+      </div>
+
+      <Swiper
+        :effect="'coverflow'"
+        :grab-cursor="true"
+        :centered-slides="true"
+        :slides-per-view="'auto'"
+        :coverflow-effect="{
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true,
+        }"
+        :pagination="true"
+        :modules="modules"
+        class="mySwiper"
+      >
+        <SwiperSlide v-for="serie in series" :key="serie.id">
+          <div class="flex flex-col md:flex-row">
+            <progress v-if="app.isLoading" class="progress w-full h-96"></progress>
+            <figure v-else class="max-w-md max-h-md ">
+              <img
+                class="w-full h-full object-cover rounded-tr-xl rounded-tl-xl"
+                :src="serie.thumbnail.path + '.' + serie.thumbnail.extension"
+                alt="Album"
+              >
+            </figure>
+            <div class="bg-white w-full py-4 rounded-br-xl rounded-bl-xl">
+              <h2 class="text-center text-lg font-bold">
+                {{ serie.title }}
+              </h2>
+              <p class="p-8">
+                {{ character.description || $t('noDescription') }}
+              </p>
+              <div class="card-actions justify-center py-6">
+                <button class="btn bg-red-600 border-0 text-white">
+                  <Icon name="mdi:television" size="1.5em" class="mr-4" />
+                  {{ $t('favorited') }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </SwiperSlide>
+      </Swiper>
+    </div>
+
+    <div id="comics" class="relative mx-auto max-w-screen-xl px-4 py-8">
+      <div class="pb-4">
+        <h1 class="text-2xl font-bold md:px-8 lg:text-3xl ">
+          {{ $t('comics') }}
+        </h1>
+        <p>{{ $t('allComicsThatParticipated') }}</p>
+      </div>
+
+      <Swiper
+        :effect="'coverflow'"
+        :grab-cursor="true"
+        :centered-slides="true"
+        :slides-per-view="'auto'"
+        :coverflow-effect="{
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true,
+        }"
+        :pagination="true"
+        :modules="modules"
+        class="mySwiper"
+      >
+        <SwiperSlide v-for="comic in comics" :key="comic.id">
+          <div class="flex flex-col md:flex-row">
+            <progress v-if="app.isLoading" class="progress w-full h-96"></progress>
+            <figure v-else class="max-w-md max-h-md ">
+              <img
+                class="w-full h-full object-cover rounded-tr-xl rounded-tl-xl"
+                :src="comic.thumbnail.path + '.' + comic.thumbnail.extension"
+                alt="Album"
+              >
+            </figure>
+            <div class="bg-white w-full py-4 rounded-br-xl rounded-bl-xl">
+              <h2 class="text-center text-lg font-bold">
+                {{ comic.title }}
+              </h2>
+              <p class="p-8">
+                {{ comic.description || $t('noDescription') }}.
+              </p>
+              <div class="card-actions justify-center py-6">
+                <button class="btn bg-red-600 border-0 text-white">
+                  <Icon name="carbon:book" size="1.5em" class="mr-4" />
+                  {{ $t('favorited') }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </SwiperSlide>
+      </Swiper>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
+import { EffectCoverflow, Pagination } from 'swiper'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { getCharacter, getCharacterComics, getCharacterSeries } from '~/helpers/marvel-api'
 import { useAppStore } from '~/store/app'
-import { MarvelCharacter } from '~/types/character'
+import 'swiper/css'
+import { Comic } from '~/types/comic'
+import { Serie } from '~/types/serie'
 
 definePageMeta({
   title: 'Detalhes do personagem',
   description: 'Detalhes do personagem'
 })
-
+const modules = [EffectCoverflow, Pagination]
+const route = useRoute()
 const app = useAppStore()
-
-const currentComic = ref({
+const character = ref({
   name: '',
+  id: 0,
   description: '',
-  series: {
-    available: 0
-  },
-  stories: {
-    available: 0
-  },
-  comics: {
-    available: 0
-  },
   thumbnail: {
     path: '',
     extension: ''
+  },
+  comics: {
+    items: [],
+    available: 0
+  },
+  series: {
+    items: [],
+    available: 0
+  },
+  stories: {
+    items: [{
+      resourceURI: '',
+      name: ''
+    }],
+    available: 0
   }
-} as MarvelCharacter)
+})
+const comics = ref([{
+  title: '',
+  id: 0,
+  isFavorite: false,
+  description: '',
+  thumbnail: {
+    path: '',
+    extension: ''
+  },
+  characters: {
+    items: [],
+    available: 0
+  },
+  series: {
+    items: [],
+    available: 0
+  },
+  stories: {
+    items: [],
+    available: 0
+  }
+} as Comic])
+const series = ref([{
+  title: '',
+  id: 0,
+  isFavorite: false,
+  description: '',
+  thumbnail: {
+    path: '',
+    extension: ''
+  },
+  characters: {
+    items: [],
+    available: 0
+  },
+  series: {
+    items: [],
+    available: 0
+  },
+  stories: {
+    items: [],
+    available: 0
+  }
 
-// onMounted(() => {
-//   getCharacterComics(current.value.id)
-//     .then((response) => {
-//       characterComics.value = response.data.results
-//     })
-//   getCharacterSeries(current.value.id)
-//     .then((response) => {
-//       characterSeries.value = response.data.results
-//     })
-// })
+} as Serie])
+
+const fetchCharacter = () => {
+  return new Promise((resolve, reject) => {
+    getCharacter(route.params.id as string)
+      .then((res) => {
+        character.value = res.data.results[0]
+        resolve(character.value)
+      })
+      .catch((error) => {
+        reject(error)
+        app.setToast({
+          show: true,
+          template: 'error',
+          icon: 'carbon:error',
+          message: error.message
+        })
+      })
+  })
+}
+
+const fetchComics = () => {
+  return new Promise((resolve, reject) => {
+    getCharacterComics(route.params.id as string)
+      .then((res) => {
+        comics.value = res.data.results
+        resolve(comics.value)
+      })
+      .catch((error) => {
+        reject(error)
+        app.setToast({
+          show: true,
+          template: 'error',
+          icon: 'carbon:error',
+          message: error.message
+        })
+      })
+  })
+}
+
+const fetchSeries = () => {
+  return new Promise((resolve, reject) => {
+    getCharacterSeries(route.params.id as string)
+      .then((res) => {
+        series.value = res.data.results
+        resolve(series.value)
+      })
+      .catch((error) => {
+        reject(error)
+        app.setToast({
+          show: true,
+          template: 'error',
+          icon: 'carbon:error',
+          message: error.message
+        })
+      })
+  })
+}
 
 onMounted(() => {
-  if (app.current !== null) {
-    currentComic.value = {
-      ...currentComic.value,
-      ...app.current
-    }
-  } else { navigateTo('/') }
+  if (route.params) {
+    return Promise.all([fetchCharacter(), fetchComics(), fetchSeries()])
+      .then(() => {
+        app.setLoading(false)
+      })
+  }
 })
 </script>

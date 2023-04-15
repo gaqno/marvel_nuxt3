@@ -1,40 +1,31 @@
-export interface MarvelCharacter {
-  id: number;
-  name: string;
-  isFavorite: boolean;
+export interface Character {
   description: string;
-  modified: string;
+  id: number;
+  isFavorite: boolean;
+  name: string;
   thumbnail: {
     path: string;
     extension: string;
   };
-  resourceURI: string;
   comics: {
-    available: number;
-    collectionURI: string;
-    items: {
+    items: Array<{
       resourceURI: string;
       name: string;
-    }[];
-    returned: number;
+    }>;
+    available: number;
   };
   series: {
-    available: number;
-    collectionURI: string;
-    items: {
+    items: Array<{
       resourceURI: string;
       name: string;
-    }[];
-    returned: number;
+    }>;
+    available: number;
   };
   stories: {
-    available: number;
-    collectionURI: string;
-    items: {
+    items: Array<{
       resourceURI: string;
       name: string;
-      type: string;
-    }[];
-    returned: number;
+    }>;
+    available: number;
   };
 }

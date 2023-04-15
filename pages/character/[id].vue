@@ -1,261 +1,244 @@
 <template>
   <section class="body-font">
-    <div class="relative mx-auto max-w-screen-xl px-4 py-8">
-      <div>
-        <h1 class="text-2xl font-bold lg:text-3xl">
-          {{ currentCharacter.name }}
-        </h1>
+    <div id="character" class="relative mx-auto max-w-screen-xl px-4 py-8">
+      <div class="flex flex-col md:flex-row">
+        <progress v-if="app.isLoading" class="progress w-full h-96"></progress>
+        <figure v-else class="max-w-md max-h-md ">
+          <img class="w-full h-full object-cover rounded-tr-xl rounded-tl-xl md:rounded-tl-lg md:rounded-bl-lg md:rounded-tr-none" :src="character.thumbnail.path + '.' + character.thumbnail.extension" alt="Album">
+        </figure>
+        <div class="bg-white prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none">
+          <h2 class="text-center text-lg font-bold">
+            {{ character.name }}
+          </h2>
+          <p class="p-8 text-center shadow-sm m-2">
+            {{ character.description || $t('noDescription') }}
+          </p>
 
-        <p class="mt-1 text-sm text-gray-500">
-          ID: {{ currentCharacter.id }}
-        </p>
-      </div>
-
-      <div class="grid gap-8 lg:grid-cols-4 lg:items-start">
-        <div class="lg:col-span-3">
-          <div class="relative mt-4">
-            <img
-              v-if="currentCharacter.thumbnail.path !== ''"
-              alt="Tee"
-              :src="currentCharacter.thumbnail.path + '.' + currentCharacter.thumbnail.extension"
-              class="h-72 w-full rounded-xl object-cover lg:h-[540px]"
-            >
-            <progress v-else class="progress w-full h-96"></progress>
-            <div class="absolute bottom-4 left-1/2 inline-flex -translate-x-1/2 items-center rounded-full bg-black/75 px-3 py-1.5 text-white">
-              <svg
-                class="h-4 w-4"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
-                />
-              </svg>
-
-              <span class="ml-1.5 text-xs">
-                Hover to zoom
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div class="lg:sticky lg:top-0">
-          <form class="space-y-4 lg:pt-4">
-            <div class="rounded border bg-gray-100 p-4 prose">
-              <span class="block">
-                {{ currentCharacter.description || $t('noDescription') }}.
-                <p>
-                  <span class="font-bold">
-                    {{ $t('comics') }}:
-                  </span>
-                  {{ currentCharacter.comics.available }}
-                </p>
-                <p>
-                  <span class="font-bold">
-                    {{ $t('series') }}:
-                  </span>
-                  {{ currentCharacter.series.available }}
-                </p>
-                <p>
-                  <span class="font-bold">
-                    {{ $t('stories') }}:
-                  </span>
-                  {{ currentCharacter.stories.available }}
-                </p>
-              </span>
-            </div>
-
-            <button type="submit" class="w-full rounded bg-red-700 px-6 py-3 text-sm font-bold uppercase tracking-wide text-white">
-              {{ $t('favorite') }}
+          <div class="card-actions justify-center py-6">
+            <button class="btn border-0 bg-red-600  text-white">
+              <Icon name="mdi:television" size="1.5em" class="mr-4" />
+              {{ $t('favorited') }}
             </button>
-          </form>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="relative mx-auto max-w-screen-xl px-4 py-8">
-      <div>
-        <h1 class="text-2xl font-bold lg:text-3xl">
-          {{ $t('comics') }}
-        </h1>
-      </div>
-
-      <div class="grid gap-8 lg:grid-cols-4 lg:items-start">
-        <div class="lg:col-span-3">
-          <div class="relative mt-4">
-            <img
-              v-if="currentComics.thumbnail.path !== ''"
-              alt="Tee"
-              :src="currentComics.thumbnail.path + '.' + currentComics.thumbnail.extension"
-              class="h-72 w-full rounded-xl object-cover lg:h-[540px]"
-            >
-            <progress v-else class="progress w-full h-96"></progress>
-            <div class="absolute bottom-4 left-1/2 inline-flex -translate-x-1/2 items-center rounded-full bg-black/75 px-3 py-1.5 text-white">
-              <svg
-                class="h-4 w-4"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
-                />
-              </svg>
-
-              <span class="ml-1.5 text-xs">
-                Hover to zoom
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div class="lg:sticky lg:top-0">
-          <form class="space-y-4 lg:pt-4">
-            <div class="rounded border bg-gray-100 p-4 prose">
-              <h2>{{ currentComics.title }}</h2>
-              <span class="block">
-                {{ currentComics.description || $t('noDescription') }}.
-              </span>
-            </div>
-
-            <button type="submit" class="w-full rounded bg-red-700 px-6 py-3 text-sm font-bold uppercase tracking-wide text-white">
-              {{ $t('favorite') }}
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <div class="relative mx-auto max-w-screen-xl px-4 py-8">
-      <div>
-        <h1 class="text-2xl font-bold lg:text-3xl">
+    <div id="series" class="relative mx-auto max-w-screen-xl px-4 py-8">
+      <div class="pb-4">
+        <h1 class="text-2xl font-bold md:text-3xl md:p-8">
           {{ $t('series') }}
         </h1>
+        <p>{{ $t('allSeriesThatParticipated') }}</p>
       </div>
 
-      <div class="grid gap-8 lg:grid-cols-4 lg:items-start">
-        <div class="lg:col-span-3">
-          <div class="relative mt-4">
-            <img
-              v-if="currentSeries.thumbnail.path !== ''"
-              alt="Tee"
-              :src="currentSeries.thumbnail.path + '.' + currentSeries.thumbnail.extension"
-              class="h-72 w-full rounded-xl object-cover lg:h-[540px]"
-            >
-            <progress v-else class="progress w-full h-96"></progress>
-            <div class="absolute bottom-4 left-1/2 inline-flex -translate-x-1/2 items-center rounded-full bg-black/75 px-3 py-1.5 text-white">
-              <svg
-                class="h-4 w-4"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
-                />
-              </svg>
-
-              <span class="ml-1.5 text-xs">
-                Hover to zoom
+      <Swiper
+        :effect="'coverflow'"
+        :grab-cursor="true"
+        :centered-slides="true"
+        :slides-per-view="'auto'"
+        :coverflow-effect="{
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true,
+        }"
+        :pagination="true"
+        :modules="modules"
+        @slide-change="view = ''"
+      >
+        <SwiperSlide v-for="serie in series" :key="serie.id">
+          <div class="flex flex-col md:flex-row">
+            <progress v-if="app.isLoading" class="progress w-full h-96"></progress>
+            <figure v-else class="max-w-md max-h-md ">
+              <img class="w-full h-full object-cover rounded-tr-xl rounded-tl-xl md:rounded-tl-lg md:rounded-bl-lg md:rounded-tr-none" :src="serie.thumbnail.path + '.' + serie.thumbnail.extension" alt="Album">
+            </figure>
+            <div class="bg-white prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none">
+              <h2 class="text-center text-lg font-bold">
+                {{ serie.title }}
+              </h2>
+              <p class="p-8 text-center shadow-sm m-2">
+                {{ character.description || $t('noDescription') }}
+              </p>
+              <span class="flex flex-row gap-4 ml-4">
+                <button class="btn border-0 rounded-lg bg-red-600 w-fit p-2" @click="handleView('characters')">
+                  <Icon name="carbon:person" size="2em" class="mr-2" />
+                  <i class="font-bold text-white">
+                    {{ serie.characters.available + ' - ' + $t('characters') }}
+                  </i>
+                </button>
+                <button class="btn border-0 rounded-lg bg-red-600 w-fit p-2" @click="handleView('comics')">
+                  <Icon name="carbon:book" size="2em" class="mr-2" />
+                  <i class="font-bold text-white">
+                    {{ serie.comics.available + ' - ' + $t('comics') }}
+                  </i>
+                </button>
+                <button class="btn border-0 bg-red-600  text-white">
+                  <Icon name="mdi:television" size="1.5em" class="mr-4" />
+                  {{ $t('favorited') }}
+                </button>
               </span>
+              <div class="w-full p-2">
+                <div v-if="view === 'characters'">
+                  <div class="overflow-x-hidden overflow-y-scroll max-h-[20vh] scrollbar scrollbar-thin">
+                    <table class="w-full divide-y-2 divide-gray-200 text-sm">
+                      <thead>
+                        <tr>
+                          <th class="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900">
+                            {{ $t('title') }}
+                          </th>
+                          <th class="px-4 py-2"></th>
+                        </tr>
+                      </thead>
+
+                      <tbody class="divide-y divide-gray-200">
+                        <tr v-for="characterPresent in serie.characters.items" :key="characterPresent.resourceURI">
+                          <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                            {{ characterPresent.name }}
+                          </td>
+                          <td class="whitespace-nowrap px-4 py-2">
+                            <a href="#" class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
+                              View
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div v-if="view === 'comics'">
+                  {{ $t('comics') }}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </SwiperSlide>
+      </Swiper>
+    </div>
 
-        <div class="lg:sticky lg:top-0">
-          <form class="space-y-4 lg:pt-4">
-            <div class="rounded border bg-gray-100 p-4 prose">
-              <h2>{{ currentSeries.title }}</h2>
-              <span class="block">
-                {{ currentSeries.description || $t('noDescription') }}.
-              </span>
-            </div>
-
-            <button type="submit" class="w-full rounded bg-red-700 px-6 py-3 text-sm font-bold uppercase tracking-wide text-white">
-              {{ $t('favorite') }}
-            </button>
-          </form>
-        </div>
+    <div id="comics" class="relative mx-auto max-w-screen-xl px-4 py-8">
+      <div class="pb-4">
+        <h1 class="text-2xl font-bold md:px-8 lg:text-3xl ">
+          {{ $t('comics') }}
+        </h1>
+        <p>{{ $t('allComicsThatParticipated') }}</p>
       </div>
+
+      <Swiper
+        :effect="'coverflow'"
+        :grab-cursor="true"
+        :centered-slides="true"
+        :slides-per-view="'auto'"
+        :coverflow-effect="{
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true,
+        }"
+        :pagination="true"
+        :modules="modules"
+        @slide-change="view = ''"
+      >
+        <SwiperSlide v-for="comic in comics" :key="comic.id">
+          <div class="flex flex-col md:flex-row">
+            <progress v-if="app.isLoading" class="progress w-full h-96"></progress>
+            <figure v-else class="max-w-md max-h-md ">
+              <img class="w-full h-full object-cover rounded-tr-xl rounded-tl-xl md:rounded-tl-lg md:rounded-bl-lg md:rounded-tr-none" :src="comic.thumbnail.path + '.' + comic.thumbnail.extension" alt="Album">
+            </figure>
+            <div class="bg-white prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none">
+              <h2 class="text-center text-lg font-bold">
+                {{ comic.title }}
+              </h2>
+              <p class="p-8 text-center shadow-sm m-2">
+                {{ character.description || $t('noDescription') }}
+              </p>
+              <span class="flex flex-row gap-4 ml-4">
+                <button class="btn border-0 rounded-lg bg-red-600 w-fit p-2" @click="handleView('characters')">
+                  <Icon name="carbon:person" size="2em" class="mr-2" />
+                  <i class="font-bold text-white">
+                    {{ comic.characters.available + ' - ' + $t('characters') }}
+                  </i>
+                </button>
+                <button class="btn border-0 rounded-lg bg-red-600 w-fit p-2" @click="handleView('comics')">
+                  <Icon name="carbon:book" size="2em" class="mr-2" />
+                </button>
+                <button class="btn border-0 bg-red-600  text-white">
+                  <Icon name="mdi:television" size="1.5em" class="mr-4" />
+                  {{ $t('favorited') }}
+                </button>
+              </span>
+              <div class="w-full p-2">
+                <div v-if="view === 'characters'">
+                  <div class="overflow-x-hidden overflow-y-scroll max-h-[20vh] scrollbar scrollbar-thin">
+                    <table class="w-full divide-y-2 divide-gray-200 text-sm">
+                      <thead>
+                        <tr>
+                          <th class="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900">
+                            {{ $t('title') }}
+                          </th>
+                          <th class="px-4 py-2"></th>
+                        </tr>
+                      </thead>
+
+                      <tbody class="divide-y divide-gray-200">
+                        <tr v-for="characterPresent in comic.characters.items" :key="characterPresent.resourceURI">
+                          <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                            {{ characterPresent.name }}
+                          </td>
+                          <td class="whitespace-nowrap px-4 py-2">
+                            <a href="#" class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
+                              View
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div v-if="view === 'comics'">
+                  {{ $t('comics') }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </SwiperSlide>
+      </Swiper>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
+import { EffectCoverflow, Pagination } from 'swiper'
+import { Swiper, SwiperSlide } from 'swiper/vue'
 import { getCharacter, getCharacterComics, getCharacterSeries } from '~/helpers/marvel-api'
 import { useAppStore } from '~/store/app'
+import 'swiper/css'
+import { Comic } from '~/types/comic'
+import { Serie } from '~/types/serie'
+
 definePageMeta({
   title: 'Detalhes do personagem',
   description: 'Detalhes do personagem'
 })
-
+const modules = [EffectCoverflow, Pagination]
 const route = useRoute()
 const app = useAppStore()
-const currentComics = ref({
-  title: '',
-  id: 0,
-  description: '',
-  series: {
-    items: [],
-    available: 0
-  },
-  stories: {
-    items: [{
-      resourceURI: '',
-      name: ''
-    }],
-    available: 0
-  },
-  characters: {
-    items: [],
-    available: 0
-  },
-  thumbnail: {
-    path: '',
-    extension: ''
-  }
-})
-const currentSeries = ref({
-  title: '',
-  id: 0,
-  description: '',
-  characters: {
-    items: [],
-    available: 0
-  },
-  stories: {
-    items: [{
-      resourceURI: '',
-      name: ''
-    }],
-    available: 0
-  },
-  comics: {
-    items: [],
-    available: 0
-  },
-  thumbnail: {
-    path: '',
-    extension: ''
-  }
-})
-const currentCharacter = ref({
+const view = ref('')
+const loading = ref(false)
+const character = ref({
   name: '',
   id: 0,
   description: '',
+  thumbnail: {
+    path: '',
+    extension: ''
+  },
+  comics: {
+    items: [],
+    available: 0
+  },
   series: {
     items: [],
     available: 0
@@ -266,24 +249,67 @@ const currentCharacter = ref({
       name: ''
     }],
     available: 0
-  },
-  comics: {
-    items: [],
-    available: 0
-  },
+  }
+})
+const comics = ref([{
+  title: '',
+  id: 0,
+  isFavorite: false,
+  description: '',
   thumbnail: {
     path: '',
     extension: ''
+  },
+  characters: {
+    items: [],
+    available: 0
+  },
+  series: {
+    items: [],
+    available: 0
+  },
+  stories: {
+    items: [],
+    available: 0
   }
-})
+} as Comic])
+const series = ref([{
+  title: '',
+  id: 0,
+  isFavorite: false,
+  description: '',
+  thumbnail: {
+    path: '',
+    extension: ''
+  },
+  characters: {
+    items: [],
+    available: 0
+  },
+  comics: {
+    available: 0,
+    items: []
+  },
+  series: {
+    items: [],
+    available: 0
+  },
+  stories: {
+    items: [],
+    available: 0
+  }
 
-onMounted(() => {
-  if (route.params) {
+} as Serie])
+
+const fetchCharacter = () => {
+  return new Promise((resolve, reject) => {
     getCharacter(route.params.id as string)
       .then((res) => {
-        currentCharacter.value = res.data.results[0]
+        character.value = res.data.results[0]
+        resolve(character.value)
       })
       .catch((error) => {
+        reject(error)
         app.setToast({
           show: true,
           template: 'error',
@@ -291,11 +317,18 @@ onMounted(() => {
           message: error.message
         })
       })
+  })
+}
+
+const fetchComics = () => {
+  return new Promise((resolve, reject) => {
     getCharacterComics(route.params.id as string)
       .then((res) => {
-        currentComics.value = res.data.results[0]
+        comics.value = res.data.results
+        resolve(comics.value)
       })
       .catch((error) => {
+        reject(error)
         app.setToast({
           show: true,
           template: 'error',
@@ -303,17 +336,52 @@ onMounted(() => {
           message: error.message
         })
       })
+  })
+}
+
+const fetchSeries = () => {
+  return new Promise((resolve, reject) => {
     getCharacterSeries(route.params.id as string)
       .then((res) => {
-        currentSeries.value = res.data.results[0]
+        series.value = res.data.results
+        resolve(series.value)
       })
       .catch((error) => {
+        reject(error)
         app.setToast({
           show: true,
           template: 'error',
           icon: 'carbon:error',
           message: error.message
         })
+      })
+  })
+}
+
+const handleView = (action: string) => {
+  loading.value = true
+  switch (action) {
+    case 'characters':
+      view.value = 'characters'
+      break
+    case 'comics':
+      view.value = 'comics'
+      break
+    case 'series':
+      view.value = 'series'
+      break
+    default:
+      view.value = ''
+      break
+  }
+}
+
+watchEffect(() => view.value !== '' && (loading.value = false))
+onMounted(() => {
+  if (route.params) {
+    return Promise.all([fetchCharacter(), fetchComics(), fetchSeries()])
+      .then(() => {
+        app.setLoading(false)
       })
   }
 })

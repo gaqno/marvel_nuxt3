@@ -22,7 +22,6 @@ const callApi = (method: string, endpoint: string, data?: any, loading?: string)
       hash: generateHash(Date.now(), config.public.MARVEL_PRIVATE_KEY, config.public.MARVEL_PUBLIC_KEY)
     }
   }).then((response) => {
-    useAppStore().setLoading(false)
     return response.data
   })
     .catch((error) => {

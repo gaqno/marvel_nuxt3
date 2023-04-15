@@ -41,12 +41,29 @@
               {{ $t('filter') }}
             </label>
 
-            <select id="SortBy" class="mt-1 rounded border-gray-300 text-sm" @change="emit('filter-orderBy', $event)">
-              <option value="asc">
-                {{ $t('alphabetic') }}
+            <select
+              id="SortBy"
+              v-model="query"
+              class="mt-1 rounded border-gray-300 text-sm"
+              @change="emit('filter-orderBy', query)"
+            >
+              <option value="modified">
+                {{ $t('modified_asc') }}
               </option>
-              <option value="desc">
-                {{ $t('alphabeticReverse') }}
+              <option value="-modified">
+                {{ $t('modified_desc') }}
+              </option>
+              <option v-if="template === 'characters'" value="name">
+                {{ $t('name_asc') }}
+              </option>
+              <option v-if="template === 'characters'" value="-name">
+                {{ $t('name_desc') }}
+              </option>
+              <option v-if="template === 'default'" value="title">
+                {{ $t('title_asc') }}
+              </option>
+              <option v-if="template === 'default'" value="-title">
+                {{ $t('title_desc') }}
               </option>
             </select>
           </div>
@@ -67,11 +84,6 @@
               </button>
             </div>
           </div>
-          <!-- <adsbygoogle class="mt-8" />
-          <adsbygoogle class="mt-8" />
-          <adsbygoogle class="mt-8" />
-          <adsbygoogle class="mt-8" />
-          <adsbygoogle class="mt-8" /> -->
         </div>
 
         <div class="lg:col-span-3">
@@ -84,6 +96,7 @@
 
 <script setup>
 const emit = defineEmits(['filter-orderBy'])
+const query = ref('name')
 const props = defineProps({
   title: {
     type: String,
@@ -96,7 +109,7 @@ const props = defineProps({
   template: {
     type: String,
     required: false,
-    default: 'default'
+    default: 'characters'
   }
 })
 </script>

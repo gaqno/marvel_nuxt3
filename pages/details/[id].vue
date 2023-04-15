@@ -55,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import { MarvelCharacter } from '~/types/character'
+import { Character } from '~/types/character'
 
 definePageMeta({
   title: 'Detalhes do personagem',
@@ -96,7 +96,7 @@ const currentCharacter = ref({
     path: '',
     extension: ''
   }
-} as MarvelCharacter)
+} as Character)
 
 const handleScroll = (index: number) => {
   currentImage.value = `comic-${index}`

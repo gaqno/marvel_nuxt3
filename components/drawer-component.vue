@@ -49,7 +49,7 @@
               gaqno
             </span>
           </a>
-          <a href="https://linkedin.com/in/gaqno" target="_blank" class="btn w-full mt-4">
+          <a href="https://linkedin.com/inw/gaqno" target="_blank" class="btn w-full mt-4">
             <Icon name="mdi:linkedin" size="2em" />
             <span class="ml-2">
               Gabriel Aquino

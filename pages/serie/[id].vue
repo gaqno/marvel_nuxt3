@@ -56,7 +56,7 @@
 
 <script setup lang="ts">
 import { useAppStore } from '~/store/app'
-import { MarvelCharacter } from '~/types/character'
+import { Character } from '~/types/character'
 
 definePageMeta({
   title: 'Detalhes do personagem',
@@ -98,7 +98,7 @@ const currentSerie = ref({
     path: '',
     extension: ''
   }
-} as MarvelCharacter)
+} as Character)
 
 const handleScroll = (index: number) => {
   currentImage.value = `comic-${index}`

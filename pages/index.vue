@@ -152,168 +152,108 @@
     <div v-else class="flex flex-col">
       <article v-if="currentView === 'characters'">
         <FilterComponent
+          template="characters"
           :description="$t('charactersDescription')"
           :title="$t('characters')"
-          @filterOrderBy="handleUpdate('orderBy', $event)"
+          @filterOrderBy="handleUpdate('characters-order', $event)"
         >
           <template #options>
-            <div class="lg:col-span-3">
-              <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <li v-for="character in characters" :key="character.id">
-                  <a href="#" class="group block overflow-hidden">
-                    <img
-                      :src="character.thumbnail.path + '.' + character.thumbnail.extension"
-                      alt="character"
-                      class="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px]"
-                    >
-
-                    <div class="relative bg-white/70 prose">
-                      <h3 class="text-3xl truncate text-center pt-2 text-gray-700 group-hover:underline group-hover:underline-offset-4">
-                        {{ character.name }}
-                      </h3>
-
-                      <div class="flex flex-row justify-center items-center gap-2 py-4">
-                        <button
-                          v-if="character.isFavorite"
-                          :data-tip="$t('desfavorited')"
-                          class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
-                          type="button"
-                          @click="handleViews('remove', character)"
-                        >
-                          <Icon name="mdi:heart" size="2em" class="text-white" />
-                        </button>
-                        <button
-                          v-else
-                          :data-tip="$t('favorited')"
-                          class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
-                          type="button"
-                          @click="handleViews('add', character)"
-                        >
-                          <Icon name="mdi:heart-outline" size="2em" class="text-white" />
-                        </button>
-                        <button
-                          :data-tip="$t('seeAbout')"
-                          class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
-                          type="button"
-                          @click="redirect('character', character)"
-                        >
-                          <Icon name="mdi:arrow-right" size="2em" class="text-white" />
-                        </button>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-              </ul>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+              <div v-for="character in characters" :key="character.id" class="cols-span-1">
+                <progress v-if="!character.thumbnail.path" class="progress w-full h-96"></progress>
+                <figure v-else class="max-w-md max-h-md overflow-hidden">
+                  <img class="w-full aspect-w-16 aspect-h-9 max-h-52 object-cover transition duration-500 transform hover:scale-105 rounded-tr-lg rounded-tl-lg" :src="character.thumbnail.path + '.' + character.thumbnail.extension" alt="Album">
+                </figure>
+                <div class="bg-white w-full py-4 rounded-br-xl rounded-bl-xl">
+                  <h1 class="text-center truncate mx-1 text-2xl font-bold">
+                    {{ character.name }}
+                  </h1>
+                  <p class="p-8 truncate">
+                    {{ character.description || $t('noDescription') }}
+                  </p>
+                  <div class="card-actions justify-center">
+                    <button class="btn bg-red-600 border-0 text-white">
+                      <Icon name="carbon:person" size="1.5em" class="mr-4" />
+                      {{ $t('favorited') }}
+                    </button>
+                    <button class="btn btn-circle bg-red-600 border-0 text-white" @click="redirect('character', character)">
+                      <Icon name="mdi:chevron-double-right" size="1.5em" />
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </template>
         </FilterComponent>
       </article>
 
       <article v-if="currentView === 'series'">
-        <FilterComponent :description="$t('seriesDescription')" :title="$t('series')">
+        <FilterComponent
+          :description="$t('seriesDescription')"
+          :title="$t('series')"
+          @filterOrderBy="handleUpdate('series-order', $event)"
+        >
           <template #options>
-            <div class="lg:col-span-3">
-              <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <li v-for="serie in series" :key="serie.id">
-                  <a href="#" class="group block overflow-hidden">
-                    <img
-                      :src="serie.thumbnail.path + '.' + serie.thumbnail.extension"
-                      alt="serie"
-                      class="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px]"
-                    >
-
-                    <div class="relative bg-white/70 prose">
-                      <h3 class="text-xl mx-4 truncate text-center pt-2 text-gray-700 group-hover:underline group-hover:underline-offset-4">
-                        {{ serie.title }}
-                      </h3>
-
-                      <div class="flex flex-row justify-center items-center gap-2 py-4">
-                        <button
-                          v-if="serie.isFavorite"
-                          :data-tip="$t('desfavorited')"
-                          class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
-                          type="button"
-                          @click="handleViews('remove', serie)"
-                        >
-                          <Icon name="mdi:heart" size="2em" class="text-white" />
-                        </button>
-                        <button
-                          v-else
-                          :data-tip="$t('favorited')"
-                          class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
-                          type="button"
-                          @click="handleViews('add', serie)"
-                        >
-                          <Icon name="mdi:heart-outline" size="2em" class="text-white" />
-                        </button>
-                        <button
-                          :data-tip="$t('seeAbout')"
-                          class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
-                          type="button"
-                          @click="redirect('serie', serie)"
-                        >
-                          <Icon name="mdi:arrow-right" size="2em" class="text-white" />
-                        </button>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-              </ul>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+              <div v-for="serie in series" :key="serie.id" class="cols-span-1">
+                <progress v-if="!serie.thumbnail.path" class="progress w-full h-96"></progress>
+                <figure v-else class="max-w-md max-h-md overflow-hidden">
+                  <img class="w-full aspect-w-16 aspect-h-9 max-h-64 object-cover transition duration-500 transform rounded-tr-lg rounded-tl-lg hover:scale-105 " :src="serie.thumbnail.path + '.' + serie.thumbnail.extension" alt="Album">
+                </figure>
+                <div class="bg-white w-full py-4 rounded-br-xl rounded-bl-xl">
+                  <h1 class="text-center truncate mx-1 text-2xl font-bold">
+                    {{ serie.title }}
+                  </h1>
+                  <p class="p-8 truncate">
+                    {{ serie.description || $t('noDescription') }}
+                  </p>
+                  <div class="card-actions justify-center">
+                    <button class="btn bg-red-600 border-0 text-white">
+                      <Icon name="mdi:television" size="1.5em" class="mr-4" />
+                      {{ $t('favorited') }}
+                    </button>
+                    <button class="btn btn-circle bg-red-600 border-0 text-white" @click="redirect('serie', serie)">
+                      <Icon name="mdi:chevron-double-right" size="1.5em" />
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </template>
         </FilterComponent>
       </article>
 
       <article v-if="currentView === 'comics'">
-        <FilterComponent :description="$t('comicsDescription')" :title="$t('comics')">
+        <FilterComponent
+          :description="$t('comicsDescription')"
+          :title="$t('comics')"
+          @filterOrderBy="handleUpdate('comics-order', $event)"
+        >
           <template #options>
-            <div class="lg:col-span-3">
-              <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <li v-for="comic in comics" :key="comic.id">
-                  <a href="#" class="group block overflow-hidden">
-                    <img
-                      :src="comic.thumbnail.path + '.' + comic.thumbnail.extension"
-                      alt="comic"
-                      class="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px]"
-                    >
-
-                    <div class="relative bg-white/70 prose">
-                      <h3 class="text-xl mx-4 truncate text-center pt-2 text-gray-700 group-hover:underline group-hover:underline-offset-4">
-                        {{ comic.title }}
-                      </h3>
-
-                      <div class="flex flex-row justify-center items-center gap-2 py-4">
-                        <button
-                          v-if="comic.isFavorite"
-                          :data-tip="$t('desfavorited')"
-                          class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
-                          type="button"
-                          @click="handleViews('remove', comic)"
-                        >
-                          <Icon name="mdi:heart" size="2em" class="text-white" />
-                        </button>
-                        <button
-                          v-else
-                          :data-tip="$t('favorited')"
-                          class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
-                          type="button"
-                          @click="handleViews('add', comic)"
-                        >
-                          <Icon name="mdi:heart-outline" size="2em" class="text-white" />
-                        </button>
-                        <button
-                          :data-tip="$t('seeAbout')"
-                          class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
-                          type="button"
-                          @click="redirect('comic', comic)"
-                        >
-                          <Icon name="mdi:arrow-right" size="2em" class="text-white" />
-                        </button>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-              </ul>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+              <div v-for="comic in comics" :key="comic.id" class="cols-span-1">
+                <progress v-if="!comic.thumbnail.path" class="progress w-full h-96"></progress>
+                <figure v-else class="max-w-md max-h-md overflow-hidden">
+                  <img class="w-full aspect-w-16 aspect-h-9 max-h-64 object-cover transition duration-500 transform hover:scale-105 rounded-tr-lg rounded-tl-lg" :src="comic.thumbnail.path + '.' + comic.thumbnail.extension" alt="Album">
+                </figure>
+                <div class="bg-white w-full py-4 rounded-br-xl rounded-bl-xl">
+                  <h1 class="text-center truncate mx-1 text-2xl font-bold">
+                    {{ comic.title }}
+                  </h1>
+                  <p class="p-8 truncate">
+                    {{ comic.description || $t('noDescription') }}
+                  </p>
+                  <div class="card-actions justify-center">
+                    <button class="btn bg-red-600 border-0 text-white">
+                      <Icon name="carbon:book" size="1.5em" class="mr-4" />
+                      {{ $t('favorited') }}
+                    </button>
+                    <button class="btn btn-circle bg-red-600 border-0 text-white" @click="redirect('comic', comic)">
+                      <Icon name="mdi:chevron-double-right" size="1.5em" />
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </template>
         </FilterComponent>
@@ -329,7 +269,7 @@
             <div class="lg:col-span-3">
               <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 <li v-for="comic in comics" :key="comic.id">
-                  <a href="#" class="group block overflow-hidden">
+                  <a class="group block overflow-hidden">
                     <img
                       :src="comic.thumbnail.path + '.' + comic.thumbnail.extension"
                       alt="comic"
@@ -387,7 +327,7 @@
         </button>
       </div>
 
-      <div v-if="currentView !== 'favorite'" class="col-span-3 mx-auto">
+      <div v-if="currentView !== 'favorite'" class="col-span-3 mx-auto mt-8">
         <button v-if="currentView === 'characters'" class="animate-pulse  ring-2 ring-lime-300 rounded-full mb-6" @click="handleUpdate('more-characters')">
           <Icon name="mdi:arrow-down" size="3em" />
         </button>
@@ -405,7 +345,9 @@
 <script setup lang="ts">
 
 import { useAppStore } from '~/store/app'
-import { MarvelCharacter } from '~/types/character'
+import { Character } from '~/types/character'
+import { Comic } from '~/types/comic'
+import { Serie } from '~/types/serie'
 import { getCharacters, getComics, getSeries } from '~~/helpers/marvel-api'
 
 const app = useAppStore()
@@ -428,39 +370,53 @@ const characters = ref([{
     available: 0
   },
   isFavorite: false
-}] as MarvelCharacter[])
+} as Character])
 
 const series = ref([{
   id: 0,
+  characters: {
+    items: [],
+    available: 0
+  },
+  description: '',
   title: '',
   thumbnail: {
     path: '',
     extension: ''
   },
   stories: {
+    items: [],
     available: 0
   },
   series: {
+    items: [],
     available: 0
   },
   isFavorite: false
-}] as any)
+} as Serie])
 
 const comics = ref([{
   id: 0,
   title: '',
+  characters: {
+    items: [],
+    available: 0
+  },
+  description: '',
   thumbnail: {
     path: '',
     extension: ''
   },
   stories: {
+    items: [],
     available: 0
   },
   series: {
+    items: [],
     available: 0
   },
   isFavorite: false
-}] as any)
+} as Comic])
 
 const offset = ref(0)
 
@@ -518,6 +474,7 @@ const handleViews = (action: string, character?: any) => {
 }
 
 const handleUpdate = (action: string, value?: any) => {
+  console.log('handleUpdate', { action, value })
   if (action === 'query-character' && value === '') { action = 'characters' }
 
   if (action === 'characters') {
@@ -649,30 +606,45 @@ const handleUpdate = (action: string, value?: any) => {
       })
   }
 
-  if (action === 'filter-orderBy') {
-    if (value === 'name') {
-      characters.value = characters.value.sort((a: any, b: any) => {
-        if (a.name > b.name) {
-          return 1
+  if (action === 'characters-order') {
+    characters.value = []
+    console.log('characters-order-value', value)
+    getCharacters({ orderBy: value })
+      .then((res: any) => {
+        if (res.code === 200) {
+          const data = res.data.results
+          characters.value = data.map((i: any) => ({
+            ...i,
+            isFavorite: app.favorites.some((j: any) => j.id === i.id)
+          }))
         }
-        if (a.name < b.name) {
-          return -1
-        }
-        return 0
       })
-    }
-    if (value === 'modified') {
-      characters.value = characters.value.sort((a: any, b: any) => {
-        if (a.modified > b.modified) {
-          return 1
-        }
-        if (a.modified < b.modified) {
-          return -1
-        }
-        return 0
-      })
-    }
   }
+  if (action === 'series-order') {
+    getSeries({ orderBy: value })
+      .then((res: any) => {
+        if (res.code === 200) {
+          const data = res.data.results
+          series.value = data.map((i: any) => ({
+            ...i,
+            isFavorite: app.favorites.some((j: any) => j.id === i.id)
+          }))
+        }
+      })
+  }
+  if (action === 'comics-order') {
+    getComics({ orderBy: value })
+      .then((res: any) => {
+        if (res.code === 200) {
+          const data = res.data.results
+          comics.value = data.map((i: any) => ({
+            ...i,
+            isFavorite: app.favorites.some((j: any) => j.id === i.id)
+          }))
+        }
+      })
+  }
+  app.setLoading(false)
 }
 
 onMounted(() => {
