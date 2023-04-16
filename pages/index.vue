@@ -1,139 +1,141 @@
 <template>
   <div class="container mx-auto">
-    <div class="mx-auto max-w-screen-xl px-4 py-8">
-      <section class="overflow-hidden rounded bg-[url(https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80)] bg-cover bg-center bg-no-repeat">
-        <div class="bg-black/25 p-8 md:p-12 lg:px-16 lg:py-24">
-          <div class="glassmorphism md:text-center p-4 text-center sm:text-left">
-            <h2 class="text-4xl font-bold text-red-600 sm:text-3xl md:text-5xl">
-              MARVEL DETAILS 🤖
-            </h2>
+    <header>
+      <div class="mx-auto max-w-screen-xl px-4 py-8">
+        <section class="overflow-hidden rounded bg-[url(https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80)] bg-cover bg-center bg-no-repeat">
+          <div class="bg-black/25 p-8 md:p-12 lg:px-16 lg:py-24">
+            <div class="glassmorphism md:text-center p-4 text-center sm:text-left">
+              <h2 class="text-4xl font-bold text-red-600 sm:text-3xl md:text-5xl">
+                MARVEL DETAILS 🤖
+              </h2>
 
-            <span class="hidden max-w-lg mx-auto text-white/90 md:mt-6 md:block md:text-lg ">
-              {{ $t('welcome') }}
-            </span>
+              <span class="hidden max-w-lg mx-auto text-white/90 md:mt-6 md:block md:text-lg ">
+                {{ $t('welcome') }}
+              </span>
 
-            <div class="flex-row float-right gap-4 my-8 hidden md:flex">
-              <button
-                data-tip="Personagens"
-                :class="[currentView === 'characters' ? 'ring-2 ring-yellow-400' : '', 'tooltip block rounded-full bg-red-800 p-2 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring']"
-                type="button"
-                @click.prevent="handleViews('characters')"
-              >
-                <Icon name="mdi:bug" size="2em" :class="currentView === 'characters' ? 'text-yellow-400' : ''" />
-                <span class="inline-flex px-2">
-                  {{ $t('characters') }}
-                </span>
-              </button>
-              <button
-                data-tip="Séries"
-                :class="[currentView === 'series' ? 'ring-2 ring-yellow-400' : '','tooltip block rounded-full bg-red-800 p-2 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring']"
-                type="button"
-                @click.prevent="handleViews('series')"
-              >
-                <Icon name="fluent:movies-and-tv-16-regular" size="2em" />
-                <span class="inline-flex px-2">
-                  {{ $t('series') }}
-                </span>
-              </button>
-              <button
-                data-tip="Quadrinhos"
-                :class="[currentView === 'comics' ? 'ring-2 ring-yellow-400' : '','tooltip block rounded-full bg-red-800 p-2 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring']"
-                type="button"
-                @click.prevent="handleViews('comics')"
-              >
-                <Icon name="material-symbols:menu-book-outline-sharp" size="2em" />
-                <span class="inline-flex px-2">
-                  {{ $t('comics') }}
-                </span>
-              </button>
-              <button
-                data-tip="Ver favoritos"
-                :class="[currentView === 'favorite' ? 'ring-2 ring-yellow-400' : '','tooltip block rounded-full bg-red-800 p-2 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring']"
-                type="button"
-                @click.prevent="handleViews('see')"
-              >
-                <Icon name="mdi:heart-box" size="2em" />
-                <span class="inline-flex px-2">
-                  {{ $t('favorite') }}
-                </span>
-              </button>
+              <div class="flex-row float-right gap-4 my-8 hidden md:flex">
+                <button
+                  data-tip="Personagens"
+                  :class="[currentView === 'characters' ? 'ring-2 ring-yellow-400' : '', 'tooltip block rounded-full bg-red-800 p-2 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring']"
+                  type="button"
+                  @click.prevent="handleViews('characters')"
+                >
+                  <Icon name="mdi:bug" size="2em" :class="currentView === 'characters' ? 'text-yellow-400' : ''" />
+                  <span class="inline-flex px-2">
+                    {{ $t('characters') }}
+                  </span>
+                </button>
+                <button
+                  data-tip="Séries"
+                  :class="[currentView === 'series' ? 'ring-2 ring-yellow-400' : '','tooltip block rounded-full bg-red-800 p-2 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring']"
+                  type="button"
+                  @click.prevent="handleViews('series')"
+                >
+                  <Icon name="fluent:movies-and-tv-16-regular" size="2em" />
+                  <span class="inline-flex px-2">
+                    {{ $t('series') }}
+                  </span>
+                </button>
+                <button
+                  data-tip="Quadrinhos"
+                  :class="[currentView === 'comics' ? 'ring-2 ring-yellow-400' : '','tooltip block rounded-full bg-red-800 p-2 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring']"
+                  type="button"
+                  @click.prevent="handleViews('comics')"
+                >
+                  <Icon name="material-symbols:menu-book-outline-sharp" size="2em" />
+                  <span class="inline-flex px-2">
+                    {{ $t('comics') }}
+                  </span>
+                </button>
+                <button
+                  data-tip="Ver favoritos"
+                  :class="[currentView === 'favorite' ? 'ring-2 ring-yellow-400' : '','tooltip block rounded-full bg-red-800 p-2 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring']"
+                  type="button"
+                  @click.prevent="handleViews('see')"
+                >
+                  <Icon name="mdi:heart-box" size="2em" />
+                  <span class="inline-flex px-2">
+                    {{ $t('favorite') }}
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
 
-    <div class="flex flex-col mx-8 gap-4 my-4 md:hidden">
-      <button
-        data-tip="Personagens"
-        :class="[currentView === 'characters' ? 'ring-2 ring-yellow-400' : '', 'tooltip block rounded-full bg-red-800 p-2 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring']"
-        type="button"
-        @click.prevent="handleViews('characters')"
-      >
-        <Icon name="mdi:bug" size="2em" :class="currentView === 'characters' ? 'text-yellow-400' : ''" />
-        <span class="inline-flex px-2">
-          {{ $t('characters') }}
-        </span>
-      </button>
-      <button
-        data-tip="Séries"
-        :class="[currentView === 'series' ? 'ring-2 ring-yellow-400' : '', 'tooltip block rounded-full bg-red-800 p-2 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring']"
-        type="button"
-        @click.prevent="handleViews('series')"
-      >
-        <Icon name="fluent:movies-and-tv-16-regular" size="2em" />
-        <span class="inline-flex px-2">
-          {{ $t('series') }}
-        </span>
-      </button>
-      <button
-        data-tip="Quadrinhos"
-        :class="[currentView === 'comics' ? 'ring-2 ring-yellow-400' : '', 'tooltip block rounded-full bg-red-800 p-2 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring']"
-        type="button"
-        @click.prevent="handleViews('comics')"
-      >
-        <Icon name="material-symbols:menu-book-outline-sharp" size="2em" />
-        <span class="inline-flex px-2">
-          {{ $t('comics') }}
-        </span>
-      </button>
-      <button
-        data-tip="Ver favoritos"
-        :class="[currentView === 'favorite' ? 'ring-2 ring-yellow-400' : '', 'tooltip block rounded-full bg-red-800 p-2 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring']"
-        type="button"
-        @click.prevent="handleViews('see')"
-      >
-        <Icon name="mdi:heart-box" size="2em" />
-        <span class="inline-flex px-2">
-          {{ $t('favorite') }}
-        </span>
-      </button>
-    </div>
+      <div class="flex flex-col mx-8 gap-4 my-4 md:hidden">
+        <button
+          data-tip="Personagens"
+          :class="[currentView === 'characters' ? 'ring-2 ring-yellow-400' : '', 'tooltip block rounded-full bg-red-800 p-2 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring']"
+          type="button"
+          @click.prevent="handleViews('characters')"
+        >
+          <Icon name="mdi:bug" size="2em" :class="currentView === 'characters' ? 'text-yellow-400' : ''" />
+          <span class="inline-flex px-2">
+            {{ $t('characters') }}
+          </span>
+        </button>
+        <button
+          data-tip="Séries"
+          :class="[currentView === 'series' ? 'ring-2 ring-yellow-400' : '', 'tooltip block rounded-full bg-red-800 p-2 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring']"
+          type="button"
+          @click.prevent="handleViews('series')"
+        >
+          <Icon name="fluent:movies-and-tv-16-regular" size="2em" />
+          <span class="inline-flex px-2">
+            {{ $t('series') }}
+          </span>
+        </button>
+        <button
+          data-tip="Quadrinhos"
+          :class="[currentView === 'comics' ? 'ring-2 ring-yellow-400' : '', 'tooltip block rounded-full bg-red-800 p-2 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring']"
+          type="button"
+          @click.prevent="handleViews('comics')"
+        >
+          <Icon name="material-symbols:menu-book-outline-sharp" size="2em" />
+          <span class="inline-flex px-2">
+            {{ $t('comics') }}
+          </span>
+        </button>
+        <button
+          data-tip="Ver favoritos"
+          :class="[currentView === 'favorite' ? 'ring-2 ring-yellow-400' : '', 'tooltip block rounded-full bg-red-800 p-2 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring']"
+          type="button"
+          @click.prevent="handleViews('see')"
+        >
+          <Icon name="mdi:heart-box" size="2em" />
+          <span class="inline-flex px-2">
+            {{ $t('favorite') }}
+          </span>
+        </button>
+      </div>
 
-    <input
-      v-if="currentView === 'characters'"
-      v-model="queryCharacter"
-      type="text"
-      class="flex rounded-lg w-fit mx-auto md:w-[50vw] h-10 px-4"
-      :placeholder="$t('lookForCharacters')"
-      @keydown.enter="handleUpdate('query-character', queryCharacter)"
-    >
-    <input
-      v-if="currentView === 'series'"
-      v-model="querySerie"
-      type="text"
-      class="flex rounded-lg w-fit mx-auto md:w-[50vw] h-10 px-4"
-      :placeholder="$t('lookForSeries')"
-      @keydown.enter="handleUpdate('query-serie', querySerie)"
-    >
-    <input
-      v-if="currentView === 'comics'"
-      v-model="queryComic"
-      type="text"
-      class="flex rounded-lg w-fit mx-auto md:w-[50vw] h-10 px-4"
-      :placeholder="$t('lookForComics')"
-      @keydown.enter="handleUpdate('query-comic', queryComic)"
-    >
+      <input
+        v-if="currentView === 'characters'"
+        v-model="queryCharacter"
+        type="text"
+        class="flex rounded-lg w-fit mx-auto md:w-[50vw] h-10 px-4"
+        :placeholder="$t('lookForCharacters')"
+        @keydown.enter="handleUpdate('query-character', queryCharacter)"
+      >
+      <input
+        v-if="currentView === 'series'"
+        v-model="querySerie"
+        type="text"
+        class="flex rounded-lg w-fit mx-auto md:w-[50vw] h-10 px-4"
+        :placeholder="$t('lookForSeries')"
+        @keydown.enter="handleUpdate('query-serie', querySerie)"
+      >
+      <input
+        v-if="currentView === 'comics'"
+        v-model="queryComic"
+        type="text"
+        class="flex rounded-lg w-fit mx-auto md:w-[50vw] h-10 px-4"
+        :placeholder="$t('lookForComics')"
+        @keydown.enter="handleUpdate('query-comic', queryComic)"
+      >
+    </header>
 
     <section v-if="app.isLoading === true">
       <div v-for="_i, ind in 4" :key="'skeleton_1_'+ind" class="md:grid md:grid-cols-3 m-8 py-8 mt-20 md:gap-8">
@@ -161,8 +163,8 @@
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
               <div v-for="character in characters" :key="character.id" class="cols-span-1">
                 <progress v-if="!character.thumbnail.path" class="progress w-full h-96"></progress>
-                <figure v-else class="max-w-md max-h-md overflow-hidden">
-                  <img class="w-full aspect-w-16 aspect-h-9 max-h-52 object-cover transition duration-500 transform hover:scale-105 rounded-tr-lg rounded-tl-lg" :src="character.thumbnail.path + '.' + character.thumbnail.extension" alt="Album">
+                <figure v-else class="max-w-md overflow-hidden">
+                  <img class="w-full aspect-w-14 aspect-h-18 max-h-52 object-cover transition duration-500 transform hover:scale-105 rounded-tr-lg rounded-tl-lg" :src="character.thumbnail.path + '.' + character.thumbnail.extension" alt="Album">
                 </figure>
                 <div class="bg-white w-full py-4 rounded-br-xl rounded-bl-xl">
                   <h1 class="text-center truncate mx-1 text-2xl font-bold">
@@ -172,9 +174,13 @@
                     {{ character.description || $t('noDescription') }}
                   </p>
                   <div class="card-actions justify-center">
-                    <button class="btn bg-red-600 border-0 text-white">
+                    <button v-if="!character.isFavorite" class="btn bg-red-600 border-0 text-white" @click="handleViews('character-favorited', character)">
                       <Icon name="carbon:person" size="1.5em" class="mr-4" />
                       {{ $t('favorited') }}
+                    </button>
+                    <button v-else class="btn bg-white border-red-600 text-red-600" @click="handleViews('character-desfavorited', character)">
+                      <Icon name="mdi:heart-box" size="1.5em" class="mr-4" />
+                      {{ $t('desfavorited') }}
                     </button>
                     <button class="btn btn-circle bg-red-600 border-0 text-white" @click="redirect('character', character)">
                       <Icon name="mdi:chevron-double-right" size="1.5em" />
@@ -182,6 +188,11 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="flex justify-center mt-8">
+              <button class="animate-pulse ring-2 ring-lime-300 rounded-full mb-6" @click="handleUpdate('more-characters')">
+                <Icon name="mdi:arrow-down" size="3em" />
+              </button>
             </div>
           </template>
         </FilterComponent>
@@ -208,9 +219,13 @@
                     {{ serie.description || $t('noDescription') }}
                   </p>
                   <div class="card-actions justify-center">
-                    <button class="btn bg-red-600 border-0 text-white">
-                      <Icon name="mdi:television" size="1.5em" class="mr-4" />
+                    <button v-if="!serie.isFavorite" class="btn bg-red-600 border-0 text-white" @click="handleViews('serie-favorited', serie)">
+                      <Icon name="ph:television-simple-light" size="1.5em" class="mr-4" />
                       {{ $t('favorited') }}
+                    </button>
+                    <button v-else class="btn border-red-600 bg-white text-red-600" @click="handleViews('serie-desfavorited', serie)">
+                      <Icon name="ph:television-simple-fill" size="1.5em" class="mr-4" />
+                      {{ $t('desfavorited') }}
                     </button>
                     <button class="btn btn-circle bg-red-600 border-0 text-white" @click="redirect('serie', serie)">
                       <Icon name="mdi:chevron-double-right" size="1.5em" />
@@ -218,6 +233,11 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="flex justify-center mt-8">
+              <button class="animate-pulse ring-2 ring-lime-300 rounded-full mb-6" @click="handleUpdate('more-series')">
+                <Icon name="mdi:arrow-down" size="3em" />
+              </button>
             </div>
           </template>
         </FilterComponent>
@@ -244,9 +264,13 @@
                     {{ comic.description || $t('noDescription') }}
                   </p>
                   <div class="card-actions justify-center">
-                    <button class="btn bg-red-600 border-0 text-white">
-                      <Icon name="carbon:book" size="1.5em" class="mr-4" />
+                    <button v-if="!comic.isFavorite" class="btn btn-ghost bg-red-600 border-0 text-white" @click="handleViews('comic-favorited', comic)">
+                      <Icon name="ph:television-simple-light" size="1.5em" class="mr-4" />
                       {{ $t('favorited') }}
+                    </button>
+                    <button v-else class="btn border-red-600 border-2 bg-white text-red-500" @click="handleViews('comic-desfavorited', comic)">
+                      <Icon name="ph:television-simple-fill" size="1.5em" class="mr-4" />
+                      {{ $t('desfavorited') }}
                     </button>
                     <button class="btn btn-circle bg-red-600 border-0 text-white" @click="redirect('comic', comic)">
                       <Icon name="mdi:chevron-double-right" size="1.5em" />
@@ -254,6 +278,11 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="flex justify-center mt-8">
+              <button class="animate-pulse ring-2 ring-lime-300 rounded-full mb-6" @click="handleUpdate('more-comics')">
+                <Icon name="mdi:arrow-down" size="3em" />
+              </button>
             </div>
           </template>
         </FilterComponent>
@@ -287,7 +316,7 @@
                           :data-tip="$t('desfavorited')"
                           class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
                           type="button"
-                          @click="handleViews('remove', comic)"
+                          @click="handleViews('comic-desfavorited', comic)"
                         >
                           <Icon name="mdi:heart" size="2em" class="text-white" />
                         </button>
@@ -296,7 +325,7 @@
                           :data-tip="$t('favorited')"
                           class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
                           type="button"
-                          @click="handleViews('add', comic)"
+                          @click="handleViews('comic-favorited', comic)"
                         >
                           <Icon name="mdi:heart-outline" size="2em" class="text-white" />
                         </button>
@@ -324,18 +353,6 @@
           <span class="mt-2 block text-sm font-semibold">
             {{ $t('kindEmpty') }}
           </span>
-        </button>
-      </div>
-
-      <div v-if="currentView !== 'favorite'" class="col-span-3 mx-auto mt-8">
-        <button v-if="currentView === 'characters'" class="animate-pulse  ring-2 ring-lime-300 rounded-full mb-6" @click="handleUpdate('more-characters')">
-          <Icon name="mdi:arrow-down" size="3em" />
-        </button>
-        <button v-if="currentView === 'series'" class="animate-pulse  ring-2 ring-lime-300 rounded-full mb-6" @click="handleUpdate('more-series')">
-          <Icon name="mdi:arrow-down" size="3em" />
-        </button>
-        <button v-if="currentView === 'comics'" class="animate-pulse  ring-2 ring-lime-300 rounded-full mb-6" @click="handleUpdate('more-comics')">
-          <Icon name="mdi:arrow-down" size="3em" />
         </button>
       </div>
     </div>
@@ -373,6 +390,10 @@ const characters = ref([{
 } as Character])
 
 const series = ref([{
+  comics: {
+    items: [],
+    available: 0
+  },
   id: 0,
   characters: {
     items: [],
@@ -434,7 +455,7 @@ const redirect = (action: string, value: any) => {
   }
 }
 
-const handleViews = (action: string, character?: any) => {
+const handleViews = (action: string, data?: any) => {
   if (action === 'characters') {
     currentView.value = 'characters'
     handleUpdate('characters')
@@ -448,24 +469,44 @@ const handleViews = (action: string, character?: any) => {
     handleUpdate('comics')
   }
 
-  if (action === 'add') {
-    character.isFavorite = true
-    app.setFavorites(character)
+  if (action === 'character-favorited') {
+    data.isFavorite = true
+    app.setFavorite('characters', data)
   }
-  if (action === 'remove') {
-    character.isFavorite = false
-    app.removeFavoriteCharacter(character)
+
+  if (action === 'character-desfavorited') {
+    data.isFavorite = false
+    app.removeFavorite('characters', data)
+  }
+
+  if (action === 'serie-favorited') {
+    data.isFavorite = true
+    app.setFavorite('series', data)
+  }
+
+  if (action === 'serie-desfavorited') {
+    data.isFavorite = false
+    app.removeFavorite('series', data)
+  }
+
+  if (action === 'comic-favorited') {
+    data.isFavorite = true
+    app.setFavorite('comics', data)
+  }
+
+  if (action === 'comic-desfavorited') {
+    data.isFavorite = false
+    app.removeFavorite('comics', data)
   }
 
   if (action === 'see') {
-    if (app.favorites.length === 0) {
-      seeingFavorites.value = false
+    app.getFavorites.characters.length === 0 &&
+      app.getFavorites.series.length === 0 &&
+      app.getFavorites.comics.length === 0 &&
+      (seeingFavorites.value = false) &&
       alert('Você não tem nenhum favorito!')
-    } else {
-      currentView.value = 'favorite'
-      characters.value = app.favorites as never
-    }
   }
+
   if (action === 'unsee') {
     currentView.value = 'characters'
     seeingFavorites.value = false
@@ -484,7 +525,7 @@ const handleUpdate = (action: string, value?: any) => {
           const data = res.data.results
           characters.value = data.map((i: any) => ({
             ...i,
-            isFavorite: app.favorites.some((j: any) => j.id === i.id)
+            isFavorite: app.getFavorites.characters.some((j: any) => j.id === i.id)
           }))
         }
       })
@@ -497,7 +538,8 @@ const handleUpdate = (action: string, value?: any) => {
           const data = res.data.results
           series.value = data.map((i: any) => ({
             ...i,
-            isFavorite: app.favorites.some((j: any) => j.id === i.id)
+            isFavorite: app.getFavorites.series.some((j: any) => j.id === i.id)
+
           }))
         }
       })
@@ -510,7 +552,7 @@ const handleUpdate = (action: string, value?: any) => {
           const data = res.data.results
           comics.value = data.map((i: any) => ({
             ...i,
-            isFavorite: app.favorites.some((j: any) => j.id === i.id)
+            isFavorite: app.getFavorites.comics.some((j: any) => j.id === i.id)
           }))
         }
       })
@@ -526,7 +568,7 @@ const handleUpdate = (action: string, value?: any) => {
             ...characters.value,
             ...data.map((i: any) => ({
               ...i,
-              isFavorite: app.favorites.some((j: any) => j.id === i.id)
+              isFavorite: app.getFavorites.characters.some((j: any) => j.id === i.id)
             }))
           ]
         }
@@ -543,7 +585,7 @@ const handleUpdate = (action: string, value?: any) => {
             ...series.value,
             ...data.map((i: any) => ({
               ...i,
-              isFavorite: app.favorites.some((j: any) => j.id === i.id)
+              isFavorite: app.getFavorites.series.some((j: any) => j.id === i.id)
             }))
           ]
         }
@@ -560,7 +602,7 @@ const handleUpdate = (action: string, value?: any) => {
             ...comics.value,
             ...data.map((i: any) => ({
               ...i,
-              isFavorite: app.favorites.some((j: any) => j.id === i.id)
+              isFavorite: app.getFavorites.comics.some((j: any) => j.id === i.id)
             }))
           ]
         }
@@ -574,7 +616,7 @@ const handleUpdate = (action: string, value?: any) => {
           const data = res.data.results
           characters.value = data.map((i: any) => ({
             ...i,
-            isFavorite: app.favorites.some((j: any) => j.id === i.id)
+            isFavorite: app.getFavorites.characters.some((j: any) => j.id === i.id)
           }))
         }
       })
@@ -587,7 +629,7 @@ const handleUpdate = (action: string, value?: any) => {
           const data = res.data.results
           series.value = data.map((i: any) => ({
             ...i,
-            isFavorite: app.favorites.some((j: any) => j.id === i.id)
+            isFavorite: app.getFavorites.series.some((j: any) => j.id === i.id)
           }))
         }
       })
@@ -600,7 +642,7 @@ const handleUpdate = (action: string, value?: any) => {
           const data = res.data.results
           comics.value = data.map((i: any) => ({
             ...i,
-            isFavorite: app.favorites.some((j: any) => j.id === i.id)
+            isFavorite: app.getFavorites.comics.some((j: any) => j.id === i.id)
           }))
         }
       })
@@ -615,7 +657,7 @@ const handleUpdate = (action: string, value?: any) => {
           const data = res.data.results
           characters.value = data.map((i: any) => ({
             ...i,
-            isFavorite: app.favorites.some((j: any) => j.id === i.id)
+            isFavorite: app.getFavorites.characters.some((j: any) => j.id === i.id)
           }))
         }
       })
@@ -627,7 +669,7 @@ const handleUpdate = (action: string, value?: any) => {
           const data = res.data.results
           series.value = data.map((i: any) => ({
             ...i,
-            isFavorite: app.favorites.some((j: any) => j.id === i.id)
+            isFavorite: app.getFavorites.series.some((j: any) => j.id === i.id)
           }))
         }
       })
@@ -639,7 +681,7 @@ const handleUpdate = (action: string, value?: any) => {
           const data = res.data.results
           comics.value = data.map((i: any) => ({
             ...i,
-            isFavorite: app.favorites.some((j: any) => j.id === i.id)
+            isFavorite: app.getFavorites.comics.some((j: any) => j.id === i.id)
           }))
         }
       })

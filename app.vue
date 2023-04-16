@@ -1,10 +1,10 @@
 <template>
   <NuxtLayout :data-theme="app.theme === 'light' ? 'dark' : 'light'">
-    <NuxtPage />
     <DrawerComponent v-if="app.isDrawer" />
     <LoadingComponent v-if="app.isLoading" />
     <ModalComponent v-if="app.isModal" />
     <ToastComponent v-if="app.isToast" />
+    <NuxtPage />
   </NuxtLayout>
 </template>
 

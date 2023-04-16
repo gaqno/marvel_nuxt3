@@ -27,12 +27,11 @@ export const useAppStore = defineStore({
         serie: {},
         comic: {}
       },
-      favorite: {
+      favorites: {
         characters: [],
         series: [],
         comics: []
       },
-      favorites: [],
       drawer: {
         show: false,
         template: '',
@@ -55,31 +54,29 @@ export const useAppStore = defineStore({
   getters: {
     getModalData: state => state.modal.data,
     getModalTemplate: state => state.modal.template,
+    getFavorites: state => state.favorites,
     isToast: state => state.toast.show,
     isModal: state => state.modal.show,
     isDrawer: state => state.drawer.show,
     isLoading: state => state.loading
   },
   actions: {
-    setFavorites (content: any) {
-      this.favorites.push(content)
-      this.toast = {
-        show: true,
-        message: 'Character adicionado aos favoritos',
-        icon: 'mdi-heart',
-        template: 'success',
-        position: 'top-right'
+    setFavorite (action: 'characters' | 'series' | 'comics', content: any) {
+      // check if exists
+      const exists = this.favorites[action].find((item: any) => item.id === content.id)
+      if (exists) {
+        this.removeFavorite(action, content)
+        return
+      }
+      this.favorites = {
+        ...this.favorites,
+        [action]: [content, ...this.favorites[action]]
       }
     },
-    removeFavoriteCharacter (character: any) {
-      const index = this.favorites.findIndex((item: any) => item.id === character.id)
-      this.favorites.splice(index, 1)
-      this.toast = {
-        show: true,
-        message: 'Character removido dos favoritos',
-        icon: 'mdi-heart-outline',
-        template: 'warning',
-        position: 'top-right'
+    removeFavorite (action: 'characters' | 'series' | 'comics', content: any) {
+      this.favorites = {
+        ...this.favorites,
+        [action]: this.favorites[action].filter((item: any) => item.id !== content.id)
       }
     },
     setCurrent (content: any) {

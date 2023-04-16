@@ -11,12 +11,11 @@ export interface App {
       [key: string]: any
     },
   },
-  favorite: {
-    series: [],
-    comics: [],
+  favorites: {
     characters: [],
+    comics: [],
+    series: []
   },
-  favorites: Array<{}>,
   drawer: {
     show: boolean,
     template: string,

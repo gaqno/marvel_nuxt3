@@ -1,18 +1,18 @@
 <template>
-  <div className="drawer">
+  <div class="drawer fixed">
     <input
       id="my-drawer"
       v-model="app.drawer.show"
       type="checkbox"
-      className="drawer-toggle"
+      class="drawer-toggle"
     >
-    <div className="drawer-content">
+    <div class="drawer-content">
       <!-- Page content here -->
-      <NuxtPage />
+      <slot></slot>
     </div>
-    <div className="drawer-side">
-      <label htmlFor="my-drawer" className="drawer-overlay"></label>
-      <ul className="menu p-4 w-80 bg-base-100 text-base-content">
+    <div class="drawer-side">
+      <label htmlFor="my-drawer" class="drawer-overlay"></label>
+      <ul class="menu p-4 w-80 bg-base-100 text-base-content">
         <!-- Sidebar content here -->
         <section v-if="app.drawer.template === 'navigation'" class="prose">
           <h3>{{ $t('thanksForVisiting') }}</h3>
@@ -20,7 +20,7 @@
           <ul class="menu bg-base-100 w-56 p-2 rounded-box prose">
             <li class="menu-title">
               <span class="text-gray-700">
-                {{ $t('franeworks') }}
+                {{ $t('frameworks') }}
               </span>
             </li>
             <span class="ml-4">

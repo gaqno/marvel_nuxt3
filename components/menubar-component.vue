@@ -55,7 +55,7 @@ const popoverLanguage = ref(false)
 const darkModeEnabled = ref(false)
 const handleDrawer = () =>
   app.setDrawer({
-    show: true,
+    show: !app.drawer.show,
     template: 'navigation',
     data: {}
   })
