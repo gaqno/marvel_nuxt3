@@ -1,13 +1,14 @@
 <template>
   <header class="navbar bg-base-100 sticky">
-    <div class="flex-none">
+    <!-- <div class="flex-none">
       <button class="btn drawer-button btn-square btn-ghost" @click.prevent="handleDrawer">
         <Icon name="carbon:menu" size="1.5em" />
       </button>
-    </div>
+    </div> -->
     <div class="flex-1">
       <button class="btn btn-ghost normal-case text-xl" @click.prevent="navigateTo('/')">
         <span class="ml-3 text-xl">
+          <Icon name="ic:round-precision-manufacturing" size="1.5em" class="mr-4" />
           Marvel
         </span>
       </button>
@@ -53,12 +54,6 @@ import { useAppStore } from '~~/store/app'
 const app = useAppStore()
 const popoverLanguage = ref(false)
 const darkModeEnabled = ref(false)
-const handleDrawer = () =>
-  app.setDrawer({
-    show: !app.drawer.show,
-    template: 'navigation',
-    data: {}
-  })
 
 const toggleDarkMode = () => {
   darkModeEnabled.value = !darkModeEnabled.value

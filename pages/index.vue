@@ -166,7 +166,7 @@
                 <figure v-else class="max-w-md overflow-hidden">
                   <img class="w-full aspect-w-14 aspect-h-18 max-h-52 object-cover transition duration-500 transform hover:scale-105 rounded-tr-lg rounded-tl-lg" :src="character.thumbnail.path + '.' + character.thumbnail.extension" alt="Album">
                 </figure>
-                <div class="bg-white w-full py-4 rounded-br-xl rounded-bl-xl">
+                <div :class="[app.theme === 'light' ? 'bg-slate-300' : 'bg-white', 'text-black prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none']">
                   <h1 class="text-center truncate mx-1 text-2xl font-bold">
                     {{ character.name }}
                   </h1>
@@ -174,12 +174,12 @@
                     {{ character.description || $t('noDescription') }}
                   </p>
                   <div class="card-actions justify-center">
-                    <button v-if="!character.isFavorite" class="btn bg-red-600 border-0 text-white" @click="handleViews('character-favorited', character)">
-                      <Icon name="carbon:person" size="1.5em" class="mr-4" />
+                    <button v-if="!character.isFavorite" class="btn btn-ghost bg-red-600 border-0 text-white hover:bg-red-800" @click="handleViews('character-favorited', character)">
+                      <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
                       {{ $t('favorited') }}
                     </button>
-                    <button v-else class="btn bg-white border-red-600 text-red-600" @click="handleViews('character-desfavorited', character)">
-                      <Icon name="mdi:heart-box" size="1.5em" class="mr-4" />
+                    <button v-else class="btn btn-ghost bg-white border-red-600 text-red-600 hover:bg-slate-100" @click="handleViews('character-desfavorited', character)">
+                      <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
                       {{ $t('desfavorited') }}
                     </button>
                     <button class="btn btn-circle bg-red-600 border-0 text-white" @click="redirect('character', character)">
@@ -211,7 +211,7 @@
                 <figure v-else class="max-w-md max-h-md overflow-hidden">
                   <img class="w-full aspect-w-16 aspect-h-9 max-h-64 object-cover transition duration-500 transform rounded-tr-lg rounded-tl-lg hover:scale-105 " :src="serie.thumbnail.path + '.' + serie.thumbnail.extension" alt="Album">
                 </figure>
-                <div class="bg-white w-full py-4 rounded-br-xl rounded-bl-xl">
+                <div :class="[app.theme === 'light' ? 'bg-slate-300' : 'bg-white', 'text-black prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none']">
                   <h1 class="text-center truncate mx-1 text-2xl font-bold">
                     {{ serie.title }}
                   </h1>
@@ -219,12 +219,20 @@
                     {{ serie.description || $t('noDescription') }}
                   </p>
                   <div class="card-actions justify-center">
-                    <button v-if="!serie.isFavorite" class="btn bg-red-600 border-0 text-white" @click="handleViews('serie-favorited', serie)">
-                      <Icon name="ph:television-simple-light" size="1.5em" class="mr-4" />
+                    <button
+                      v-if="!serie.isFavorite"
+                      class="btn btn-ghost bg-red-600 border-0 text-white hover:bg-red-800"
+                      @click="handleViews('serie-favorited', serie)"
+                    >
+                      <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
                       {{ $t('favorited') }}
                     </button>
-                    <button v-else class="btn border-red-600 bg-white text-red-600" @click="handleViews('serie-desfavorited', serie)">
-                      <Icon name="ph:television-simple-fill" size="1.5em" class="mr-4" />
+                    <button
+                      v-else
+                      class="btn btn-ghost bg-white border-red-600 text-red-600 hover:bg-slate-100"
+                      @click="handleViews('serie-desfavorited', serie)"
+                    >
+                      <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
                       {{ $t('desfavorited') }}
                     </button>
                     <button class="btn btn-circle bg-red-600 border-0 text-white" @click="redirect('serie', serie)">
@@ -256,7 +264,7 @@
                 <figure v-else class="max-w-md max-h-md overflow-hidden">
                   <img class="w-full aspect-w-16 aspect-h-9 max-h-64 object-cover transition duration-500 transform hover:scale-105 rounded-tr-lg rounded-tl-lg" :src="comic.thumbnail.path + '.' + comic.thumbnail.extension" alt="Album">
                 </figure>
-                <div class="bg-white w-full py-4 rounded-br-xl rounded-bl-xl">
+                <div :class="[app.theme === 'light' ? 'bg-slate-300' : 'bg-white', 'text-black prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none']">
                   <h1 class="text-center truncate mx-1 text-2xl font-bold">
                     {{ comic.title }}
                   </h1>
@@ -264,12 +272,12 @@
                     {{ comic.description || $t('noDescription') }}
                   </p>
                   <div class="card-actions justify-center">
-                    <button v-if="!comic.isFavorite" class="btn btn-ghost bg-red-600 border-0 text-white" @click="handleViews('comic-favorited', comic)">
-                      <Icon name="ph:television-simple-light" size="1.5em" class="mr-4" />
+                    <button v-if="!comic.isFavorite" class="btn btn-ghost bg-red-600 border-0 text-white hover:bg-red-800" @click="handleViews('comic-favorited', comic)">
+                      <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
                       {{ $t('favorited') }}
                     </button>
-                    <button v-else class="btn border-red-600 border-2 bg-white text-red-500" @click="handleViews('comic-desfavorited', comic)">
-                      <Icon name="ph:television-simple-fill" size="1.5em" class="mr-4" />
+                    <button v-else class="btn btn-ghost bg-white border-red-600 text-red-600 hover:bg-slate-100" @click="handleViews('comic-desfavorited', comic)">
+                      <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
                       {{ $t('desfavorited') }}
                     </button>
                     <button class="btn btn-circle bg-red-600 border-0 text-white" @click="redirect('comic', comic)">
@@ -444,13 +452,17 @@ const offset = ref(0)
 // const favorites = computed(() => characters.value.filter((i: any) => i.isFavorite))
 
 const redirect = (action: string, value: any) => {
+  console.log({ action, value })
   if (action === 'character') {
+    app.setCurrent('character', value)
     navigateTo(`/character/${value.id}`)
   }
   if (action === 'serie') {
+    app.setCurrent('serie', value)
     navigateTo(`/serie/${value.id}`)
   }
   if (action === 'comic') {
+    app.setCurrent('comic', value)
     navigateTo(`/comic/${value.id}`)
   }
 }
@@ -519,6 +531,7 @@ const handleUpdate = (action: string, value?: any) => {
   if (action === 'query-character' && value === '') { action = 'characters' }
 
   if (action === 'characters') {
+    characters.value = []
     getCharacters()
       .then((res: any) => {
         if (res.code === 200) {
@@ -532,6 +545,7 @@ const handleUpdate = (action: string, value?: any) => {
   }
 
   if (action === 'series') {
+    series.value = []
     getSeries()
       .then((res: any) => {
         if (res.code === 200) {
@@ -539,13 +553,13 @@ const handleUpdate = (action: string, value?: any) => {
           series.value = data.map((i: any) => ({
             ...i,
             isFavorite: app.getFavorites.series.some((j: any) => j.id === i.id)
-
           }))
         }
       })
   }
 
   if (action === 'comics') {
+    comics.value = []
     getComics()
       .then((res: any) => {
         if (res.code === 200) {
@@ -560,6 +574,7 @@ const handleUpdate = (action: string, value?: any) => {
 
   if (action === 'more-characters') {
     offset.value += 20
+    characters.value = []
     getCharacters({ offset: offset.value })
       .then((res: any) => {
         if (res.code === 200) {
@@ -577,6 +592,7 @@ const handleUpdate = (action: string, value?: any) => {
 
   if (action === 'more-series') {
     offset.value += 20
+    series.value = []
     getSeries({ offset: offset.value })
       .then((res: any) => {
         if (res.code === 200) {
@@ -594,6 +610,7 @@ const handleUpdate = (action: string, value?: any) => {
 
   if (action === 'more-comics') {
     offset.value += 20
+    comics.value = []
     getComics({ offset: offset.value })
       .then((res: any) => {
         if (res.code === 200) {
@@ -610,6 +627,7 @@ const handleUpdate = (action: string, value?: any) => {
   }
 
   if (action === 'query-character') {
+    characters.value = []
     getCharacters({ nameStartsWith: value })
       .then((res: any) => {
         if (res.code === 200) {
@@ -623,6 +641,7 @@ const handleUpdate = (action: string, value?: any) => {
   }
 
   if (action === 'query-serie') {
+    series.value = []
     getSeries({ titleStartsWith: value })
       .then((res: any) => {
         if (res.code === 200) {
@@ -636,6 +655,7 @@ const handleUpdate = (action: string, value?: any) => {
   }
 
   if (action === 'query-comic') {
+    comics.value = []
     getComics({ titleStartsWith: value })
       .then((res: any) => {
         if (res.code === 200) {
@@ -650,7 +670,6 @@ const handleUpdate = (action: string, value?: any) => {
 
   if (action === 'characters-order') {
     characters.value = []
-    console.log('characters-order-value', value)
     getCharacters({ orderBy: value })
       .then((res: any) => {
         if (res.code === 200) {
@@ -663,6 +682,7 @@ const handleUpdate = (action: string, value?: any) => {
       })
   }
   if (action === 'series-order') {
+    series.value = []
     getSeries({ orderBy: value })
       .then((res: any) => {
         if (res.code === 200) {
@@ -675,6 +695,7 @@ const handleUpdate = (action: string, value?: any) => {
       })
   }
   if (action === 'comics-order') {
+    comics.value = []
     getComics({ orderBy: value })
       .then((res: any) => {
         if (res.code === 200) {
@@ -690,6 +711,7 @@ const handleUpdate = (action: string, value?: any) => {
 }
 
 onMounted(() => {
+  app.setLoading(true)
   handleUpdate('characters')
 })
 </script>

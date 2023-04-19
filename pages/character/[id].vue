@@ -6,20 +6,53 @@
         <figure v-else class="max-w-md max-h-md ">
           <img class="w-full h-full object-cover rounded-tr-xl rounded-tl-xl md:rounded-tl-lg md:rounded-bl-lg md:rounded-tr-none" :src="character.thumbnail.path + '.' + character.thumbnail.extension" alt="Album">
         </figure>
-        <div class="bg-white prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none">
-          <h2 class="text-center text-lg font-bold">
-            {{ character.name }}
-          </h2>
-          <p class="p-8 text-center shadow-sm m-2">
-            {{ character.description || $t('noDescription') }}
-          </p>
-
-          <div class="card-actions justify-center py-6">
-            <button class="btn border-0 bg-red-600  text-white">
-              <Icon name="mdi:television" size="1.5em" class="mr-4" />
-              {{ $t('favorited') }}
-            </button>
+        <div :class="[app.theme === 'light' ? 'bg-slate-300' : 'bg-white', 'text-black prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none']">
+          <div class="px-4 py-5 sm:px-6">
+            <div class="-ml-4 -mt-4 flex flex-wrap items-center justify-between sm:flex-nowrap">
+              <div class="ml-4 mt-4">
+                <h3 class="text-2xl font-semibold leading-6 text-gray-900">
+                  {{ character.name }}
+                </h3>
+                <p class="mt-1 text-sm text-gray-500">
+                  {{ character.description || $t('noDescription') }}
+                </p>
+                <div class="ml-4 mt-4 flex-shrink-0">
+                  <button v-if="!character.isFavorite" class="btn btn-ghost bg-red-600 border-0 text-white hover:bg-red-800" @click="handleViews('character-favorited', character)">
+                    <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
+                    {{ $t('favorited') }}
+                  </button>
+                  <button v-else class="btn btn-ghost bg-white border-red-600 text-red-600 hover:bg-slate-100" @click="handleViews('character-desfavorited', character)">
+                    <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
+                    {{ $t('desfavorited') }}
+                  </button>
+                </div>
+                <div>
+                  <p>
+                    <Icon name="ph:books-bold" size="1.5em" class="mr-4 btn btn-circle bg-red-600 text-white border-0 p-2" />
+                    {{ character.comics.available }} <span class="uppercase">
+                      {{ $t('comics') }}
+                    </span>
+                  </p>
+                  <p>
+                    <Icon name="fluent:movies-and-tv-16-regular" size="1.5em" class="mr-4 btn btn-circle bg-red-600 text-white border-0 p-2" />
+                    {{ character.series.available }} <span class="uppercase">
+                      {{ $t('series') }}
+                    </span>
+                  </p>
+                  <p>
+                    <Icon name="icon-park-solid:history-query" size="1.5em" class="mr-4 btn btn-circle bg-red-600 text-white border-0 p-2" />
+                    {{ character.stories.available }} <span class="uppercase">
+                      {{ $t('series') }}
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
+          <h2 class="text-center text-2xl text-black font-bold">
+          </h2>
+          <p class="p-8 text-center m-2">
+          </p>
         </div>
       </div>
     </div>
@@ -48,61 +81,49 @@
         :modules="modules"
         @slide-change="view = ''"
       >
-        <SwiperSlide v-for="comic, ind in comics" :key="comic.id">
+        <SwiperSlide v-for="comic in comics" :key="comic.id">
           <div class="flex flex-col md:flex-row">
             <progress v-if="app.isLoading" class="progress w-full h-96"></progress>
             <figure v-else class="max-w-md max-h-md">
               <img class="w-full h-full object-cover rounded-tr-xl rounded-tl-xl md:rounded-tl-lg md:rounded-bl-lg md:rounded-tr-none" :src="comic.thumbnail.path + '.' + comic.thumbnail.extension" alt="Album">
             </figure>
-            <div class="bg-white prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none">
-              <h2 class="text-center text-lg font-bold">
-                {{ comic.title }}
-              </h2>
-              <p class="p-8 text-center shadow-sm m-2">
-                {{ character.description || $t('noDescription') }}
-              </p>
-              <span class="flex flex-col md:flex-row gap-4 ml-4">
-                <button class="btn border-0 rounded-lg bg-red-600 w-fit p-2" @click="handleView('characters', ind)">
-                  <Icon name="carbon:person" size="2em" class="mr-2" />
-                  <i class="font-bold text-white">
-                    {{ comic.characters.available + ' - ' + $t('characters') }}
-                  </i>
-                </button>
-                <button class="btn border-0 bg-red-600 text-white mr-4">
-                  <Icon name="mdi:television" size="1.5em" class="mr-4" />
-                  {{ $t('favorited') }}
-                </button>
-              </span>
-              <div class="w-full p-2">
-                <div v-if="view === 'characters'">
-                  <div class="overflow-x-hidden overflow-y-scroll max-h-[20vh] scrollbar scrollbar-thin">
-                    <table class="w-full divide-y-2 divide-gray-200 text-sm">
-                      <thead>
-                        <tr>
-                          <th class="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900">
-                            {{ $t('title') }}
-                          </th>
-                          <th class="px-4 py-2"></th>
-                        </tr>
-                      </thead>
-
-                      <tbody class="divide-y divide-gray-200">
-                        <tr v-for="characterPresent in comic.characters.items" :key="characterPresent.resourceURI">
-                          <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                            {{ characterPresent.name }}
-                          </td>
-                          <td class="whitespace-nowrap px-4 py-2">
-                            <a href="#" class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
-                              View
-                            </a>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+            <div :class="[app.theme === 'light' ? 'bg-slate-300' : 'bg-white', 'text-black prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none']">
+              <div class="px-4 py-5 sm:px-6">
+                <div class="-ml-4 -mt-4 flex flex-wrap items-center justify-between sm:flex-nowrap">
+                  <div class="ml-4 mt-4">
+                    <h3 class="text-2xl font-semibold leading-6 text-gray-900">
+                      {{ comic.title }}
+                    </h3>
+                    <p class="mt-1 text-sm text-gray-500">
+                      {{ comic.description || $t('noDescription') }}
+                    </p>
                   </div>
-                </div>
-                <div v-if="view === 'comics'">
-                  {{ $t('comics') }}
+                  <div class="ml-4 mt-4 flex-shrink-0 gap">
+                    <button
+                      v-if="!comic.isFavorite"
+                      class="btn btn-ghost bg-red-600 border-0 text-white hover:bg-red-800"
+                      @click="handleViews('comic-favorited', comic)"
+                    >
+                      <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
+                      {{ $t('favorited') }}
+                    </button>
+                    <button
+                      v-else
+                      class="btn btn-ghost bg-white border-red-600 text-red-600 hover:bg-slate-100"
+                      @click="handleViews('comic-desfavorited', comic)"
+                    >
+                      <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
+                      {{ $t('desfavorited') }}
+                    </button>
+                    <button
+                      class="btn btn-ghost ml-2 bg-red-600 border-0 text-white hover:bg-red-800"
+                      @click.prevent="navigateTo('/comic/' + comic.id)"
+                    >
+                      <Icon name="material-symbols:arrows-more-up-rounded" size="1.5em" class="mr-4" />
+                      {{ comic.id }}
+                      {{ $t('comic') }}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -111,12 +132,12 @@
       </Swiper>
     </div>
 
-    <div id="comics" class="relative mx-auto max-w-screen-xl px-4 py-8">
+    <div id="serie" class="relative mx-auto max-w-screen-xl px-4 py-8">
       <div class="pb-4">
         <h1 class="text-2xl font-bold md:px-8 lg:text-3xl ">
-          {{ $t('comics') }}
+          {{ $t('series') }}
         </h1>
-        <p>{{ $t('allComicsThatParticipated') }}</p>
+        <p>{{ $t('allSeriesThatParticipated') }}</p>
       </div>
 
       <Swiper
@@ -135,61 +156,33 @@
         :modules="modules"
         @slide-change="view = ''"
       >
-        <SwiperSlide v-for="serie, ind in series" :key="serie.id">
+        <SwiperSlide v-for="serie in series" :key="serie.id">
           <div class="flex flex-col md:flex-row">
             <progress v-if="app.isLoading" class="progress w-full h-96"></progress>
             <figure v-else class="max-w-md max-h-md">
               <img class="w-full h-full object-cover rounded-tr-xl rounded-tl-xl md:rounded-tl-lg md:rounded-bl-lg md:rounded-tr-none" :src="serie.thumbnail.path + '.' + serie.thumbnail.extension" alt="Album">
             </figure>
-            <div class="bg-white prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none">
-              <h2 class="text-center text-lg font-bold">
-                {{ serie.title }}
-              </h2>
-              <p class="p-8 text-center shadow-sm m-2">
-                {{ character.description || $t('noDescription') }}
-              </p>
-              <span class="flex flex-col md:flex-row gap-4 ml-4">
-                <button class="btn border-0 rounded-lg bg-red-600 w-fit p-2" @click="handleView('characters', ind)">
-                  <Icon name="carbon:person" size="2em" class="mr-2" />
-                  <i class="font-bold text-white">
-                    {{ serie.characters.available + ' - ' + $t('characters') }}
-                  </i>
-                </button>
-                <button class="btn border-0 bg-red-600 text-white mr-4">
-                  <Icon name="mdi:television" size="1.5em" class="mr-4" />
-                  {{ $t('favorited') }}
-                </button>
-              </span>
-              <div class="w-full p-2">
-                <div v-if="view === 'characters'">
-                  <div class="overflow-x-hidden overflow-y-scroll max-h-[20vh] scrollbar scrollbar-thin">
-                    <table class="w-full divide-y-2 divide-gray-200 text-sm">
-                      <thead>
-                        <tr>
-                          <th class="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900">
-                            {{ $t('title') }}
-                          </th>
-                          <th class="px-4 py-2"></th>
-                        </tr>
-                      </thead>
-
-                      <tbody class="divide-y divide-gray-200">
-                        <tr v-for="characterPresent in serie.characters.items" :key="characterPresent.resourceURI">
-                          <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                            {{ characterPresent.name }}
-                          </td>
-                          <td class="whitespace-nowrap px-4 py-2">
-                            <a href="#" class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
-                              View
-                            </a>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+            <div :class="[app.theme === 'light' ? 'bg-slate-300' : 'bg-white', 'text-black prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none']">
+              <div class="px-4 py-5 sm:px-6">
+                <div class="-ml-4 -mt-4 flex flex-wrap items-center justify-between sm:flex-nowrap">
+                  <div class="ml-4 mt-4">
+                    <h3 class="text-2xl font-semibold leading-6 text-gray-900">
+                      {{ serie.title }}
+                    </h3>
+                    <p class="mt-1 text-sm text-gray-500">
+                      {{ serie.description || $t('noDescription') }}
+                    </p>
                   </div>
-                </div>
-                <div v-if="view === 'series'">
-                  {{ $t('series') }}
+                  <div class="ml-4 mt-4 flex-shrink-0">
+                    <button v-if="!serie.isFavorite" class="btn btn-ghost bg-red-600 border-0 text-white hover:bg-red-800" @click="handleViews('serie-favorited', serie)">
+                      <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
+                      {{ $t('favorited') }}
+                    </button>
+                    <button v-else class="btn btn-ghost bg-white border-red-600 text-red-600 hover:bg-slate-100" @click="handleViews('serie-desfavorited', serie)">
+                      <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
+                      {{ $t('desfavorited') }}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -221,6 +214,7 @@ const loading = ref(false)
 const character = ref({
   name: '',
   id: 0,
+  isFavorite: false,
   description: '',
   thumbnail: {
     path: '',
@@ -296,7 +290,11 @@ const fetchCharacter = () => {
   return new Promise((resolve, reject) => {
     getCharacter(route.params.id as string)
       .then((res) => {
-        character.value = res.data.results[0]
+        console.log(app.getFavorites.series.some((j: any) => j.id === res.data.results[0].id))
+        character.value = {
+          ...res.data.results[0],
+          isFavorite: app.getFavorites.series.some((j: any) => j.id === res.data.results[0].id)
+        }
         resolve(character.value)
       })
       .catch((error) => {
@@ -349,26 +347,35 @@ const fetchSeries = () => {
   })
 }
 
-const handleView = (action: string, ind?: number) => {
-  loading.value = true
-  if (action === 'characters') {
-    app.setDrawer({
-      template: 'character',
-      show: true,
-      data: {
-        comics: comics.value[ind as number]
-      }
-    })
-    view.value = 'characters'
-  } else if (action === 'series') {
-    view.value = 'series'
-    app.setDrawer({
-      template: 'series',
-      show: true,
-      data: {
-        comic: series.value[ind as number]
-      }
-    })
+const handleViews = (action: string, data?: any) => {
+  if (action === 'character-favorited') {
+    data.isFavorite = true
+    app.setFavorite('characters', data)
+  }
+
+  if (action === 'character-desfavorited') {
+    data.isFavorite = false
+    app.removeFavorite('characters', data)
+  }
+
+  if (action === 'serie-favorited') {
+    data.isFavorite = true
+    app.setFavorite('series', data)
+  }
+
+  if (action === 'serie-desfavorited') {
+    data.isFavorite = false
+    app.removeFavorite('series', data)
+  }
+
+  if (action === 'comic-favorited') {
+    data.isFavorite = true
+    app.setFavorite('comics', data)
+  }
+
+  if (action === 'comic-desfavorited') {
+    data.isFavorite = false
+    app.removeFavorite('comics', data)
   }
 }
 

@@ -1,115 +1,188 @@
 <template>
-  <section class="text-gray-600 body-font">
-    <div class="flex flex-col">
-      <div class="m-12 p-12 mx-auto prose rounded h-1/2">
-        <img :src="currentSerie.thumbnail.path + '.' + currentSerie.thumbnail.extension" class="rounded-full w-32 h-32 my-8 mx-auto">
-        <span class="text-center">
-          <h1>{{ currentSerie.name }}</h1>
-          <p>{{ currentSerie.description || 'Sem descrição' }}</p>
-        </span>
-      </div>
-      <div class="m-12  mx-auto prose rounded">
-        <div class="btn-group flex justify-center">
-          <button data-tip="Quadrinhos" :class="[currentTab === 'comics' && 'btn-active', 'btn tooltip']" @click="currentTab = 'comics'">
-            <p class="text-white">
-              <Icon name="material-symbols:auto-stories-outline" size="1.5em" />
-              {{ currentSerie.stories.available }}
-            </p>
-          </button>
-          <button data-tip="Séries" :class="[currentTab === 'series' && 'btn-active', 'btn tooltip']" @click="currentTab = 'series'">
-            <p class="text-white">
-              <Icon name="material-symbols:live-tv-outline" size="1.5em" />
-              {{ currentSerie.series.available }}
-            </p>
-          </button>
-        </div>
-        <div v-if="currentTab === 'comics'" class="mt-8">
-          <h3 class="text-center">
-            Edições em que participa
-          </h3>
-          <div class="carousel carousel-center w-full space-x-4 bg-neutral rounded-box">
-            <div v-for="comic, index in characterComics" :key="comic.title" class="carousel-item">
-              <img
-                id="comic-{{ index }}"
-                :class="handleScroll(index)"
-                :src="comic.thumbnail.path + '.' + comic.thumbnail.extension"
-                tabindex="0"
-                class="w-40 h-70 px-2 focus:ring-2 ring-lime-200"
-                @touchmove="handleScroll(index)"
-                @click="handleScroll(index)"
-              >
+  <section class="body-font">
+    <div id="serie" class="relative mx-auto max-w-screen-xl px-4 py-8">
+      <div class="flex flex-col md:flex-row">
+        <progress v-if="app.isLoading" class="progress w-full h-96"></progress>
+        <figure v-else class="max-w-md max-h-md ">
+          <img class="w-full h-full object-cover rounded-tr-xl rounded-tl-xl md:rounded-tl-lg md:rounded-bl-lg md:rounded-tr-none" :src="serie.thumbnail.path + '.' + serie.thumbnail.extension" alt="Album">
+        </figure>
+        <div class="bg-white border prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none">
+          <h2 class="text-center text-lg font-bold">
+            {{ serie.title }}
+          </h2>
+          <div class="flex flex-col">
+            <span class="text-center">
+              <span>{{ serie.description || $t('noDescription') }}</span>
+            </span>
+            <div class="flex flex-row justify-center">
+              <span class="mt-3 mr-2">
+                Tipo:
+              </span>
+              <p class="items-center rounded-full bg-red-100 px-3 py-0.5 text-sm font-medium text-red-800">
+                {{ formatType(serie.type) }}
+              </p>
             </div>
           </div>
-        </div>
-        <div v-if="currentTab === 'series'" class="mt-8">
-          <h3>Séries em que participa</h3>
-          <div class="carousel carousel-center w-full space-x-4 bg-neutral rounded-box">
-            <div v-for="serie in characterSeries" :key="serie.title" class="carousel-item">
-              <img :src="serie.thumbnail.path + '.' + serie.thumbnail.extension" class="w-40 h-40">
-            </div>
+          <div class="card-actions justify-center py-6">
+            <button v-if="!serie.isFavorite" class="btn btn-ghost bg-red-600 border-0 text-white hover:bg-red-800" @click="handleViews('serie-favorited', serie)">
+              <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
+              {{ $t('favorited') }}
+            </button>
+            <button v-else class="btn btn-ghost bg-white border-red-600 text-red-600 hover:bg-slate-100" @click="handleViews('serie-desfavorited', serie)">
+              <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
+              {{ $t('desfavorited') }}
+            </button>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- <div id="comics" class="relative mx-auto max-w-screen-xl px-4 py-8">
+      <div class="pb-4">
+        <h1 class="text-2xl font-bold md:px-8 lg:text-3xl ">
+          {{ $t('comics') }}
+        </h1>
+        <p>{{ $t('allComicsThatParticipated') }}</p>
+      </div>
+
+      <Swiper
+        :effect="'coverflow'"
+        :grab-cursor="true"
+        :centered-slides="true"
+        :slides-per-view="'auto'"
+        :coverflow-effect="{
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true,
+        }"
+        :pagination="true"
+        :modules="modules"
+        @slide-change="view = ''"
+      >
+        <SwiperSlide v-for="storie in stories" :key="storie.name">
+          <div class="flex flex-col md:flex-row">
+            <progress v-if="app.isLoading" class="progress w-full h-96"></progress>
+            <figure v-else class="max-w-md max-h-md">
+              <img class="w-full h-full object-cover rounded-tr-xl rounded-tl-xl md:rounded-tl-lg md:rounded-bl-lg md:rounded-tr-none" :src="storie.thumbnail.path + '.' + storie.thumbnail.extension" alt="Album">
+            </figure>
+            <div class="bg-white prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none">
+              <h2 class="text-center text-lg font-bold">
+                {{ storie.name }}
+              </h2>
+              <p class="p-8 text-center shadow-sm m-2">
+                {{ storie.resourceURI || $t('noDescription') }}
+              </p>
+              <span class="flex flex-col md:flex-row gap-4 ml-4">
+                <button class="btn border-0 bg-red-600 text-white mr-4">
+                  <Icon name="mdi:television" size="1.5em" class="mr-4" />
+                  {{ $t('favorited') }}
+                </button>
+                <button class="btn border-0 bg-red-600 text-white mr-4">
+                  <Icon name="material-symbols:arrows-more-up-rounded" size="1.5em" class="mr-4" />
+                  {{ $t('storie') }}
+                </button>
+              </span>
+            </div>
+          </div>
+        </SwiperSlide>
+      </Swiper>
+    </div> -->
   </section>
 </template>
 
 <script setup lang="ts">
+// import { EffectCoverflow, Pagination } from 'swiper'
+// import { Swiper, SwiperSlide } from 'swiper/vue'
+import { getSeries } from '~/helpers/marvel-api'
 import { useAppStore } from '~/store/app'
-import { Character } from '~/types/character'
+import 'swiper/css'
 
 definePageMeta({
   title: 'Detalhes do personagem',
   description: 'Detalhes do personagem'
 })
-
+// const modules = [EffectCoverflow, Pagination]
+const route = useRoute()
 const app = useAppStore()
-const currentTab = ref('comics')
-const currentImage = ref('comic-0')
-const characterComics = ref([{
+const view = ref('')
+const loading = ref(false)
+const serie = ref({
   title: '',
-  thumbnail: {
-    path: '',
-    extension: ''
-  }
-}])
-const characterSeries = ref([
-  {
-    title: '',
-    thumbnail: {
-      path: '',
-      extension: ''
-    }
-  }
-])
-const currentSerie = ref({
-  name: '',
   description: '',
-  series: {
-    available: 0
-  },
-  stories: {
-    available: 0
-  },
-  comics: {
-    available: 0
-  },
+  type: '',
+  resourceURI: '',
   thumbnail: {
     path: '',
     extension: ''
   }
-} as Character)
+} as any)
 
-const handleScroll = (index: number) => {
-  currentImage.value = `comic-${index}`
+const fetchSeries = () => {
+  return new Promise((resolve, reject) => {
+    getSeries({ id: route.params.id })
+      .then((res) => {
+        serie.value = res.data.results[0]
+        console.log(serie.value)
+        resolve(serie.value)
+      })
+      .catch((error) => {
+        reject(error)
+        app.setToast({
+          show: true,
+          template: 'error',
+          icon: 'carbon:error',
+          message: error.message
+        })
+      })
+  })
 }
 
+const formatType = (type: string) => {
+  if (type === 'limited') { return 'Limitado' }
+  if (type === 'collection') { return 'Coleção' }
+  if (type === 'trade paperback') { return 'Livro' }
+  if (type === 'hardcover') { return 'Livro' }
+}
+
+const handleViews = (action: string, data?: any) => {
+  if (action === 'character-favorited') {
+    data.isFavorite = true
+    app.setFavorite('characters', data)
+  }
+
+  if (action === 'character-desfavorited') {
+    data.isFavorite = false
+    app.removeFavorite('characters', data)
+  }
+
+  if (action === 'serie-favorited') {
+    data.isFavorite = true
+    app.setFavorite('series', data)
+  }
+
+  if (action === 'serie-desfavorited') {
+    data.isFavorite = false
+    app.removeFavorite('series', data)
+  }
+
+  if (action === 'comic-favorited') {
+    data.isFavorite = true
+    app.setFavorite('comics', data)
+  }
+
+  if (action === 'comic-desfavorited') {
+    data.isFavorite = false
+    app.removeFavorite('comics', data)
+  }
+}
+
+watchEffect(() => view.value !== '' && (loading.value = false))
 onMounted(() => {
-  if (app.current !== null) {
-    currentSerie.value = {
-      ...currentSerie.value,
-      ...app.current
-    }
-  } else { navigateTo('/') }
+  if (route.params) {
+    fetchSeries()
+    app.setLoading(false)
+  }
 })
 </script>

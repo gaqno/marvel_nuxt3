@@ -19,7 +19,6 @@ export const useAppStore = defineStore({
     return {
       language: 'ptBR',
       loading: false,
-      darkMode: false,
       theme: 'light',
       translate: {},
       current: {
@@ -79,8 +78,20 @@ export const useAppStore = defineStore({
         [action]: this.favorites[action].filter((item: any) => item.id !== content.id)
       }
     },
-    setCurrent (content: any) {
-      this.current = content
+    setCurrent (key: string, content: any) {
+      if (key === 'character') {
+        this.current.character = content
+      }
+      if (key === 'serie') {
+        this.current.serie = content
+      }
+      if (key === 'comic') {
+        this.current.comic = content
+      }
+    },
+    isFavorited (action: 'characters' | 'series' | 'comics', content: any) {
+      const exists = this.favorites[action].find((item: any) => item.id === content.id)
+      return exists
     },
     setToast (content: IToast) {
       this.toast.show = !this.toast.show
@@ -114,9 +125,6 @@ export const useAppStore = defineStore({
     },
     setLoading (content: boolean) {
       this.loading = content
-    },
-    setDarkMode (content: boolean) {
-      this.darkMode = content
     },
     setTranslate (content: any) {
       this.translate = content

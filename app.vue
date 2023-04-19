@@ -1,5 +1,5 @@
 <template>
-  <NuxtLayout :data-theme="app.theme === 'light' ? 'dark' : 'light'">
+  <NuxtLayout :data-theme="app.theme">
     <DrawerComponent v-if="app.isDrawer" />
     <LoadingComponent v-if="app.isLoading" />
     <ModalComponent v-if="app.isModal" />

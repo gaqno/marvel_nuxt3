@@ -1,7 +1,6 @@
 export interface App {
   translate: {},
   theme: 'light' | 'dark',
-  darkMode: boolean,
   language: | 'ptBR' | 'enUS',
   loading: boolean,
   current: {
