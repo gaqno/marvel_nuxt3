@@ -39,23 +39,23 @@ export const getCharacters = (params?: any) => {
   return callApi('get', 'characters', { params })
 }
 
-export const getCharacter = (id: number | string, params?: any) => {
+export const getCharacter = (id: any, params?: any) => {
   return callApi('get', `characters/${id}`, { params })
 }
 
-export const getCharacterComics = (id: number | string, params?: any) => {
+export const getCharacterComics = (id: any, params?: any) => {
   return callApi('get', `characters/${id}/comics`, { params })
 }
 
-export const getCharacterEvents = (id: number | string, params?: any) => {
+export const getCharacterEvents = (id: any, params?: any) => {
   return callApi('get', `characters/${id}/events`, { params })
 }
 
-export const getCharacterSeries = (id: number | string, params?: any) => {
+export const getCharacterSeries = (id: any, params?: any) => {
   return callApi('get', `characters/${id}/series`, { params })
 }
 
-export const getCharacterStories = (id: number | string, params?: any) => {
+export const getCharacterStories = (id: any, params?: any) => {
   return callApi('get', `characters/${id}/stories`, { params })
 }
 

@@ -14,7 +14,7 @@
       <div class="mt-8 block lg:hidden">
         <button class="flex cursor-pointer items-center gap-2 border-b border-gray-400 pb-1 text-gray-900 transition hover:border-gray-600">
           <span class="text-sm font-medium">
-            Filters & Sorting
+            {{ $t('filter') }}
           </span>
 
           <svg

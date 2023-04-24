@@ -111,30 +111,45 @@
         </button>
       </div>
 
-      <input
-        v-if="currentView === 'characters'"
-        v-model="queryCharacter"
-        type="text"
-        class="flex rounded-lg w-fit mx-auto md:w-[50vw] h-10 px-4"
-        :placeholder="$t('lookForCharacters')"
-        @keydown.enter="handleUpdate('query-character', queryCharacter)"
-      >
-      <input
-        v-if="currentView === 'series'"
-        v-model="querySerie"
-        type="text"
-        class="flex rounded-lg w-fit mx-auto md:w-[50vw] h-10 px-4"
-        :placeholder="$t('lookForSeries')"
-        @keydown.enter="handleUpdate('query-serie', querySerie)"
-      >
-      <input
-        v-if="currentView === 'comics'"
-        v-model="queryComic"
-        type="text"
-        class="flex rounded-lg w-fit mx-auto md:w-[50vw] h-10 px-4"
-        :placeholder="$t('lookForComics')"
-        @keydown.enter="handleUpdate('query-comic', queryComic)"
-      >
+      <span class="flex flex-row mx-12">
+        <input
+          v-if="currentView === 'characters'"
+          v-model="queryCharacter"
+          type="text"
+          class="flex rounded-lg w-fit mx-auto md:w-[50vw] h-10 px-4 mt-1"
+          :placeholder="$t('lookForCharacters')"
+          @keydown.enter="handleUpdate('query-character', queryCharacter)"
+        >
+        <button v-if="currentView === 'characters'" class="flex md:hidden btn btn-circle" @click="handleUpdate('query-character', queryCharacter)">
+          <Icon name="mdi:magnify" size="2em" />
+        </button>
+      </span>
+      <span class="flex flex-row mx-12">
+        <input
+          v-if="currentView === 'series'"
+          v-model="querySerie"
+          type="text"
+          class="flex rounded-lg w-fit mx-auto md:w-[50vw] h-10 px-4 mt-1"
+          :placeholder="$t('lookForSeries')"
+          @keydown.enter="handleUpdate('query-serie', querySerie)"
+        >
+        <button v-if="currentView === 'series'" class="flex md:hidden btn btn-circle" @click="handleUpdate('query-character', queryCharacter)">
+          <Icon name="mdi:magnify" size="2em" />
+        </button>
+      </span>
+      <span class="flex flex-row mx-12">
+        <input
+          v-if="currentView === 'comics'"
+          v-model="queryComic"
+          type="text"
+          class="flex rounded-lg w-fit mx-auto md:w-[50vw] h-10 px-4 mt-1"
+          :placeholder="$t('lookForComics')"
+          @keydown.enter="handleUpdate('query-comic', queryComic)"
+        >
+        <button v-if="currentView === 'comics'" class="flex md:hidden btn btn-circle" @click="handleUpdate('query-character', queryCharacter)">
+          <Icon name="mdi:magnify" size="2em" />
+        </button>
+      </span>
     </header>
 
     <section v-if="app.isLoading === true">
@@ -151,7 +166,7 @@
       </div>
     </section>
 
-    <div v-else class="flex flex-col">
+    <section v-else class="flex flex-col">
       <article v-if="currentView === 'characters'">
         <FilterComponent
           template="characters"
@@ -166,7 +181,7 @@
                 <figure v-else class="max-w-md overflow-hidden">
                   <img class="w-full aspect-w-14 aspect-h-18 max-h-52 object-cover transition duration-500 transform hover:scale-105 rounded-tr-lg rounded-tl-lg" :src="character.thumbnail.path + '.' + character.thumbnail.extension" alt="Album">
                 </figure>
-                <div :class="[app.theme === 'light' ? 'bg-slate-300' : 'bg-white', 'text-black prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none']">
+                <div :class="[app.theme === 'light' ? 'bg-slate-300' : 'bg-white', 'text-black prose w-full py-4 rounded-br-lg rounded-bl-lg']">
                   <h1 class="text-center truncate mx-1 text-2xl font-bold">
                     {{ character.name }}
                   </h1>
@@ -363,7 +378,7 @@
           </span>
         </button>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -428,7 +443,10 @@ const comics = ref([{
   id: 0,
   title: '',
   characters: {
-    items: [],
+    items: [{
+      name: '',
+      resourceURI: ''
+    }],
     available: 0
   },
   description: '',
