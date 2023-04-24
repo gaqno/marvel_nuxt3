@@ -56,7 +56,7 @@
         <button
           v-for="character in comics.characters.items"
           :key="character.resourceURI"
-          class="inline-flex items-center gap-x-1.5 m-4 rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600"
+          class="inline-flex items-center gap-x-1.5 m-2 rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600"
           @click.prevent="navigateTo(character.resourceURI.replace(/http.*\/v1\/public\//, '').replace(/characters/, '/character'))"
         >
           {{ character.name }}

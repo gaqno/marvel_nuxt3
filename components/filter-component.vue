@@ -11,31 +11,8 @@
         </p>
       </header>
 
-      <div class="mt-8 block lg:hidden">
-        <button class="flex cursor-pointer items-center gap-2 border-b border-gray-400 pb-1 text-gray-900 transition hover:border-gray-600">
-          <span class="text-sm font-medium">
-            {{ $t('filter') }}
-          </span>
-
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="h-4 w-4"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M8.25 4.5l7.5 7.5-7.5 7.5"
-            />
-          </svg>
-        </button>
-      </div>
-
       <div class="mt-4 lg:mt-8 lg:grid lg:grid-cols-4 lg:items-start lg:gap-8">
-        <div class="hidden space-y-4 lg:block">
+        <div class="space-y-4">
           <div>
             <label for="SortBy" class="block text-xs font-medium">
               {{ $t('filter') }}
@@ -44,7 +21,7 @@
             <select
               id="SortBy"
               v-model="query"
-              class="mt-1 rounded border-gray-300 text-sm"
+              class="my-2 rounded border-gray-300 text-sm"
               @change="emit('filter-orderBy', query)"
             >
               <option value="modified">

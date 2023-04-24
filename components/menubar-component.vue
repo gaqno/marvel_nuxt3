@@ -57,7 +57,7 @@ const darkModeEnabled = ref(false)
 
 const toggleDarkMode = () => {
   darkModeEnabled.value = !darkModeEnabled.value
-  if (darkModeEnabled.value) { app.$patch({ theme: 'light' }) } else { app.$patch({ theme: 'dark' }) }
+  app.$patch({ theme: darkModeEnabled.value ? 'dark' : 'light' })
 }
 
 </script>
