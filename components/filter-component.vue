@@ -46,17 +46,14 @@
           </div>
 
           <div v-if="props.template === 'favorites'">
-            <p class="block text-xs font-medium">
-              Filters
-            </p>
             <div class="flex flex-col gap-y-3 mt-4">
-              <button class="btn btn-primary block w-full" @click="emit('favorites-characters', 'characters')">
+              <button class="btn bg-red-700 block w-full" @click="emit('favorites-characters', 'characters')">
                 {{ $t('characters') }}
               </button>
-              <button class="btn btn-primary block w-full" @click="emit('favorites-series', 'series')">
+              <button class="btn bg-red-700 block w-full" @click="emit('favorites-series', 'series')">
                 {{ $t('series') }}
               </button>
-              <button class="btn btn-primary block w-full" @click="emit('favorites-comics', 'comics')">
+              <button class="btn bg-red-700 block w-full" @click="emit('favorites-comics', 'comics')">
                 {{ $t('comics') }}
               </button>
             </div>

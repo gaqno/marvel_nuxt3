@@ -324,7 +324,7 @@
           <template #options>
             <div class="lg:col-span-3 mt-6">
               <ul v-if="favoriteTab === 'characters'" class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                <li v-for="character in characters" :key="character.id">
+                <li v-for="character in characters" :key="character.id" class="shadow-lg rounded-lg">
                   <a class="group block overflow-hidden">
                     <img
                       :src="character.thumbnail.path + '.' + character.thumbnail.extension"
@@ -336,33 +336,21 @@
                       <h3 class="text-xl mx-4 truncate text-center pt-2 text-gray-700 group-hover:underline group-hover:underline-offset-4">
                         {{ character.name }}
                       </h3>
+                      <p class="text-center">
+                        {{ character.description || $t('noDescription') }}
+                      </p>
 
-                      <div class="flex flex-row justify-center items-center gap-2 py-4">
-                        <button
-                          v-if="character.isFavorite"
-                          :data-tip="$t('desfavorited')"
-                          class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
-                          type="button"
-                          @click="handleViews('character-desfavorited', character)"
-                        >
-                          <Icon name="mdi:heart" size="2em" class="text-white" />
+                      <div class="card-actions justify-center mb-4">
+                        <button v-if="!character.isFavorite" class="btn btn-ghost bg-red-600 border-0 text-white hover:bg-red-800" @click="handleViews('character-favorited', character)">
+                          <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
+                          {{ $t('favorited') }}
                         </button>
-                        <button
-                          v-else
-                          :data-tip="$t('favorited')"
-                          class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
-                          type="button"
-                          @click="handleViews('character-favorited', character)"
-                        >
-                          <Icon name="mdi:heart-outline" size="2em" class="text-white" />
+                        <button v-else class="btn btn-ghost bg-white border-red-600 text-red-600 hover:bg-slate-100" @click="handleViews('character-desfavorited', character)">
+                          <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
+                          {{ $t('desfavorited') }}
                         </button>
-                        <button
-                          :data-tip="$t('seeAbout')"
-                          class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
-                          type="button"
-                          @click="redirect('character', character)"
-                        >
-                          <Icon name="mdi:arrow-right" size="2em" class="text-white" />
+                        <button class="btn btn-circle bg-red-600 border-0 text-white" @click="redirect('character', character)">
+                          <Icon name="mdi:chevron-double-right" size="1.5em" />
                         </button>
                       </div>
                     </div>
@@ -370,7 +358,7 @@
                 </li>
               </ul>
               <ul v-if="favoriteTab === 'series'" class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                <li v-for="serie in series" :key="serie.id">
+                <li v-for="serie in series" :key="serie.id" class="shadow-lg rounded-lg">
                   <a class="group block overflow-hidden">
                     <img
                       :src="serie.thumbnail.path + '.' + serie.thumbnail.extension"
@@ -382,33 +370,21 @@
                       <h3 class="text-xl mx-4 truncate text-center pt-2 text-gray-700 group-hover:underline group-hover:underline-offset-4">
                         {{ serie.title }}
                       </h3>
+                      <p class="p-2">
+                        {{ serie.description || $t('noDescription') }}
+                      </p>
 
-                      <div class="flex flex-row justify-center items-center gap-2 py-4">
-                        <button
-                          v-if="serie.isFavorite"
-                          :data-tip="$t('desfavorited')"
-                          class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
-                          type="button"
-                          @click="handleViews('serie-desfavorited', serie)"
-                        >
-                          <Icon name="mdi:heart" size="2em" class="text-white" />
+                      <div class="card-actions justify-center mb-4">
+                        <button v-if="!serie.isFavorite" class="btn btn-ghost bg-red-600 border-0 text-white hover:bg-red-800" @click="handleViews('serie-favorited', serie)">
+                          <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
+                          {{ $t('favorited') }}
                         </button>
-                        <button
-                          v-else
-                          :data-tip="$t('favorited')"
-                          class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
-                          type="button"
-                          @click="handleViews('serie-favorited', serie)"
-                        >
-                          <Icon name="mdi:heart-outline" size="2em" class="text-white" />
+                        <button v-else class="btn btn-ghost bg-white border-red-600 text-red-600 hover:bg-slate-100" @click="handleViews('serie-desfavorited', serie)">
+                          <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
+                          {{ $t('desfavorited') }}
                         </button>
-                        <button
-                          :data-tip="$t('seeAbout')"
-                          class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
-                          type="button"
-                          @click="redirect('serie', serie)"
-                        >
-                          <Icon name="mdi:arrow-right" size="2em" class="text-white" />
+                        <button class="btn btn-circle bg-red-600 border-0 text-white" @click="redirect('serie', serie)">
+                          <Icon name="mdi:chevron-double-right" size="1.5em" />
                         </button>
                       </div>
                     </div>
@@ -416,7 +392,7 @@
                 </li>
               </ul>
               <ul v-if="favoriteTab === 'comics'" class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                <li v-for="comic in comics" :key="comic.id">
+                <li v-for="comic in comics" :key="comic.id" class="shadow-lg rounded-lg">
                   <a class="group block overflow-hidden">
                     <img
                       :src="comic.thumbnail.path + '.' + comic.thumbnail.extension"
@@ -428,33 +404,21 @@
                       <h3 class="text-xl mx-4 truncate text-center pt-2 text-gray-700 group-hover:underline group-hover:underline-offset-4">
                         {{ comic.title }}
                       </h3>
+                      <p class="p-2">
+                        {{ comic.description || $t('noDescription') }}
+                      </p>
 
-                      <div class="flex flex-row justify-center items-center gap-2 py-4">
-                        <button
-                          v-if="comic.isFavorite"
-                          :data-tip="$t('desfavorited')"
-                          class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
-                          type="button"
-                          @click="handleViews('comic-desfavorited', comic)"
-                        >
-                          <Icon name="mdi:heart" size="2em" class="text-white" />
+                      <div class="card-actions justify-center mb-4">
+                        <button v-if="!comic.isFavorite" class="btn btn-ghost bg-red-600 border-0 text-white hover:bg-red-800" @click="handleViews('comic-favorited', comic)">
+                          <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
+                          {{ $t('favorited') }}
                         </button>
-                        <button
-                          v-else
-                          :data-tip="$t('favorited')"
-                          class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
-                          type="button"
-                          @click="handleViews('comic-favorited', comic)"
-                        >
-                          <Icon name="mdi:heart-outline" size="2em" class="text-white" />
+                        <button v-else class="btn btn-ghost bg-white border-red-600 text-red-600 hover:bg-slate-100" @click="handleViews('comic-desfavorited', comic)">
+                          <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
+                          {{ $t('desfavorited') }}
                         </button>
-                        <button
-                          :data-tip="$t('seeAbout')"
-                          class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
-                          type="button"
-                          @click="redirect('comic', comic)"
-                        >
-                          <Icon name="mdi:arrow-right" size="2em" class="text-white" />
+                        <button class="btn btn-circle bg-red-600 border-0 text-white" @click="redirect('comic', comic)">
+                          <Icon name="mdi:chevron-double-right" size="1.5em" />
                         </button>
                       </div>
                     </div>
