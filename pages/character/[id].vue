@@ -49,10 +49,6 @@
               </div>
             </div>
           </div>
-          <h2 class="text-center text-2xl text-black font-bold">
-          </h2>
-          <p class="p-8 text-center m-2">
-          </p>
         </div>
       </div>
     </div>

@@ -15,7 +15,10 @@ export interface Comic {
     available: number;
   };
   characters: {
-    items: any[];
+    items: [{
+      resourceURI: string;
+      name: string;
+    }];
     available: number;
   };
   thumbnail: {
