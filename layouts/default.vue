@@ -1,7 +1,7 @@
 <template>
   <div>
-    <MenubarComponent />
-    <slot class="min-w-screen min-h-screen"></slot>
+    <MenubarComponent class="z-10" />
+    <slot class="min-w-screen min-h-screen z-0"></slot>
     <footer class="footer mt-auto p-10 bg-neutral text-neutral-content">
       <div>
         <svg

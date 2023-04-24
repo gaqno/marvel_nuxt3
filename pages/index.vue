@@ -6,7 +6,7 @@
           <div class="bg-black/25 p-8 md:p-12 lg:px-16 lg:py-24">
             <div class="glassmorphism md:text-center p-4 text-center sm:text-left">
               <h2 class="text-4xl font-bold text-red-600 sm:text-3xl md:text-5xl">
-                MARVEL DETAILS 🤖
+                MARVEL
               </h2>
 
               <span class="hidden max-w-lg mx-auto text-white/90 md:mt-6 md:block md:text-lg ">
@@ -172,7 +172,7 @@
           template="characters"
           :description="$t('charactersDescription')"
           :title="$t('characters')"
-          @filterOrderBy="handleUpdate('characters-order', $event)"
+          @filter-order-by="handleUpdate('characters-order', $event)"
         >
           <template #options>
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -316,10 +316,106 @@
           template="favorites"
           :description="$t('comicsDescription')"
           :title="$t('comics')"
+          @filter-orderBy="handleUpdate('characters-order', $event)"
+          @favorites-characters="handleUpdate('favorites-characters', $event)"
+          @favorites-series="handleUpdate('favorites-series', $event)"
+          @favorites-comics="handleUpdate('favorites-comics', $event)"
         >
           <template #options>
-            <div class="lg:col-span-3">
-              <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="lg:col-span-3 mt-6">
+              <ul v-if="favoriteTab === 'characters'" class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                <li v-for="character in characters" :key="character.id">
+                  <a class="group block overflow-hidden">
+                    <img
+                      :src="character.thumbnail.path + '.' + character.thumbnail.extension"
+                      alt="character"
+                      class="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px]"
+                    >
+
+                    <div class="relative bg-white/70 prose">
+                      <h3 class="text-xl mx-4 truncate text-center pt-2 text-gray-700 group-hover:underline group-hover:underline-offset-4">
+                        {{ character.name }}
+                      </h3>
+
+                      <div class="flex flex-row justify-center items-center gap-2 py-4">
+                        <button
+                          v-if="character.isFavorite"
+                          :data-tip="$t('desfavorited')"
+                          class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
+                          type="button"
+                          @click="handleViews('character-desfavorited', character)"
+                        >
+                          <Icon name="mdi:heart" size="2em" class="text-white" />
+                        </button>
+                        <button
+                          v-else
+                          :data-tip="$t('favorited')"
+                          class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
+                          type="button"
+                          @click="handleViews('character-favorited', character)"
+                        >
+                          <Icon name="mdi:heart-outline" size="2em" class="text-white" />
+                        </button>
+                        <button
+                          :data-tip="$t('seeAbout')"
+                          class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
+                          type="button"
+                          @click="redirect('character', character)"
+                        >
+                          <Icon name="mdi:arrow-right" size="2em" class="text-white" />
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+              <ul v-if="favoriteTab === 'series'" class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                <li v-for="serie in series" :key="serie.id">
+                  <a class="group block overflow-hidden">
+                    <img
+                      :src="serie.thumbnail.path + '.' + serie.thumbnail.extension"
+                      alt="serie"
+                      class="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px]"
+                    >
+
+                    <div class="relative bg-white/70 prose">
+                      <h3 class="text-xl mx-4 truncate text-center pt-2 text-gray-700 group-hover:underline group-hover:underline-offset-4">
+                        {{ serie.title }}
+                      </h3>
+
+                      <div class="flex flex-row justify-center items-center gap-2 py-4">
+                        <button
+                          v-if="serie.isFavorite"
+                          :data-tip="$t('desfavorited')"
+                          class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
+                          type="button"
+                          @click="handleViews('serie-desfavorited', serie)"
+                        >
+                          <Icon name="mdi:heart" size="2em" class="text-white" />
+                        </button>
+                        <button
+                          v-else
+                          :data-tip="$t('favorited')"
+                          class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
+                          type="button"
+                          @click="handleViews('serie-favorited', serie)"
+                        >
+                          <Icon name="mdi:heart-outline" size="2em" class="text-white" />
+                        </button>
+                        <button
+                          :data-tip="$t('seeAbout')"
+                          class="tooltip block rounded-full bg-red-600 p-2 text-sm font-medium  transition hover:bg-red-700 focus:outline-none focus:ring"
+                          type="button"
+                          @click="redirect('serie', serie)"
+                        >
+                          <Icon name="mdi:arrow-right" size="2em" class="text-white" />
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+              <ul v-if="favoriteTab === 'comics'" class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 <li v-for="comic in comics" :key="comic.id">
                   <a class="group block overflow-hidden">
                     <img
@@ -392,6 +488,7 @@ import { getCharacters, getComics, getSeries } from '~~/helpers/marvel-api'
 
 const app = useAppStore()
 const currentView = ref<'characters' | 'series' | 'comics' | 'favorite'>('characters')
+const favoriteTab = ref<'characters' | 'series' | 'comics'>('characters')
 const seeingFavorites = ref(false)
 const queryCharacter = ref('')
 const querySerie = ref('')
@@ -529,6 +626,7 @@ const handleViews = (action: string, data?: any) => {
   }
 
   if (action === 'see') {
+    currentView.value = 'favorite'
     app.getFavorites.characters.length === 0 &&
       app.getFavorites.series.length === 0 &&
       app.getFavorites.comics.length === 0 &&
@@ -697,6 +795,7 @@ const handleUpdate = (action: string, value?: any) => {
         }
       })
   }
+
   if (action === 'series-order') {
     series.value = []
     getSeries({ orderBy: value })
@@ -710,6 +809,7 @@ const handleUpdate = (action: string, value?: any) => {
         }
       })
   }
+
   if (action === 'comics-order') {
     comics.value = []
     getComics({ orderBy: value })
@@ -722,6 +822,21 @@ const handleUpdate = (action: string, value?: any) => {
           }))
         }
       })
+  }
+
+  if (action === 'favorites-characters') {
+    characters.value = app.getFavorites.characters
+    favoriteTab.value = value
+  }
+
+  if (action === 'favorites-series') {
+    series.value = app.getFavorites.series
+    favoriteTab.value = value
+  }
+
+  if (action === 'favorites-comics') {
+    comics.value = app.getFavorites.comics
+    favoriteTab.value = value
   }
   app.setLoading(false)
 }

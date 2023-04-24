@@ -50,13 +50,13 @@
               Filters
             </p>
             <div class="flex flex-col gap-y-3 mt-4">
-              <button class="btn btn-primary block w-full">
+              <button class="btn btn-primary block w-full" @click="emit('favorites-characters', 'characters')">
                 {{ $t('characters') }}
               </button>
-              <button class="btn btn-primary block w-full">
+              <button class="btn btn-primary block w-full" @click="emit('favorites-series', 'series')">
                 {{ $t('series') }}
               </button>
-              <button class="btn btn-primary block w-full">
+              <button class="btn btn-primary block w-full" @click="emit('favorites-comics', 'comics')">
                 {{ $t('comics') }}
               </button>
             </div>
@@ -72,7 +72,7 @@
 </template>
 
 <script setup>
-const emit = defineEmits(['filter-orderBy'])
+const emit = defineEmits(['filter-orderBy', 'favorites-characters', 'favorites-series', 'favorites-comics'])
 const query = ref('name')
 const props = defineProps({
   title: {
@@ -87,6 +87,11 @@ const props = defineProps({
     type: String,
     required: false,
     default: 'characters'
+  },
+  selected: {
+    type: String,
+    required: false,
+    default: 'character'
   }
 })
 </script>
