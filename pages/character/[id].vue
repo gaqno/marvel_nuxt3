@@ -73,7 +73,7 @@
 
     <div id="comics" class="relative mx-auto max-w-screen-xl px-4 py-8">
       <div class="pb-4">
-        <h1 class="text-2xl font-bold md:px-8 lg:text-3xl ">
+        <h1 class="text-3xl text-bold">
           {{ $t('comics') }}
         </h1>
         <p>{{ $t('allComicsThatParticipated') }}</p>
@@ -98,8 +98,13 @@
         <SwiperSlide v-for="comic in comics" :key="comic.id">
           <div class="flex flex-col md:flex-row">
             <progress v-if="app.isLoading" class="progress w-full h-96"></progress>
-            <figure v-else class="max-w-md max-h-md">
+            <figure v-else class="relative max-w-md max-h-md">
               <img class="w-full h-full object-cover rounded-tr-xl rounded-tl-xl md:rounded-tl-lg md:rounded-bl-lg md:rounded-tr-none" :src="comic.thumbnail.path + '.' + comic.thumbnail.extension" alt="Album">
+              <div class="absolute inset-0 opacity-0 hover:opacity-100 transition duration-300 ease-in-out flex justify-center items-center bg-black bg-opacity-50">
+                <span class="text-white text-5xl material-icons-round">
+                  <Icon name="material-symbols:swipe" />
+                </span>
+              </div>
             </figure>
             <div :class="[app.theme === 'light' ? 'bg-slate-300' : 'bg-white', 'text-black prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none']">
               <div class="px-4 py-5">
@@ -147,7 +152,7 @@
 
     <div id="serie" class="relative mx-auto max-w-screen-xl px-4 py-8">
       <div class="pb-4">
-        <h1 class="text-2xl font-bold md:px-8 lg:text-3xl ">
+        <h1 class="text-3xl text-bold">
           {{ $t('series') }}
         </h1>
         <p>{{ $t('allSeriesThatParticipated') }}</p>
