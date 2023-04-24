@@ -30,7 +30,7 @@
                   <p>
                     <Icon name="ph:books-bold" size="1.5em" class="mr-4 btn btn-circle bg-red-600 text-white border-0 p-2" />
                     <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                      <progress v-if="!character.comics.available" class="progress w-56"></progress>
+                      <progress v-if="!character.comics.available && character.comics.available !== 0" class="progress w-56"></progress>
                       <span v-else>
                         {{ character.comics.available }}
                         <span class="ml-2 uppercase ">
@@ -42,7 +42,7 @@
                   <p>
                     <Icon name="fluent:movies-and-tv-16-regular" size="1.5em" class="mr-4 btn btn-circle bg-red-600 text-white border-0 p-2" />
                     <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                      <progress v-if="!character.series.available" class="progress w-56"></progress>
+                      <progress v-if="!character.series.available && character.series.available !== 0" class="progress w-56"></progress>
                       <span v-else>
                         {{ character.series.available }}
                         <span class="ml-2 uppercase ">
@@ -54,7 +54,7 @@
                   <p>
                     <Icon name="icon-park-solid:history-query" size="1.5em" class="mr-4 btn btn-circle bg-red-600 text-white border-0 p-2" />
                     <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                      <progress v-if="!character.stories.available" class="progress w-56"></progress>
+                      <progress v-if="!character.stories.available && character.stories.available !== 0" class="progress w-56"></progress>
                       <span v-else>
                         {{ character.stories.available }}
                         <span class="ml-2 uppercase ">
@@ -311,7 +311,6 @@ const fetchCharacter = () => {
   return new Promise((resolve, reject) => {
     getCharacter(route.params.id as string)
       .then((res) => {
-        console.log(app.getFavorites.series.some((j: any) => j.id === res.data.results[0].id))
         character.value = {
           ...res.data.results[0],
           isFavorite: app.getFavorites.series.some((j: any) => j.id === res.data.results[0].id)
