@@ -1,6 +1,6 @@
 <template>
   <section class="body-font">
-    <div id="character" class="relative mx-auto max-w-screen-xl px-4 py-8">
+    <div id="comic" class="relative mx-auto max-w-screen-xl px-4 py-8">
       <div class="flex flex-col md:flex-row">
         <progress v-if="app.isLoading" class="progress w-full h-96"></progress>
         <figure v-else class="max-w-md max-h-md ">
@@ -26,7 +26,7 @@
                   <button
                     v-if="!comics.isFavorite"
                     class="btn btn-ghost bg-red-600 border-0 text-white hover:bg-red-800"
-                    @click="handleViews('comic-favorited', comic)"
+                    @click="handleViews('comic-favorited', comics)"
                   >
                     <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
                     {{ $t('favorited') }}
@@ -34,7 +34,7 @@
                   <button
                     v-else
                     class="btn btn-ghost bg-white border-red-600 text-red-600 hover:bg-slate-100"
-                    @click="handleViews('comic-desfavorited', comic)"
+                    @click="handleViews('comic-desfavorited', comics)"
                   >
                     <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
                     {{ $t('desfavorited') }}
@@ -47,71 +47,58 @@
       </div>
     </div>
 
-    <div id="serie" class="relative mx-auto max-w-screen-xl px-4 py-8">
+    <div id="character" class="relative mx-auto max-w-screen-xl px-4 py-8">
       <div class="pb-4">
         <h1 class="text-2xl font-bold md:px-8 lg:text-3xl ">
-          {{ $t('series') }}
+          {{ $t('characters') }}
         </h1>
-        <p>{{ $t('allSeriesThatParticipated') }}</p>
+        <p>{{ $t('allCharactersThatParticipated') }}</p>
+        <button
+          v-for="character in comics.characters.items"
+          :key="character.resourceURI"
+          class="inline-flex items-center gap-x-1.5 m-4 rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600"
+          @click.prevent="navigateTo(character.resourceURI.replace(/http.*\/v1\/public\//, '').replace(/characters/, '/character'))"
+        >
+          {{ character.name }}
+        </button>
       </div>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { EffectCoverflow, Pagination } from 'swiper'
-import { Swiper, SwiperSlide } from 'swiper/vue'
+// import { EffectCoverflow, Pagination } from 'swiper'
+// import { Swiper, SwiperSlide } from 'swiper/vue'
 import { getComics } from '~/helpers/marvel-api'
 import { useAppStore } from '~/store/app'
 import 'swiper/css'
-import { Comic } from '~/types/comic'
+// import { Comic } from '~/types/comic'
 
 definePageMeta({
   title: 'Detalhes do personagem',
   description: 'Detalhes do personagem'
 })
-const modules = [EffectCoverflow, Pagination]
+// const modules = [EffectCoverflow, Pagination]
 const route = useRoute()
 const app = useAppStore()
 const view = ref('')
 const loading = ref(false)
-const comic = ref({
+
+const comics = ref({
   title: '',
-  id: 0,
-  isFavorite: false,
-  description: '',
-  thumbnail: {
-    path: '',
-    extension: ''
-  },
-  comics: {
-    items: [],
-    available: 0
-  },
-  series: {
-    items: [],
-    available: 0
-  },
-  stories: {
+  characters: {
+    available: 0,
     items: [{
       resourceURI: '',
       name: ''
-    }],
-    available: 0
-  }
-})
-const comics = ref({
-  title: '',
-  id: 0,
-  isFavorite: false,
+    }]
+  },
   description: '',
+  isFavorite: false,
+  id: 0,
   thumbnail: {
     path: '',
     extension: ''
-  },
-  comics: {
-    items: [],
-    available: 0
   },
   series: {
     items: [],
@@ -129,7 +116,7 @@ const comics = ref({
 const fetchComics = () => {
   return new Promise((resolve, reject) => {
     const { id } = route.params
-    console.log('id', id)
+    comics.value.characters.items = []
     getComics({ id: id as string })
       .then((res) => {
         comics.value = {
@@ -137,13 +124,11 @@ const fetchComics = () => {
           isFavorite: app.isFavorited('comics', { id }),
           characters: {
             available: res.data.results[0].characters.available,
-            items: {
-              ...res.data.results[0].characters.items,
-              name: res.data.results[0].characters.items[0].name.split(' (')[0]
-            }
+            items: res.data.results[0].characters.items
           }
         }
-        app.setCurrent('comics', comics.value)
+        console.log(comics.value)
+        app.setCurrent('comic', comics.value)
         app.setLoading(false)
         resolve(comics.value)
       })

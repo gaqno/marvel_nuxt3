@@ -470,7 +470,6 @@ const offset = ref(0)
 // const favorites = computed(() => characters.value.filter((i: any) => i.isFavorite))
 
 const redirect = (action: string, value: any) => {
-  console.log({ action, value })
   if (action === 'character') {
     app.setCurrent('character', value)
     navigateTo(`/character/${value.id}`)
@@ -545,7 +544,6 @@ const handleViews = (action: string, data?: any) => {
 }
 
 const handleUpdate = (action: string, value?: any) => {
-  console.log('handleUpdate', { action, value })
   if (action === 'query-character' && value === '') { action = 'characters' }
 
   if (action === 'characters') {

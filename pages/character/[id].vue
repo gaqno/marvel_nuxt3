@@ -116,7 +116,6 @@
                       @click.prevent="navigateTo('/comic/' + comic.id)"
                     >
                       <Icon name="material-symbols:arrows-more-up-rounded" size="1.5em" class="mr-4" />
-                      {{ comic.id }}
                       {{ $t('comic') }}
                     </button>
                   </div>
@@ -242,7 +241,10 @@ const comics = ref([{
     extension: ''
   },
   characters: {
-    items: [],
+    items: [{
+      resourceURI: '',
+      name: ''
+    }],
     available: 0
   },
   series: {
