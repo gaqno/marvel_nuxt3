@@ -430,10 +430,10 @@
         </FilterComponent>
       </article>
 
-      <div v-if="characters.length <= 0" class="flex justify-center col-span-3">
+      <div v-if="characters.length <= 0 || series.length <= 0 || series.length <= 0" class="flex justify-center col-span-3">
         <button type="button" class="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
           <Icon name="line-md:emoji-frown" size="5em" />
-          <span class="mt-2 block text-sm font-semibold">
+          <span class="p-2 block text-sm font-semibold">
             {{ $t('kindEmpty') }}
           </span>
         </button>
@@ -609,7 +609,6 @@ const handleUpdate = (action: string, value?: any) => {
   if (action === 'query-character' && value === '') { action = 'characters' }
 
   if (action === 'characters') {
-    characters.value = []
     getCharacters()
       .then((res: any) => {
         if (res.code === 200) {
@@ -623,7 +622,6 @@ const handleUpdate = (action: string, value?: any) => {
   }
 
   if (action === 'series') {
-    series.value = []
     getSeries()
       .then((res: any) => {
         if (res.code === 200) {
@@ -637,7 +635,6 @@ const handleUpdate = (action: string, value?: any) => {
   }
 
   if (action === 'comics') {
-    comics.value = []
     getComics()
       .then((res: any) => {
         if (res.code === 200) {
@@ -652,7 +649,6 @@ const handleUpdate = (action: string, value?: any) => {
 
   if (action === 'more-characters') {
     offset.value += 20
-    characters.value = []
     getCharacters({ offset: offset.value })
       .then((res: any) => {
         if (res.code === 200) {
@@ -670,7 +666,6 @@ const handleUpdate = (action: string, value?: any) => {
 
   if (action === 'more-series') {
     offset.value += 20
-    series.value = []
     getSeries({ offset: offset.value })
       .then((res: any) => {
         if (res.code === 200) {
@@ -688,7 +683,6 @@ const handleUpdate = (action: string, value?: any) => {
 
   if (action === 'more-comics') {
     offset.value += 20
-    comics.value = []
     getComics({ offset: offset.value })
       .then((res: any) => {
         if (res.code === 200) {
