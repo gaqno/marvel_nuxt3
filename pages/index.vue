@@ -2,7 +2,7 @@
   <div class="container mx-auto">
     <header>
       <div class="mx-auto max-w-screen-xl px-4 py-8">
-        <section class="overflow-hidden rounded bg-[url(https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80)] bg-cover bg-center bg-no-repeat">
+        <section class="overflow-hidden rounded bg-[url(/assets/dashboard.jpeg)] bg-cover bg-center bg-no-repeat">
           <div class="bg-black/25 p-8 md:p-12 lg:px-16 lg:py-24">
             <div class="glassmorphism md:text-center p-4 text-center sm:text-left">
               <h2 class="text-4xl font-bold text-red-600 sm:text-3xl md:text-5xl">

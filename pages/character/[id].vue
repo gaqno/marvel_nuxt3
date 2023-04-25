@@ -1,213 +1,243 @@
 <template>
   <section class="body-font">
-    <div id="character" class="relative mx-auto px-4 py-8">
-      <div class="flex flex-col md:flex-row justify-center">
-        <progress v-if="!character.thumbnail.path" class="progress w-full h-96 rounded-br-none rounded-bl-none"></progress>
-        <figure v-else class="max-w-md max-h-md ">
-          <img class="w-full h-full object-cover rounded-tr-xl rounded-tl-xl md:rounded-tl-lg md:rounded-bl-lg md:rounded-tr-none" :src="character.thumbnail.path + '.' + character.thumbnail.extension" alt="Album">
-        </figure>
-        <div :class="[app.theme === 'light' ? 'bg-slate-300' : 'bg-white', 'text-black prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none']">
-          <div class="px-4 py-5 sm:px-6">
-            <div class="-mt-4 ">
-              <div class="mt-4">
-                <h3 class="text-2xl font-semibold leading-6 text-gray-900">
-                  {{ character.name }}
-                </h3>
-                <p class="mt-1 text-sm text-gray-500">
-                  {{ character.description || $t('noDescription') }}
-                </p>
-                <div class="ml-4 mt-4">
-                  <button v-if="!character.isFavorite" class="btn btn-ghost w-full bg-red-600 border-0 text-white hover:bg-red-800" @click="handleViews('character-favorited', character)">
-                    <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
-                    {{ $t('favorited') }}
-                  </button>
-                  <button v-else class="btn btn-ghost w-full bg-white border-red-600 text-red-600 hover:bg-slate-100" @click="handleViews('character-desfavorited', character)">
-                    <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
-                    {{ $t('desfavorited') }}
-                  </button>
-                </div>
-                <div>
-                  <p>
-                    <Icon name="ph:books-bold" size="1.5em" class="mr-4 btn btn-circle bg-red-600 text-white border-0 p-2" />
-                    <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                      <progress v-if="!character.comics.available && character.comics.available !== 0" class="progress w-56"></progress>
-                      <span v-else>
-                        {{ character.comics.available }}
-                        <span class="ml-2 uppercase ">
-                          {{ $t('comics') }}
+    <div v-if="loading" class="mx-60 grid grid-cols-12 mb-full">
+      <span class="col-span-5">
+        <progress class="progress w-full h-96"></progress>
+      </span>
+      <span :class="[app.theme === 'light' ? 'bg-slate-300' : 'bg-white', 'col-span-7 flex flex-col m-1 pt-12 rounded-lg rounded-tl-lg rounded-bl-none']">
+        <progress class="progress w-40 h-8 ml-4"></progress>
+        <progress class="progress w-40 h-4 mt-2 ml-4"></progress>
+        <progress class="progress w-3/4 mx-auto mt-6 h-12"></progress>
+        <span class="mx-4">
+          <progress class="progress w-12 mx-auto h-12 rounded-full"></progress>
+          <progress class="progress w-24 mx-auto mb-4 h-4 ml-4"></progress>
+        </span>
+        <span class="mx-4">
+          <progress class="progress w-12 mx-auto h-12 rounded-full"></progress>
+          <progress class="progress w-24 mx-auto mb-4 h-4 ml-4"></progress>
+        </span>
+        <span class="mx-4">
+          <progress class="progress w-12 mx-auto h-12 rounded-full"></progress>
+          <progress class="progress w-24 mx-auto mb-4 h-4 ml-4"></progress>
+        </span>
+      </span>
+    </div>
+
+    <article v-else>
+      <div id="character" class="relative mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row justify-center">
+          <progress v-if="!character.thumbnail.path" class="progress w-full h-96 rounded-br-none rounded-bl-none"></progress>
+          <figure v-else class="max-w-md max-h-md ">
+            <img class="w-full h-full object-cover rounded-tr-xl rounded-tl-xl md:rounded-tl-lg md:rounded-bl-lg md:rounded-tr-none" :src="character.thumbnail.path + '.' + character.thumbnail.extension" alt="Album">
+          </figure>
+          <div :class="[app.theme === 'light' ? 'bg-slate-300' : 'bg-white', 'text-black prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none']">
+            <div class="px-4 py-5 sm:px-6">
+              <div class="-mt-4 ">
+                <div class="mt-4">
+                  <h3 class="text-2xl font-semibold leading-6 text-gray-900">
+                    {{ character.name }}
+                  </h3>
+                  <p class="mt-1 text-sm text-gray-500">
+                    {{ character.description || $t('noDescription') }}
+                  </p>
+                  <div class="ml-4 mt-4">
+                    <button v-if="!character.isFavorite" class="btn btn-ghost w-full bg-red-600 border-0 text-white hover:bg-red-800" @click="handleViews('character-favorited', character)">
+                      <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
+                      {{ $t('favorited') }}
+                    </button>
+                    <button v-else class="btn btn-ghost w-full bg-white border-red-600 text-red-600 hover:bg-slate-100" @click="handleViews('character-desfavorited', character)">
+                      <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
+                      {{ $t('desfavorited') }}
+                    </button>
+                  </div>
+                  <div>
+                    <p>
+                      <Icon name="ph:books-bold" size="1.5em" class="mr-4 btn btn-circle bg-red-600 text-white border-0 p-2" />
+                      <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                        <progress v-if="!character.comics.available && character.comics.available !== 0" class="progress w-56"></progress>
+                        <span v-else>
+                          {{ character.comics.available }}
+                          <span class="ml-2 uppercase ">
+                            {{ $t('comics') }}
+                          </span>
                         </span>
                       </span>
-                    </span>
-                  </p>
-                  <p>
-                    <Icon name="fluent:movies-and-tv-16-regular" size="1.5em" class="mr-4 btn btn-circle bg-red-600 text-white border-0 p-2" />
-                    <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                      <progress v-if="!character.series.available && character.series.available !== 0" class="progress w-56"></progress>
-                      <span v-else>
-                        {{ character.series.available }}
-                        <span class="ml-2 uppercase ">
-                          {{ $t('series') }}
+                    </p>
+                    <p>
+                      <Icon name="fluent:movies-and-tv-16-regular" size="1.5em" class="mr-4 btn btn-circle bg-red-600 text-white border-0 p-2" />
+                      <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                        <progress v-if="!character.series.available && character.series.available !== 0" class="progress w-56"></progress>
+                        <span v-else>
+                          {{ character.series.available }}
+                          <span class="ml-2 uppercase ">
+                            {{ $t('series') }}
+                          </span>
                         </span>
                       </span>
-                    </span>
-                  </p>
-                  <p>
-                    <Icon name="icon-park-solid:history-query" size="1.5em" class="mr-4 btn btn-circle bg-red-600 text-white border-0 p-2" />
-                    <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                      <progress v-if="!character.stories.available && character.stories.available !== 0" class="progress w-56"></progress>
-                      <span v-else>
-                        {{ character.stories.available }}
-                        <span class="ml-2 uppercase ">
-                          {{ $t('stories') }}
+                    </p>
+                    <p>
+                      <Icon name="icon-park-solid:history-query" size="1.5em" class="mr-4 btn btn-circle bg-red-600 text-white border-0 p-2" />
+                      <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                        <progress v-if="!character.stories.available && character.stories.available !== 0" class="progress w-56"></progress>
+                        <span v-else>
+                          {{ character.stories.available }}
+                          <span class="ml-2 uppercase ">
+                            {{ $t('stories') }}
+                          </span>
                         </span>
                       </span>
-                    </span>
-                  </p>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div id="comics" class="relative mx-auto max-w-screen-xl px-4 py-8">
-      <div class="pb-4">
-        <h1 class="text-3xl text-bold">
-          {{ $t('comics') }}
-        </h1>
-        <p>{{ $t('allComicsThatParticipated') }}</p>
-      </div>
+      <div id="comics" class="relative mx-auto max-w-screen-xl px-4 py-8">
+        <div class="pb-4">
+          <h1 class="text-3xl text-bold">
+            {{ $t('comics') }}
+          </h1>
+          <p>{{ $t('allComicsThatParticipated') }}</p>
+        </div>
 
-      <Swiper
-        :effect="'coverflow'"
-        :grab-cursor="true"
-        :centered-slides="true"
-        :slides-per-view="'auto'"
-        :coverflow-effect="{
-          rotate: 50,
-          stretch: 0,
-          depth: 100,
-          modifier: 1,
-          slideShadows: true,
-        }"
-        :pagination="true"
-        :modules="modules"
-        @slide-change="view = ''"
-      >
-        <SwiperSlide v-for="comic in comics" :key="comic.id">
-          <div class="flex flex-col md:flex-row">
-            <progress v-if="app.isLoading" class="progress w-full h-96"></progress>
-            <figure v-else class="relative max-w-md max-h-md">
-              <img class="w-full h-full object-cover rounded-tr-xl rounded-tl-xl md:rounded-tl-lg md:rounded-bl-lg md:rounded-tr-none" :src="comic.thumbnail.path + '.' + comic.thumbnail.extension" alt="Album">
-              <div class="absolute inset-0 opacity-0 hover:opacity-100 transition duration-300 ease-in-out flex justify-center items-center bg-black bg-opacity-50">
-                <span class="text-white text-5xl material-icons-round">
-                  <Icon name="material-symbols:swipe" />
-                </span>
-              </div>
-            </figure>
-            <div :class="[app.theme === 'light' ? 'bg-slate-300' : 'bg-white', 'text-black prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none']">
-              <div class="px-4 py-5">
-                <div class="-mt-4">
-                  <div class="mt-4">
-                    <h3 class="text-2xl font-semibold leading-6 text-gray-900">
-                      {{ comic.title }}
-                    </h3>
-                    <p class="mt-1 text-sm text-gray-500">
-                      {{ comic.description || $t('noDescription') }}
-                    </p>
-                  </div>
+        <Swiper
+          :effect="'coverflow'"
+          :grab-cursor="true"
+          :centered-slides="true"
+          :slides-per-view="'auto'"
+          :coverflow-effect="{
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: true,
+          }"
+          :pagination="true"
+          :modules="modules"
+          @slide-change="view = ''"
+        >
+          <SwiperSlide v-for="comic in comics" :key="comic.id">
+            <div class="flex flex-col md:flex-row">
+              <progress v-if="app.isLoading" class="progress w-full h-96"></progress>
+              <figure v-else class="relative max-w-md max-h-md">
+                <img class="w-full h-full object-cover rounded-tr-xl rounded-tl-xl md:rounded-tl-lg md:rounded-bl-lg md:rounded-tr-none" :src="comic.thumbnail.path + '.' + comic.thumbnail.extension" alt="Album">
+                <div class="absolute inset-0 opacity-0 hover:opacity-100 transition duration-300 ease-in-out flex justify-center items-center bg-black bg-opacity-50">
+                  <span class="text-white text-5xl material-icons-round">
+                    <Icon name="material-symbols:swipe" />
+                  </span>
                 </div>
-                <div class="flex flex-col justify-center mt-4 gap-y-4">
-                  <button
-                    v-if="!comic.isFavorite"
-                    class="btn btn-ghost w-full bg-red-600 border-0 text-white hover:bg-red-800"
-                    @click="handleViews('comic-favorited', comic)"
-                  >
-                    <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
-                    {{ $t('favorited') }}
-                  </button>
-                  <button
-                    v-else
-                    class="btn btn-ghost w-full bg-white border-red-600 text-red-600 hover:bg-slate-100"
-                    @click="handleViews('comic-desfavorited', comic)"
-                  >
-                    <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
-                    {{ $t('desfavorited') }}
-                  </button>
-                  <button
-                    class="btn btn-ghost w-full bg-red-600 border-0 text-white hover:bg-red-800"
-                    @click.prevent="navigateTo('/comic/' + comic.id)"
-                  >
-                    <Icon name="material-symbols:arrows-more-up-rounded" size="1.5em" class="mr-4" />
-                    {{ $t('comic') }}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </SwiperSlide>
-      </Swiper>
-    </div>
-
-    <div id="serie" class="relative mx-auto max-w-screen-xl px-4 py-8">
-      <div class="pb-4">
-        <h1 class="text-3xl text-bold">
-          {{ $t('series') }}
-        </h1>
-        <p>{{ $t('allSeriesThatParticipated') }}</p>
-      </div>
-
-      <Swiper
-        :effect="'coverflow'"
-        :grab-cursor="true"
-        :centered-slides="true"
-        :slides-per-view="'auto'"
-        :coverflow-effect="{
-          rotate: 50,
-          stretch: 0,
-          depth: 100,
-          modifier: 1,
-          slideShadows: true,
-        }"
-        :pagination="true"
-        :modules="modules"
-        @slide-change="view = ''"
-      >
-        <SwiperSlide v-for="serie in series" :key="serie.id">
-          <div class="flex flex-col md:flex-row">
-            <progress v-if="app.isLoading" class="progress w-full h-96"></progress>
-            <figure v-else class="max-w-md max-h-md">
-              <img class="w-full h-full object-cover rounded-tr-xl rounded-tl-xl md:rounded-tl-lg md:rounded-bl-lg md:rounded-tr-none" :src="serie.thumbnail.path + '.' + serie.thumbnail.extension" alt="Album">
-            </figure>
-            <div :class="[app.theme === 'light' ? 'bg-slate-300' : 'bg-white', 'text-black prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none']">
-              <div class="px-4 py-5 sm:px-6">
-                <div class="-ml-4 -mt-4 flex flex-wrap items-center justify-between sm:flex-nowrap">
-                  <div class="ml-4 mt-4">
-                    <h3 class="text-2xl font-semibold leading-6 text-gray-900">
-                      {{ serie.title }}
-                    </h3>
-                    <p class="mt-1 text-sm text-gray-500">
-                      {{ serie.description || $t('noDescription') }}
-                    </p>
+              </figure>
+              <div :class="[app.theme === 'light' ? 'bg-slate-300' : 'bg-white', 'text-black prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none']">
+                <div class="px-4 py-5">
+                  <div class="-mt-4">
+                    <div class="mt-4">
+                      <h3 class="text-2xl font-semibold leading-6 text-gray-900">
+                        {{ comic.title }}
+                      </h3>
+                      <p class="mt-1 text-sm text-gray-500">
+                        {{ comic.description || $t('noDescription') }}
+                      </p>
+                    </div>
                   </div>
-                  <div class="ml-4 mt-4 flex-shrink-0">
-                    <button v-if="!serie.isFavorite" class="btn btn-ghost w-full bg-red-600 border-0 text-white hover:bg-red-800" @click="handleViews('serie-favorited', serie)">
+                  <div class="flex flex-col justify-center mt-4 gap-y-4">
+                    <button
+                      v-if="!comic.isFavorite"
+                      class="btn btn-ghost w-full bg-red-600 border-0 text-white hover:bg-red-800"
+                      @click="handleViews('comic-favorited', comic)"
+                    >
                       <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
                       {{ $t('favorited') }}
                     </button>
-                    <button v-else class="btn btn-ghost w-full bg-white border-red-600 text-red-600 hover:bg-slate-100" @click="handleViews('serie-desfavorited', serie)">
+                    <button
+                      v-else
+                      class="btn btn-ghost w-full bg-white border-red-600 text-red-600 hover:bg-slate-100"
+                      @click="handleViews('comic-desfavorited', comic)"
+                    >
                       <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
                       {{ $t('desfavorited') }}
+                    </button>
+                    <button
+                      class="btn btn-ghost w-full bg-red-600 border-0 text-white hover:bg-red-800"
+                      @click.prevent="navigateTo('/comic/' + comic.id)"
+                    >
+                      <Icon name="material-symbols:arrows-more-up-rounded" size="1.5em" class="mr-4" />
+                      {{ $t('comic') }}
                     </button>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </SwiperSlide>
-      </Swiper>
-    </div>
+          </SwiperSlide>
+        </Swiper>
+      </div>
+
+      <div id="serie" class="relative mx-auto max-w-screen-xl px-4 py-8">
+        <div class="pb-4">
+          <h1 class="text-3xl text-bold">
+            {{ $t('series') }}
+          </h1>
+          <p>{{ $t('allSeriesThatParticipated') }}</p>
+        </div>
+
+        <Swiper
+          :effect="'coverflow'"
+          :grab-cursor="true"
+          :centered-slides="true"
+          :slides-per-view="'auto'"
+          :coverflow-effect="{
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: true,
+          }"
+          :pagination="true"
+          :modules="modules"
+          @slide-change="view = ''"
+        >
+          <SwiperSlide v-for="serie in series" :key="serie.id">
+            <div class="flex flex-col md:flex-row">
+              <progress v-if="app.isLoading" class="progress w-full h-96"></progress>
+              <figure v-else class="relative max-w-md max-h-md">
+                <img class="w-full h-full object-cover rounded-tr-xl rounded-tl-xl md:rounded-tl-lg md:rounded-bl-lg md:rounded-tr-none" :src="serie.thumbnail.path + '.' + serie.thumbnail.extension" alt="Album">
+                <div class="absolute inset-0 opacity-0 hover:opacity-100 transition duration-300 ease-in-out flex justify-center items-center bg-black bg-opacity-50">
+                  <span class="text-white text-5xl material-icons-round">
+                    <Icon name="material-symbols:swipe" />
+                  </span>
+                </div>
+              </figure>
+              <div :class="[app.theme === 'light' ? 'bg-slate-300' : 'bg-white', 'text-black prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none']">
+                <div class="px-4 py-5 sm:px-6">
+                  <div class="-ml-4 -mt-4 flex flex-wrap items-center justify-between sm:flex-nowrap">
+                    <div class="ml-4 mt-4">
+                      <h3 class="text-2xl font-semibold leading-6 text-gray-900">
+                        {{ serie.title }}
+                      </h3>
+                      <p class="mt-1 text-sm text-gray-500">
+                        {{ serie.description || $t('noDescription') }}
+                      </p>
+                    </div>
+                    <div class="ml-4 mt-4 flex-shrink-0">
+                      <button v-if="!serie.isFavorite" class="btn btn-ghost w-full bg-red-600 border-0 text-white hover:bg-red-800" @click="handleViews('serie-favorited', serie)">
+                        <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
+                        {{ $t('favorited') }}
+                      </button>
+                      <button v-else class="btn btn-ghost w-full bg-white border-red-600 text-red-600 hover:bg-slate-100" @click="handleViews('serie-desfavorited', serie)">
+                        <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
+                        {{ $t('desfavorited') }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </SwiperSlide>
+        </Swiper>
+      </div>
+    </article>
   </section>
 </template>
 
@@ -401,10 +431,12 @@ const handleViews = (action: string, data?: any) => {
 
 watchEffect(() => view.value !== '' && (loading.value = false))
 onMounted(() => {
+  loading.value = true
   if (route.params) {
     return Promise.all([fetchCharacter(), fetchComics(), fetchSeries()])
       .then(() => {
         app.setLoading(false)
+        loading.value = false
       })
   }
 })

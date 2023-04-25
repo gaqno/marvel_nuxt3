@@ -27,9 +27,13 @@
       >
         {{ $t('language') }}
       </button>
-      <div v-show="popoverLanguage" class="absolute z-10 top-0 right-0 mt-12 w-fit h-fit rounded-md shadow-lg bg-white ring-1 ring-indigo-800 ring-opacity-5">
+      <div
+        v-show="popoverLanguage"
+        class="absolute z-10 top-0 right-0 mt-12 w-fit h-fit rounded-md shadow-lg bg-white ring-1 ring-indigo-800 ring-opacity-5"
+        @mouseleave="popoverLanguage = false"
+      >
         <div class="p-2">
-          <span class="flex flex-row md:flex-col text-gray-700">
+          <span class="flex flex-col text-gray-700">
             <NuxtLink :to="switchLocalePath('pt')" class="btn btn-ghost normal-case text-base" @click="popoverLanguage = false">
               <Icon name="game-icons:brazil" size="1em" />
             </NuxtLink>
