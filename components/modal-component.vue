@@ -14,18 +14,12 @@
           <li>NodeJS 18</li>
         </ul>
       </section>
-      <section v-if="app.modal.template === 'jaba'">
-        <p>{{ $t('jaba') }}</p>
-        <progress v-if="!Jaba" class="progress w-full h-80"></progress>
-        <nuxt-img v-else :src="Jaba" class="absolute -bottom-6 right-0 w-auto h-32 mt-8" />
-      </section>
     </div>
   </div>
 </template>
 
 <script setup>
 import { useAppStore } from '~~/store/app'
-import Jaba from '~/assets/jaba.png'
 const app = useAppStore()
 
 </script>
