@@ -19,7 +19,7 @@ export const useAppStore = defineStore({
     return {
       language: 'ptBR',
       loading: false,
-      theme: 'light',
+      theme: 'dark',
       translate: {},
       current: {
         character: {},
@@ -57,6 +57,7 @@ export const useAppStore = defineStore({
     isToast: state => state.toast.show,
     isModal: state => state.modal.show,
     isDrawer: state => state.drawer.show,
+    isDarkMode: state => state.theme === 'dark',
     isLoading: state => state.loading
   },
   actions: {

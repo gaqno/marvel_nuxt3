@@ -175,36 +175,54 @@
           @filter-order-by="handleUpdate('characters-order', $event)"
         >
           <template #options>
-            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-              <div v-for="character in characters" :key="character.id" class="cols-span-1">
-                <progress v-if="!character.thumbnail.path" class="progress w-full h-96"></progress>
-                <figure v-else class="max-w-md overflow-hidden">
-                  <img class="w-full aspect-w-14 aspect-h-18 max-h-52 object-cover transition duration-500 transform hover:scale-105 rounded-tr-lg rounded-tl-lg" :src="character.thumbnail.path + '.' + character.thumbnail.extension" alt="Album">
-                </figure>
-                <div :class="[app.theme === 'light' ? 'bg-slate-300' : 'bg-white', 'text-black prose w-full py-4 rounded-br-lg rounded-bl-lg']">
-                  <h1 class="text-center truncate mx-1 text-2xl font-bold">
-                    {{ character.name }}
-                  </h1>
-                  <p class="p-8 truncate">
-                    {{ character.description || $t('noDescription') }}
-                  </p>
-                  <div class="card-actions justify-center">
-                    <button v-if="!character.isFavorite" class="btn btn-ghost bg-red-600 border-0 text-white hover:bg-red-800" @click="handleViews('character-favorited', character)">
-                      <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
-                      {{ $t('favorited') }}
-                    </button>
-                    <button v-else class="btn btn-ghost bg-white border-red-600 text-red-600 hover:bg-slate-100" @click="handleViews('character-desfavorited', character)">
-                      <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
-                      {{ $t('desfavorited') }}
-                    </button>
-                    <button class="btn btn-circle bg-red-600 border-0 text-white" @click="redirect('character', character)">
-                      <Icon name="mdi:chevron-double-right" size="1.5em" />
-                    </button>
-                  </div>
-                </div>
-              </div>
+            <div class="lg:col-span-3 mt-6">
+              <ul class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                <li v-for="character in characters" :key="character.id" class="shadow-lg rounded-lg">
+                  <a class="group relative block bg-black">
+                    <progress v-if="!character.thumbnail.path" class="progress absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"></progress>
+                    <img
+                      v-else
+                      alt="character"
+                      :src="character.thumbnail.path + '.' + character.thumbnail.extension"
+                      class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
+                    >
+
+                    <div class="relative p-4 sm:p-6 lg:p-8 min-h-[45vh] max-h-[45vh]">
+                      <p class="text-sm font-medium uppercase tracking-widest text-pink-500">
+                        {{ character.name }}
+                      </p>
+
+                      <p class="text-xl font-bold text-white sm:text-2xl">
+                        {{ character.name }}
+                      </p>
+
+                      <div class="mt-32 sm:mt-48 lg:mt-64">
+                        <div class="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                          <p class="text-sm text-white truncate">
+                            {{ character.description || $t('noDescription') }}
+                          </p>
+                          <div class="flex flex-col gap-4 justify-between mt-6">
+                            <button v-if="!character.isFavorite" class="btn btn-ghost text-red-500 glassmorphism" @click="handleViews('character-favorited', character)">
+                              <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
+                              {{ $t('favorited') }}
+                            </button>
+                            <button v-else class="btn btn-ghost text-red-500 glassmorphism" @click="handleViews('character-desfavorited', character)">
+                              <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
+                              {{ $t('desfavorited') }}
+                            </button>
+                            <button class="btn btn-ghost text-red-500 glassmorphism" @click="navigateTo(`character/${character.id}`)">
+                              <Icon name="mdi:chevron-double-right" size="1.5em" class="mr-4" />
+                              {{ $t('details') }}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
             </div>
-            <div class="flex justify-center mt-8">
+            <div class="flex justify-center mt-8 z-10">
               <button class="animate-pulse ring-2 ring-lime-300 rounded-full mb-6" @click="handleUpdate('more-characters')">
                 <Icon name="mdi:arrow-down" size="3em" />
               </button>
@@ -220,42 +238,52 @@
           @filterOrderBy="handleUpdate('series-order', $event)"
         >
           <template #options>
-            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-              <div v-for="serie in series" :key="serie.id" class="cols-span-1">
-                <progress v-if="!serie.thumbnail.path" class="progress w-full h-96"></progress>
-                <figure v-else class="max-w-md max-h-md overflow-hidden">
-                  <img class="w-full aspect-w-16 aspect-h-9 max-h-64 object-cover transition duration-500 transform rounded-tr-lg rounded-tl-lg hover:scale-105 " :src="serie.thumbnail.path + '.' + serie.thumbnail.extension" alt="Album">
-                </figure>
-                <div :class="[app.theme === 'light' ? 'bg-slate-300' : 'bg-white', 'text-black prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none']">
-                  <h1 class="text-center truncate mx-1 text-2xl font-bold">
-                    {{ serie.title }}
-                  </h1>
-                  <p class="p-8 truncate">
-                    {{ serie.description || $t('noDescription') }}
-                  </p>
-                  <div class="card-actions justify-center">
-                    <button
-                      v-if="!serie.isFavorite"
-                      class="btn btn-ghost bg-red-600 border-0 text-white hover:bg-red-800"
-                      @click="handleViews('serie-favorited', serie)"
-                    >
-                      <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
-                      {{ $t('favorited') }}
-                    </button>
-                    <button
+            <div class="lg:col-span-3 mt-6">
+              <ul class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                <li v-for="serie in series" :key="serie.id" class="shadow-lg rounded-lg">
+                  <a class="group relative block bg-black">
+                    <progress v-if="!serie.thumbnail.path" class="progress absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"></progress>
+                    <img
                       v-else
-                      class="btn btn-ghost bg-white border-red-600 text-red-600 hover:bg-slate-100"
-                      @click="handleViews('serie-desfavorited', serie)"
+                      alt="serie"
+                      :src="serie.thumbnail.path + '.' + serie.thumbnail.extension"
+                      class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
                     >
-                      <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
-                      {{ $t('desfavorited') }}
-                    </button>
-                    <button class="btn btn-circle bg-red-600 border-0 text-white" @click="redirect('serie', serie)">
-                      <Icon name="mdi:chevron-double-right" size="1.5em" />
-                    </button>
-                  </div>
-                </div>
-              </div>
+
+                    <div class="relative p-4 sm:p-6 lg:p-8 min-h-[50vh]">
+                      <p class="text-sm font-medium uppercase tracking-widest text-pink-500">
+                        {{ serie.title }}
+                      </p>
+
+                      <p class="text-xl font-bold text-white sm:text-2xl">
+                        {{ serie.title }}
+                      </p>
+
+                      <div class="mt-32 sm:mt-48 lg:mt-64">
+                        <div class="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                          <p class="text-sm text-white">
+                            {{ serie.description || $t('noDescription') }}
+                          </p>
+                          <div class="flex flex-col gap-4 justify-between mt-6">
+                            <button v-if="!serie.isFavorite" class="btn btn-ghost text-red-500 glassmorphism" @click="handleViews('serie-favorited', serie)">
+                              <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
+                              {{ $t('favorited') }}
+                            </button>
+                            <button v-else class="btn btn-ghost text-red-500 glassmorphism" @click="handleViews('serie-desfavorited', serie)">
+                              <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
+                              {{ $t('desfavorited') }}
+                            </button>
+                            <button class="btn btn-ghost text-red-500 glassmorphism" @click="navigateTo(`serie/${serie.id}`)">
+                              <Icon name="mdi:chevron-double-right" size="1.5em" class="mr-4" />
+                              {{ $t('details') }}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
             </div>
             <div class="flex justify-center mt-8">
               <button class="animate-pulse ring-2 ring-lime-300 rounded-full mb-6" @click="handleUpdate('more-series')">
@@ -273,34 +301,52 @@
           @filterOrderBy="handleUpdate('comics-order', $event)"
         >
           <template #options>
-            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-              <div v-for="comic in comics" :key="comic.id" class="cols-span-1">
-                <progress v-if="!comic.thumbnail.path" class="progress w-full h-96"></progress>
-                <figure v-else class="max-w-md max-h-md overflow-hidden">
-                  <img class="w-full aspect-w-16 aspect-h-9 max-h-64 object-cover transition duration-500 transform hover:scale-105 rounded-tr-lg rounded-tl-lg" :src="comic.thumbnail.path + '.' + comic.thumbnail.extension" alt="Album">
-                </figure>
-                <div :class="[app.theme === 'light' ? 'bg-slate-300' : 'bg-white', 'text-black prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none']">
-                  <h1 class="text-center truncate mx-1 text-2xl font-bold">
-                    {{ comic.title }}
-                  </h1>
-                  <p class="p-8 truncate">
-                    {{ comic.description || $t('noDescription') }}
-                  </p>
-                  <div class="card-actions justify-center">
-                    <button v-if="!comic.isFavorite" class="btn btn-ghost bg-red-600 border-0 text-white hover:bg-red-800" @click="handleViews('comic-favorited', comic)">
-                      <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
-                      {{ $t('favorited') }}
-                    </button>
-                    <button v-else class="btn btn-ghost bg-white border-red-600 text-red-600 hover:bg-slate-100" @click="handleViews('comic-desfavorited', comic)">
-                      <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
-                      {{ $t('desfavorited') }}
-                    </button>
-                    <button class="btn btn-circle bg-red-600 border-0 text-white" @click="redirect('comic', comic)">
-                      <Icon name="mdi:chevron-double-right" size="1.5em" />
-                    </button>
-                  </div>
-                </div>
-              </div>
+            <div>
+              <ul class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                <li v-for="comic in comics" :key="comic.id" class="shadow-lg rounded-lg">
+                  <a :href="`comic/${comic.id}`" class="group relative block bg-black">
+                    <progress v-if="!comic.thumbnail.path" class="progress absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"></progress>
+                    <img
+                      v-else
+                      alt="comic"
+                      :src="comic.thumbnail.path + '.' + comic.thumbnail.extension"
+                      class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
+                    >
+
+                    <div class="relative p-4 sm:p-6 lg:p-8 min-h-[50vh]">
+                      <p class="text-sm font-medium uppercase tracking-widest text-pink-500">
+                        {{ comic.title }}
+                      </p>
+
+                      <p class="text-xl font-bold text-white sm:text-2xl">
+                        {{ comic.title }}
+                      </p>
+
+                      <div class="mt-32 sm:mt-48 lg:mt-64">
+                        <div class="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                          <p class="text-sm text-white">
+                            {{ comic.description || $t('noDescription') }}
+                          </p>
+                          <div class="flex flex-col gap-4 justify-between mt-6">
+                            <button v-if="!comic.isFavorite" class="btn btn-ghost text-red-500 glassmorphism" @click="handleViews('comic-favorited', comic)">
+                              <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
+                              {{ $t('favorited') }}
+                            </button>
+                            <button v-else class="btn btn-ghost text-red-500 glassmorphism" @click="handleViews('comic-desfavorited', comic)">
+                              <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
+                              {{ $t('desfavorited') }}
+                            </button>
+                            <button class="btn btn-ghost text-red-500 glassmorphism" @click="navigateTo(`comic/${comic.id}`)">
+                              <Icon name="mdi:chevron-double-right" size="1.5em" class="mr-4" />
+                              {{ $t('details') }}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
             </div>
             <div class="flex justify-center mt-8">
               <button class="animate-pulse ring-2 ring-lime-300 rounded-full mb-6" @click="handleUpdate('more-comics')">
@@ -324,120 +370,143 @@
           <template #options>
             <div class="lg:col-span-3 mt-6">
               <ul v-if="favoriteTab === 'characters'" class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                <li v-for="character in characters" :key="character.id" class="shadow-lg rounded-lg">
-                  <a class="group block overflow-hidden">
+                <li v-for="character in favorites" :key="character.id" class="shadow-lg rounded-lg">
+                  <a href="#" class="group relative block bg-black">
                     <img
-                      :src="character.thumbnail.path + '.' + character.thumbnail.extension"
                       alt="character"
-                      class="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px]"
+                      :src="character.thumbnail.path + '.' + character.thumbnail.extension"
+                      class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
                     >
 
-                    <div class="relative bg-white/70 prose">
-                      <h3 class="text-xl mx-4 truncate text-center pt-2 text-gray-700 group-hover:underline group-hover:underline-offset-4">
+                    <div class="relative p-4 sm:p-6 lg:p-8 min-h-[50vh]">
+                      <p class="text-sm font-medium uppercase tracking-widest text-pink-500">
                         {{ character.name }}
-                      </h3>
-                      <p class="text-center">
-                        {{ character.description || $t('noDescription') }}
                       </p>
 
-                      <div class="card-actions justify-center mb-4">
-                        <button v-if="!character.isFavorite" class="btn btn-ghost bg-red-600 border-0 text-white hover:bg-red-800" @click="handleViews('character-favorited', character)">
-                          <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
-                          {{ $t('favorited') }}
-                        </button>
-                        <button v-else class="btn btn-ghost bg-white border-red-600 text-red-600 hover:bg-slate-100" @click="handleViews('character-desfavorited', character)">
-                          <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
-                          {{ $t('desfavorited') }}
-                        </button>
-                        <button class="btn btn-circle bg-red-600 border-0 text-white" @click="redirect('character', character)">
-                          <Icon name="mdi:chevron-double-right" size="1.5em" />
-                        </button>
+                      <p class="text-xl font-bold text-white sm:text-2xl">
+                        {{ character.name }}
+                      </p>
+
+                      <div class="mt-32 sm:mt-48 lg:mt-64">
+                        <div class="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                          <p class="text-sm text-white">
+                            {{ character.description || $t('noDescription') }}
+                          </p>
+                          <div class="flex justify-between mt-6">
+                            <button v-if="!character.isFavorite" class="btn btn-ghost text-red-500 glassmorphism" @click="handleViews('character-favorited', character)">
+                              <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
+                              {{ $t('favorited') }}
+                            </button>
+                            <button v-else class="btn btn-ghost text-red-500 glassmorphism" @click="handleViews('character-desfavorited', character)">
+                              <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
+                              {{ $t('desfavorited') }}
+                            </button>
+                            <button class="btn btn-circle bg-red-600 border-0 text-white" @click="redirect('character', character)">
+                              <Icon name="mdi:chevron-double-right" size="1.5em" />
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </a>
                 </li>
               </ul>
+
               <ul v-if="favoriteTab === 'series'" class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 <li v-for="serie in series" :key="serie.id" class="shadow-lg rounded-lg">
-                  <a class="group block overflow-hidden">
+                  <a href="#" class="group relative block bg-black">
                     <img
-                      :src="serie.thumbnail.path + '.' + serie.thumbnail.extension"
                       alt="serie"
-                      class="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px]"
+                      :src="serie.thumbnail.path + '.' + serie.thumbnail.extension"
+                      class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
                     >
 
-                    <div class="relative bg-white/70 prose">
-                      <h3 class="text-xl mx-4 truncate text-center pt-2 text-gray-700 group-hover:underline group-hover:underline-offset-4">
+                    <div class="relative p-4 sm:p-6 lg:p-8 min-h-[50vh]">
+                      <p class="text-sm font-medium uppercase tracking-widest text-pink-500">
                         {{ serie.title }}
-                      </h3>
-                      <p class="p-2">
-                        {{ serie.description || $t('noDescription') }}
                       </p>
 
-                      <div class="card-actions justify-center mb-4">
-                        <button v-if="!serie.isFavorite" class="btn btn-ghost bg-red-600 border-0 text-white hover:bg-red-800" @click="handleViews('serie-favorited', serie)">
-                          <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
-                          {{ $t('favorited') }}
-                        </button>
-                        <button v-else class="btn btn-ghost bg-white border-red-600 text-red-600 hover:bg-slate-100" @click="handleViews('serie-desfavorited', serie)">
-                          <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
-                          {{ $t('desfavorited') }}
-                        </button>
-                        <button class="btn btn-circle bg-red-600 border-0 text-white" @click="redirect('serie', serie)">
-                          <Icon name="mdi:chevron-double-right" size="1.5em" />
-                        </button>
+                      <p class="text-xl font-bold text-white sm:text-2xl">
+                        {{ serie.title }}
+                      </p>
+
+                      <div class="mt-32 sm:mt-48 lg:mt-64">
+                        <div class="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                          <p class="text-sm text-white">
+                            {{ serie.description || $t('noDescription') }}
+                          </p>
+                          <div class="flex justify-between mt-6">
+                            <button v-if="!serie.isFavorite" class="btn btn-ghost text-red-500 glassmorphism" @click="handleViews('serie-favorited', serie)">
+                              <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
+                              {{ $t('favorited') }}
+                            </button>
+                            <button v-else class="btn btn-ghost text-red-500 glassmorphism" @click="handleViews('serie-desfavorited', serie)">
+                              <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
+                              {{ $t('desfavorited') }}
+                            </button>
+                            <button class="btn btn-circle bg-red-600 border-0 text-white" @click="redirect('serie', serie)">
+                              <Icon name="mdi:chevron-double-right" size="1.5em" />
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </a>
                 </li>
               </ul>
+
               <ul v-if="favoriteTab === 'comics'" class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 <li v-for="comic in comics" :key="comic.id" class="shadow-lg rounded-lg">
-                  <a class="group block overflow-hidden">
+                  <a href="#" class="group relative block bg-black">
                     <img
-                      :src="comic.thumbnail.path + '.' + comic.thumbnail.extension"
                       alt="comic"
-                      class="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px]"
+                      :src="comic.thumbnail.path + '.' + comic.thumbnail.extension"
+                      class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
                     >
 
-                    <div class="relative bg-white/70 prose">
-                      <h3 class="text-xl mx-4 truncate text-center pt-2 text-gray-700 group-hover:underline group-hover:underline-offset-4">
+                    <div class="relative p-4 sm:p-6 lg:p-8 min-h-[50vh]">
+                      <p class="text-sm font-medium uppercase tracking-widest text-pink-500">
                         {{ comic.title }}
-                      </h3>
-                      <p class="p-2">
-                        {{ comic.description || $t('noDescription') }}
                       </p>
 
-                      <div class="card-actions justify-center mb-4">
-                        <button v-if="!comic.isFavorite" class="btn btn-ghost bg-red-600 border-0 text-white hover:bg-red-800" @click="handleViews('comic-favorited', comic)">
-                          <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
-                          {{ $t('favorited') }}
-                        </button>
-                        <button v-else class="btn btn-ghost bg-white border-red-600 text-red-600 hover:bg-slate-100" @click="handleViews('comic-desfavorited', comic)">
-                          <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
-                          {{ $t('desfavorited') }}
-                        </button>
-                        <button class="btn btn-circle bg-red-600 border-0 text-white" @click="redirect('comic', comic)">
-                          <Icon name="mdi:chevron-double-right" size="1.5em" />
-                        </button>
+                      <p class="text-xl font-bold text-white sm:text-2xl">
+                        {{ comic.title }}
+                      </p>
+
+                      <div class="mt-32 sm:mt-48 lg:mt-64">
+                        <div class="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                          <p class="text-sm text-white truncate">
+                            {{ comic.description || $t('noDescription') }}
+                          </p>
+                          <div class="flex justify-between mt-6">
+                            <button v-if="!comic.isFavorite" class="btn btn-ghost text-red-500 glassmorphism" @click="handleViews('comic-favorited', comic)">
+                              <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
+                              {{ $t('favorited') }}
+                            </button>
+                            <button v-else class="btn btn-ghost text-red-500 glassmorphism" @click="handleViews('comic-desfavorited', comic)">
+                              <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
+                              {{ $t('desfavorited') }}
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </a>
                 </li>
               </ul>
+
+              <div v-if="characters.length <= 0 || series.length <= 0 || series.length <= 0" class="flex justify-center col-span-3">
+                <button type="button" class="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                  <Icon name="line-md:emoji-frown" size="5em" />
+                  <span class="p-2 block text-sm font-semibold">
+                    {{ $t('kindEmpty') }}
+                  </span>
+                </button>
+              </div>
             </div>
           </template>
         </FilterComponent>
       </article>
-
-      <div v-if="characters.length <= 0 || series.length <= 0 || series.length <= 0" class="flex justify-center col-span-3">
-        <button type="button" class="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-          <Icon name="line-md:emoji-frown" size="5em" />
-          <span class="p-2 block text-sm font-semibold">
-            {{ $t('kindEmpty') }}
-          </span>
-        </button>
-      </div>
     </section>
   </div>
 </template>
@@ -528,7 +597,7 @@ const comics = ref([{
 
 const offset = ref(0)
 
-// const favorites = computed(() => characters.value.filter((i: any) => i.isFavorite))
+const favorites = computed(() => characters.value.filter((i: any) => i.isFavorite))
 
 const redirect = (action: string, value: any) => {
   if (action === 'character') {

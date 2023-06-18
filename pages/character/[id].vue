@@ -1,100 +1,60 @@
 <template>
   <section class="body-font">
-    <div v-if="loading" class="mx-60 grid grid-cols-12 mb-full">
-      <span class="col-span-5">
-        <progress class="progress w-full h-96"></progress>
-      </span>
-      <span :class="[app.theme === 'light' ? 'bg-slate-300' : 'bg-white', 'col-span-7 flex flex-col m-1 pt-12 rounded-lg rounded-tl-lg rounded-bl-none']">
-        <progress class="progress w-40 h-8 ml-4"></progress>
-        <progress class="progress w-40 h-4 mt-2 ml-4"></progress>
-        <progress class="progress w-3/4 mx-auto mt-6 h-12"></progress>
-        <span class="mx-4">
-          <progress class="progress w-12 mx-auto h-12 rounded-full"></progress>
-          <progress class="progress w-24 mx-auto mb-4 h-4 ml-4"></progress>
-        </span>
-        <span class="mx-4">
-          <progress class="progress w-12 mx-auto h-12 rounded-full"></progress>
-          <progress class="progress w-24 mx-auto mb-4 h-4 ml-4"></progress>
-        </span>
-        <span class="mx-4">
-          <progress class="progress w-12 mx-auto h-12 rounded-full"></progress>
-          <progress class="progress w-24 mx-auto mb-4 h-4 ml-4"></progress>
-        </span>
-      </span>
-    </div>
-
-    <article v-else>
-      <div id="character" class="relative mx-auto px-4 py-8">
-        <div class="flex flex-col md:flex-row justify-center">
-          <progress v-if="!character.thumbnail.path" class="progress w-full h-96 rounded-br-none rounded-bl-none"></progress>
-          <figure v-else class="max-w-md max-h-md ">
-            <img class="w-full h-full object-cover rounded-tr-xl rounded-tl-xl md:rounded-tl-lg md:rounded-bl-lg md:rounded-tr-none" :src="character.thumbnail.path + '.' + character.thumbnail.extension" alt="Album">
-          </figure>
-          <div :class="[app.theme === 'light' ? 'bg-slate-300' : 'bg-white', 'text-black prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none']">
-            <div class="px-4 py-5 sm:px-6">
-              <div class="-mt-4 ">
-                <div class="mt-4">
-                  <h3 class="text-2xl font-semibold leading-6 text-gray-900">
-                    {{ character.name }}
-                  </h3>
-                  <p class="mt-1 text-sm text-gray-500">
-                    {{ character.description || $t('noDescription') }}
-                  </p>
-                  <div class="ml-4 mt-4">
-                    <button v-if="!character.isFavorite" class="btn btn-ghost w-full bg-red-600 border-0 text-white hover:bg-red-800" @click="handleViews('character-favorited', character)">
-                      <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
-                      {{ $t('favorited') }}
-                    </button>
-                    <button v-else class="btn btn-ghost w-full bg-white border-red-600 text-red-600 hover:bg-slate-100" @click="handleViews('character-desfavorited', character)">
-                      <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
-                      {{ $t('desfavorited') }}
-                    </button>
-                  </div>
-                  <div>
-                    <p>
-                      <Icon name="ph:books-bold" size="1.5em" class="mr-4 btn btn-circle bg-red-600 text-white border-0 p-2" />
-                      <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                        <progress v-if="!character.comics.available && character.comics.available !== 0" class="progress w-56"></progress>
-                        <span v-else>
-                          {{ character.comics.available }}
-                          <span class="ml-2 uppercase ">
-                            {{ $t('comics') }}
-                          </span>
-                        </span>
-                      </span>
-                    </p>
-                    <p>
-                      <Icon name="fluent:movies-and-tv-16-regular" size="1.5em" class="mr-4 btn btn-circle bg-red-600 text-white border-0 p-2" />
-                      <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                        <progress v-if="!character.series.available && character.series.available !== 0" class="progress w-56"></progress>
-                        <span v-else>
-                          {{ character.series.available }}
-                          <span class="ml-2 uppercase ">
-                            {{ $t('series') }}
-                          </span>
-                        </span>
-                      </span>
-                    </p>
-                    <p>
-                      <Icon name="icon-park-solid:history-query" size="1.5em" class="mr-4 btn btn-circle bg-red-600 text-white border-0 p-2" />
-                      <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                        <progress v-if="!character.stories.available && character.stories.available !== 0" class="progress w-56"></progress>
-                        <span v-else>
-                          {{ character.stories.available }}
-                          <span class="ml-2 uppercase ">
-                            {{ $t('stories') }}
-                          </span>
-                        </span>
-                      </span>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div :class="[!app.isDarkMode ? 'bg-white' : 'bg-slate-700']">
+      <div aria-hidden="true" class="relative">
+        <img :src="character.thumbnail.path + '.' + character.thumbnail.extension" alt="" class="h-96 w-full object-cover">
+        <div :class="[!app.isDarkMode ? 'from-white' : 'from-slate-700', 'absolute inset-0 bg-gradient-to-t']"></div>
       </div>
 
+      <div class="relative mx-auto -mt-12 max-w-7xl px-4 pb-16 sm:px-6 sm:pb-24 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center lg:max-w-4xl">
+          <h2 :class="[!app.isDarkMode ? 'text-gray-900' : '', 'text-3xl font-bold tracking-tight sm:text-4xl']">
+            {{ character.name }}
+          </h2>
+          <p class="mt-4 text-gray-500">
+            {{ character.description || $t('noDescription') }}
+          </p>
+        </div>
+
+        <dl class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-y-16 lg:max-w-none lg:grid-cols-3 lg:gap-x-8">
+          <div class="border-t border-gray-200 pt-4">
+            <dt :class="[!app.isDarkMode ? 'text-gray-900' : 'text-white', 'font-medium']">
+              {{ $t('comics') }}
+            </dt>
+            <dd class="mt-2 text-base text-gray-500">
+              {{ character.comics.available }}
+            </dd>
+          </div>
+          <div class="border-t border-gray-200 pt-4">
+            <dt :class="[!app.isDarkMode ? 'text-gray-900' : 'text-white', 'font-medium']">
+              {{ $t('series') }}
+            </dt>
+            <dd class="mt-2 text-base text-gray-500">
+              {{ character.series.available }}
+            </dd>
+          </div>
+          <div class="border-t border-gray-200 pt-4">
+            <dt :class="[!app.isDarkMode ? 'text-gray-900' : 'text-white', 'font-medium']">
+              {{ $t('stories') }}
+            </dt>
+            <dd class="mt-2 text-base text-gray-500">
+              {{ character.stories.available }}
+            </dd>
+          </div>
+          <div class="ml-4 mt-4">
+            <button v-if="!character.isFavorite" class="btn btn-ghost w-full bg-red-600 border-0 text-white hover:bg-red-800" @click="handleViews('character-favorited', character)">
+              <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
+              {{ $t('favorited') }}
+            </button>
+            <button v-else class="btn btn-ghost w-full bg-white border-red-600 text-red-600 hover:bg-slate-100" @click="handleViews('character-desfavorited', character)">
+              <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
+              {{ $t('desfavorited') }}
+            </button>
+          </div>
+        </dl>
+      </div>
+    </div>
+    <article>
       <div id="comics" class="relative mx-auto max-w-screen-xl px-4 py-8">
         <div class="pb-4">
           <h1 class="text-3xl text-bold">
@@ -273,6 +233,10 @@ const character = ref({
     available: 0
   },
   series: {
+    items: [],
+    available: 0
+  },
+  events: {
     items: [],
     available: 0
   },

@@ -2,7 +2,7 @@
   <section>
     <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
       <header>
-        <h2 class="text-xl font-bold text-gray-900 sm:text-3xl">
+        <h2 :class="[!app.isDarkMode ? 'text-gray-900' : 'text-white', 'text-xl sm:text-3xl']">
           {{ props.title }}
         </h2>
 
@@ -69,8 +69,11 @@
 </template>
 
 <script setup>
+import { useAppStore } from '~/store/app'
+
 const emit = defineEmits(['filter-orderBy', 'favorites-characters', 'favorites-series', 'favorites-comics'])
 const query = ref('name')
+const app = useAppStore()
 const props = defineProps({
   title: {
     type: String,
