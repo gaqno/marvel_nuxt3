@@ -20,6 +20,8 @@ export default defineNuxtConfig({
     ]
   },
   i18n: {
+    locales: ['pt', 'en', 'ch', 'kr'],
+    defaultLocale: 'pt',
     vueI18n: './i18n.config.ts'
   },
   googleFonts: {
