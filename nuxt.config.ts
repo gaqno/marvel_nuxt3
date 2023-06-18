@@ -19,6 +19,9 @@ export default defineNuxtConfig({
       ['defineStore', 'definePiniaStore'] // import { defineStore as definePiniaStore } from 'pinia'
     ]
   },
+  i18n: {
+    vueI18n: './i18n.config.ts'
+  },
   googleFonts: {
     download: true,
     families: {
@@ -27,7 +30,7 @@ export default defineNuxtConfig({
   },
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css',
-    configPath: 'tailwind.config'
+    configPath: './tailwind.config.js'
     // exposeConfig: false,
     // config: {},
     // injectPosition: 0,
@@ -39,10 +42,5 @@ export default defineNuxtConfig({
       MARVEL_PUBLIC_KEY: process.env.MARVEL_PUBLIC_KEY,
       MARVEL_PRIVATE_KEY: process.env.MARVEL_PRIVATE_KEY
     }
-  },
-  i18n: {
-    locales: ['pt', 'en', 'cn', 'kr'],
-    defaultLocale: 'pt',
-    vueI18n: './i18n.config.ts'
   }
 })
