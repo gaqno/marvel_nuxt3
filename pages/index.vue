@@ -187,7 +187,7 @@
                       class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
                     >
 
-                    <div class="relative p-4 sm:p-6 lg:p-8 min-h-[45vh] max-h-[45vh]">
+                    <div class="relative p-4 sm:p-6 lg:p-8 h-full md:min-h-[45vh] md:max-h-[45vh]">
                       <p class="text-sm font-medium uppercase tracking-widest text-pink-500">
                         {{ character.name }}
                       </p>
