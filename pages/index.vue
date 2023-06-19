@@ -610,7 +610,7 @@ const redirect = (action: string, value: any) => {
   }
   if (action === 'comic') {
     app.setCurrent('comic', value)
-    navigateTo(`/comic/${value.id}`)
+    navigateTo(`/comics/${value.id}`)
   }
 }
 

@@ -82,7 +82,7 @@
           <SwiperSlide v-for="comic in comics" :key="comic.id">
             <div class="flex flex-col md:flex-row">
               <progress v-if="app.isLoading" class="progress w-full h-96"></progress>
-              <figure v-else class="relative max-w-md max-h-md">
+              <figure v-else class="relative max-h-md">
                 <img class="w-full h-full object-cover rounded-tr-xl rounded-tl-xl md:rounded-tl-lg md:rounded-bl-lg md:rounded-tr-none" :src="comic.thumbnail.path + '.' + comic.thumbnail.extension" alt="Album">
                 <div class="absolute inset-0 opacity-0 hover:opacity-100 transition duration-300 ease-in-out flex justify-center items-center bg-black bg-opacity-50">
                   <span class="text-white text-5xl material-icons-round">
@@ -90,14 +90,14 @@
                   </span>
                 </div>
               </figure>
-              <div :class="[app.theme === 'light' ? 'bg-slate-300' : 'bg-white', 'text-black prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none']">
+              <div :class="[!app.isDarkMode ? 'bg-white' : 'bg-slate-700', 'text-black prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none']">
                 <div class="px-4 py-5">
                   <div class="-mt-4">
                     <div class="mt-4">
-                      <h3 class="text-2xl font-semibold leading-6 text-gray-900">
+                      <h3 :class="[!app.isDarkMode ? 'text-gray-900' : 'text-white', 'text-2xl font-semibold leading-6']">
                         {{ comic.title }}
                       </h3>
-                      <p class="mt-1 text-sm text-gray-500">
+                      <p class="mt-1 text-base text-gray-500">
                         {{ comic.description || $t('noDescription') }}
                       </p>
                     </div>
@@ -121,7 +121,7 @@
                     </button>
                     <button
                       class="btn btn-ghost w-full bg-red-600 border-0 text-white hover:bg-red-800"
-                      @click.prevent="navigateTo('/comic/' + comic.id)"
+                      @click.prevent="navigateTo('/comics/' + comic.id)"
                     >
                       <Icon name="material-symbols:arrows-more-up-rounded" size="1.5em" class="mr-4" />
                       {{ $t('comic') }}
@@ -169,27 +169,42 @@
                   </span>
                 </div>
               </figure>
-              <div :class="[app.theme === 'light' ? 'bg-slate-300' : 'bg-white', 'text-black prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none']">
-                <div class="px-4 py-5 sm:px-6">
-                  <div class="-ml-4 -mt-4 flex flex-wrap items-center justify-between sm:flex-nowrap">
-                    <div class="ml-4 mt-4">
-                      <h3 class="text-2xl font-semibold leading-6 text-gray-900">
+              <div :class="[!app.isDarkMode ? 'bg-white' : 'bg-slate-700', 'text-black prose w-full py-4 rounded-br-xl rounded-bl-xl md:rounded-tl-none md:rounded-tr-lg md:rounded-bl-none']">
+                <div class="px-4 py-5">
+                  <div class="-mt-4">
+                    <div class="mt-4">
+                      <h3 :class="[!app.isDarkMode ? 'text-gray-900' : 'text-white', 'text-2xl font-semibold leading-6']">
                         {{ serie.title }}
                       </h3>
-                      <p class="mt-1 text-sm text-gray-500">
+                      <p class="mt-1 text-base text-gray-500">
                         {{ serie.description || $t('noDescription') }}
                       </p>
                     </div>
-                    <div class="ml-4 mt-4 flex-shrink-0">
-                      <button v-if="!serie.isFavorite" class="btn btn-ghost w-full bg-red-600 border-0 text-white hover:bg-red-800" @click="handleViews('serie-favorited', serie)">
-                        <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
-                        {{ $t('favorited') }}
-                      </button>
-                      <button v-else class="btn btn-ghost w-full bg-white border-red-600 text-red-600 hover:bg-slate-100" @click="handleViews('serie-desfavorited', serie)">
-                        <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
-                        {{ $t('desfavorited') }}
-                      </button>
-                    </div>
+                  </div>
+                  <div class="flex flex-col justify-center mt-4 gap-y-4">
+                    <button
+                      v-if="!serie.isFavorite"
+                      class="btn btn-ghost w-full bg-red-600 border-0 text-white hover:bg-red-800"
+                      @click="handleViews('serie-favorited', serie)"
+                    >
+                      <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
+                      {{ $t('favorited') }}
+                    </button>
+                    <button
+                      v-else
+                      class="btn btn-ghost w-full bg-white border-red-600 text-red-600 hover:bg-slate-100"
+                      @click="handleViews('serie-desfavorited', serie)"
+                    >
+                      <Icon name="ic:sharp-favorite" size="1.5em" class="mr-4" />
+                      {{ $t('desfavorited') }}
+                    </button>
+                    <button
+                      class="btn btn-ghost w-full bg-red-600 border-0 text-white hover:bg-red-800"
+                      @click.prevent="navigateTo('/serie/' + serie.id)"
+                    >
+                      <Icon name="material-symbols:arrows-more-up-rounded" size="1.5em" class="mr-4" />
+                      {{ $t('serie') }}
+                    </button>
                   </div>
                 </div>
               </div>
