@@ -196,12 +196,12 @@
                         {{ character.name }}
                       </p>
 
-                      <div class="mt-32 sm:mt-48 lg:mt-64">
-                        <div class="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                      <div class="mt-32 sm:mt-48 lg:mt-[3em]">
+                        <div class="translate-y-8 h-full transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
                           <p class="text-sm text-white truncate">
                             {{ character.description || $t('noDescription') }}
                           </p>
-                          <div class="flex flex-col gap-4 justify-between mt-6">
+                          <div class="flex flex-col gap-4 justify-between ">
                             <button v-if="!character.isFavorite" class="btn btn-ghost text-red-500 glassmorphism" @click="handleViews('character-favorited', character)">
                               <Icon name="ic:round-favorite-border" size="1.5em" class="mr-4" />
                               {{ $t('favorited') }}
@@ -250,7 +250,7 @@
                       class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
                     >
 
-                    <div class="relative p-4 sm:p-6 lg:p-8 min-h-[50vh]">
+                    <div class="relative p-4 sm:p-6 lg:p-8  h-full md:min-h-[45vh] md:max-h-[45vh]">
                       <p class="text-sm font-medium uppercase tracking-widest text-pink-500">
                         {{ serie.title }}
                       </p>
@@ -259,7 +259,7 @@
                         {{ serie.title }}
                       </p>
 
-                      <div class="mt-32 sm:mt-48 lg:mt-64">
+                      <div class="mt-32 sm:mt-48 lg:mt-[3em]">
                         <div class="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
                           <p class="text-sm text-white">
                             {{ serie.description || $t('noDescription') }}
@@ -313,7 +313,7 @@
                       class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
                     >
 
-                    <div class="relative p-4 sm:p-6 lg:p-8 min-h-[50vh]">
+                    <div class="relative p-4 sm:p-6 lg:p-8  h-full md:min-h-[45vh] md:max-h-[45vh]">
                       <p class="text-sm font-medium uppercase tracking-widest text-pink-500">
                         {{ comic.title }}
                       </p>
@@ -322,7 +322,7 @@
                         {{ comic.title }}
                       </p>
 
-                      <div class="mt-32 sm:mt-48 lg:mt-64">
+                      <div class="mt-32 sm:mt-48 lg:mt-[3em]">
                         <div class="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
                           <p class="text-sm text-white">
                             {{ comic.description || $t('noDescription') }}
